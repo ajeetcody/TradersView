@@ -13,9 +13,17 @@
 		777DA941271B657C00C1256D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 777DA93F271B657C00C1256D /* Main.storyboard */; };
 		777DA943271B657D00C1256D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 777DA942271B657D00C1256D /* Assets.xcassets */; };
 		777DA946271B657D00C1256D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 777DA944271B657D00C1256D /* LaunchScreen.storyboard */; };
+		777DA953271B672E00C1256D /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA952271B672E00C1256D /* SplashViewController.swift */; };
+		777DA956271B673900C1256D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA955271B673900C1256D /* LoginViewController.swift */; };
+		777DA959271B674300C1256D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA958271B674300C1256D /* SignupViewController.swift */; };
+		779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779D307D271B6B8B0021EEFC /* Extensions.swift */; };
+		779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779D3082271B7AD70021EEFC /* GoogleService-Info.plist */; };
+		D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradersView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73842C881FD9C6453521C7C7 /* Pods-TradersView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.debug.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.debug.xcconfig"; sourceTree = "<group>"; };
 		777DA936271B657C00C1256D /* TradersView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradersView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		777DA939271B657C00C1256D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		777DA93B271B657C00C1256D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +32,12 @@
 		777DA942271B657D00C1256D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		777DA945271B657D00C1256D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		777DA947271B657D00C1256D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		777DA952271B672E00C1256D /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		777DA955271B673900C1256D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		777DA958271B674300C1256D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		779D307D271B6B8B0021EEFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		779D3082271B7AD70021EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.release.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +45,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A6EEEDDFB2FCFF42DB40323 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		777DA92D271B657C00C1256D = {
 			isa = PBXGroup;
 			children = (
 				777DA938271B657C00C1256D /* TradersView */,
 				777DA937271B657C00C1256D /* Products */,
+				F44CFBC7E61AA099648A208C /* Pods */,
+				2A6EEEDDFB2FCFF42DB40323 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +81,9 @@
 		777DA938271B657C00C1256D /* TradersView */ = {
 			isa = PBXGroup;
 			children = (
+				779D3082271B7AD70021EEFC /* GoogleService-Info.plist */,
+				779D307C271B6B800021EEFC /* Common */,
+				777DA951271B672200C1256D /* ViewControllers */,
 				777DA939271B657C00C1256D /* AppDelegate.swift */,
 				777DA93B271B657C00C1256D /* SceneDelegate.swift */,
 				777DA93D271B657C00C1256D /* ViewController.swift */,
@@ -67,6 +95,33 @@
 			path = TradersView;
 			sourceTree = "<group>";
 		};
+		777DA951271B672200C1256D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				777DA952271B672E00C1256D /* SplashViewController.swift */,
+				777DA955271B673900C1256D /* LoginViewController.swift */,
+				777DA958271B674300C1256D /* SignupViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		779D307C271B6B800021EEFC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				779D307D271B6B8B0021EEFC /* Extensions.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		F44CFBC7E61AA099648A208C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				73842C881FD9C6453521C7C7 /* Pods-TradersView.debug.xcconfig */,
+				AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +129,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 777DA94A271B657D00C1256D /* Build configuration list for PBXNativeTarget "TradersView" */;
 			buildPhases = (
+				C81D52C92D4C2F57E12A044D /* [CP] Check Pods Manifest.lock */,
 				777DA932271B657C00C1256D /* Sources */,
 				777DA933271B657C00C1256D /* Frameworks */,
 				777DA934271B657C00C1256D /* Resources */,
+				6D74E200266A75B59FBC03F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				777DA946271B657D00C1256D /* LaunchScreen.storyboard in Resources */,
+				779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */,
 				777DA943271B657D00C1256D /* Assets.xcassets in Resources */,
 				777DA941271B657C00C1256D /* Main.storyboard in Resources */,
 			);
@@ -132,14 +190,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6D74E200266A75B59FBC03F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TradersView/Pods-TradersView-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TradersView/Pods-TradersView-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TradersView/Pods-TradersView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C81D52C92D4C2F57E12A044D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TradersView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		777DA932271B657C00C1256D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
+				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
+				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
+				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +387,7 @@
 		};
 		777DA94B271B657D00C1256D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73842C881FD9C6453521C7C7 /* Pods-TradersView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -293,7 +398,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palatable.consumer.TradersView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tradersview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -302,6 +407,7 @@
 		};
 		777DA94C271B657D00C1256D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -312,7 +418,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palatable.consumer.TradersView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tradersview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
