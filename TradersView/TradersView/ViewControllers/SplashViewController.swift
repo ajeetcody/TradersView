@@ -7,18 +7,17 @@
 
 import UIKit
 
-class SplashViewController: UIViewController {
+class SplashViewController: MasterViewController {
 
     @IBOutlet weak var continueButton: UIButton!
     
-    let appdelegate = UIApplication.shared.delegate as! AppDelegate
     
    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        self.appdelegate.mainNavigation = self.navigationController
+        self.appDelegate.mainNavigation = self.navigationController
         self.continueButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
         
         

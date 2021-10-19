@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignupViewController: UIViewController {
+class SignupViewController: MasterViewController {
 
     
     //MARK:- UI Object declarations ---

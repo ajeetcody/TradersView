@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: MasterViewController {
 
     
     //MARK:- UI Object declarations ---
@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
     //MARK:- UIViewcontroller lifecycle methods ---
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
 
@@ -39,6 +40,8 @@ class LoginViewController: UIViewController {
         self.passwordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
 
 
+        self.emailIDTextfield.text = "ajeet.cody@gmail.com"
+        self.passwordTextfield.text = "qwerty"
 
     }
     
@@ -46,6 +49,30 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func loginButtonAction(_ sender: Any) {
+        
+        if !self.isTextfieldEmpty(textFields: [self.emailIDTextfield, self.passwordTextfield]){
+            
+                
+            FirebaseManager.login(emailId: self.emailIDTextfield.text!, password: self.passwordTextfield.text!) {
+                
+
+                
+                self.showTabbarController()
+                
+                self.dismiss(animated: true, completion: nil)
+                
+                
+                
+                
+            } failureHandler: { (error) in
+                
+                self.showErrorMessage(error: error)
+                
+                
+            }
+
+            
+        }
         
         
     }
@@ -55,6 +82,8 @@ class LoginViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
 
     }
+    
+    
     
 
     /*

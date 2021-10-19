@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		771D4B2C271C221D00AD2131 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B2B271C221D00AD2131 /* FirebaseManager.swift */; };
+		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
+		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
+		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
 		777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA939271B657C00C1256D /* AppDelegate.swift */; };
 		777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93B271B657C00C1256D /* SceneDelegate.swift */; };
 		777DA93E271B657C00C1256D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93D271B657C00C1256D /* ViewController.swift */; };
@@ -16,6 +20,7 @@
 		777DA953271B672E00C1256D /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA952271B672E00C1256D /* SplashViewController.swift */; };
 		777DA956271B673900C1256D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA955271B673900C1256D /* LoginViewController.swift */; };
 		777DA959271B674300C1256D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA958271B674300C1256D /* SignupViewController.swift */; };
+		778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778A1B44271C1D0A008A4665 /* MasterViewController.swift */; };
 		779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779D307D271B6B8B0021EEFC /* Extensions.swift */; };
 		779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779D3082271B7AD70021EEFC /* GoogleService-Info.plist */; };
 		D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */; };
@@ -24,6 +29,10 @@
 /* Begin PBXFileReference section */
 		1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradersView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73842C881FD9C6453521C7C7 /* Pods-TradersView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.debug.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.debug.xcconfig"; sourceTree = "<group>"; };
+		771D4B2B271C221D00AD2131 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
+		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
+		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		777DA936271B657C00C1256D /* TradersView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradersView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		777DA939271B657C00C1256D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		777DA93B271B657C00C1256D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +44,7 @@
 		777DA952271B672E00C1256D /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		777DA955271B673900C1256D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		777DA958271B674300C1256D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		778A1B44271C1D0A008A4665 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		779D307D271B6B8B0021EEFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		779D3082271B7AD70021EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.release.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.release.xcconfig"; sourceTree = "<group>"; };
@@ -60,6 +70,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		771D4B29271C21F000AD2131 /* FirebaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				771D4B2B271C221D00AD2131 /* FirebaseManager.swift */,
+			);
+			path = FirebaseManager;
+			sourceTree = "<group>";
+		};
+		771D4B31271C244300AD2131 /* TabbarController */ = {
+			isa = PBXGroup;
+			children = (
+				771D4B32271C244300AD2131 /* MyTabbarController.swift */,
+			);
+			path = TabbarController;
+			sourceTree = "<group>";
+		};
 		777DA92D271B657C00C1256D = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +107,8 @@
 		777DA938271B657C00C1256D /* TradersView */ = {
 			isa = PBXGroup;
 			children = (
+				771D4B31271C244300AD2131 /* TabbarController */,
+				771D4B29271C21F000AD2131 /* FirebaseManager */,
 				779D3082271B7AD70021EEFC /* GoogleService-Info.plist */,
 				779D307C271B6B800021EEFC /* Common */,
 				777DA951271B672200C1256D /* ViewControllers */,
@@ -91,6 +119,7 @@
 				777DA942271B657D00C1256D /* Assets.xcassets */,
 				777DA944271B657D00C1256D /* LaunchScreen.storyboard */,
 				777DA947271B657D00C1256D /* Info.plist */,
+				771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */,
 			);
 			path = TradersView;
 			sourceTree = "<group>";
@@ -101,6 +130,8 @@
 				777DA952271B672E00C1256D /* SplashViewController.swift */,
 				777DA955271B673900C1256D /* LoginViewController.swift */,
 				777DA958271B674300C1256D /* SignupViewController.swift */,
+				778A1B44271C1D0A008A4665 /* MasterViewController.swift */,
+				771D4B40271E81D200AD2131 /* ChatViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -185,6 +216,7 @@
 				779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */,
 				777DA943271B657D00C1256D /* Assets.xcassets in Resources */,
 				777DA941271B657C00C1256D /* Main.storyboard in Resources */,
+				771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,11 +269,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
+				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
+				771D4B2C271C221D00AD2131 /* FirebaseManager.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
+				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
 				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
 			);
@@ -392,13 +428,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MQ7X5VPF23;
+				DEVELOPMENT_TEAM = EH362898Q2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tradersview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.vello.driiver;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -412,13 +448,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MQ7X5VPF23;
+				DEVELOPMENT_TEAM = EH362898Q2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tradersview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.vello.driiver;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
