@@ -13,7 +13,8 @@ class ChatViewController: UIViewController {
 
     
     @IBOutlet weak var leadingScrollIndicator: NSLayoutConstraint!
-    
+    @IBOutlet weak var leadingGroupScrollIndicator: NSLayoutConstraint!
+
     //MARK:- UI Object declaration -----
     
     @IBOutlet weak var searchButton: UIButton!
@@ -84,40 +85,46 @@ class ChatViewController: UIViewController {
 
 extension ChatViewController:UIScrollViewDelegate{
     
-    
+  
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         
         print(scrollView.currentPage)
         
-        UIView.animate(withDuration: 5.5, delay: 5.5, options: []) {
-            
-           // self.view.layoutIfNeeded()
-            
-            self.leadingScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/3))
+        if scrollView.tag == 0 {
+        
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+                
+               
+                
+                self.leadingScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/3))
+
+                self.view.layoutIfNeeded()
+                
+            } completion: { (isComplete) in
+                print("Complete animation")
+            }
 
             
-            
-        } completion: { (isComplete) in
-            print("Complete animation")
         }
+        else if scrollView.tag == 1{
 
-        UIView.animate(withDuration: 3.5) {
-            
-           // self.leadingScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/3))
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+                
+               
+                
+                self.leadingGroupScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/2))
+
+                self.view.layoutIfNeeded()
+                
+            } completion: { (isComplete) in
+                print("Complete animation")
+            }
+
             
         }
         
-//        UIView.animate(withDuration: 3.5) {
-//
-//        //    self.leadingScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/3))
-//
-//        } completion: { (isCompleted) in
-//            print("Completed")
-//        }
-
-        
-        
+     
         
     }
     

@@ -21,15 +21,13 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Navigation ----
     
+
     
     func showTabbarController(){
         
         
         let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
-        
         let tbBarController = dashBoardStoryBoard.instantiateViewController(identifier: "MyTabbarController")
-        
-        
         self.appDelegate.mainNavigation?.pushViewController(tbBarController, animated: true)
         
         

@@ -23,6 +23,7 @@
 		778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778A1B44271C1D0A008A4665 /* MasterViewController.swift */; };
 		779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779D307D271B6B8B0021EEFC /* Extensions.swift */; };
 		779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779D3082271B7AD70021EEFC /* GoogleService-Info.plist */; };
+		77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */; };
 		D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		778A1B44271C1D0A008A4665 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		779D307D271B6B8B0021EEFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		779D3082271B7AD70021EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.release.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				779D307D271B6B8B0021EEFC /* Extensions.swift */,
+				77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,
+				77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
 				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
 			);

@@ -25,7 +25,7 @@ class MyTabbarController: UITabBarController {
     var imageViewArray:[UIImageView] = []
     
     
-    var imageList:[String] = ["","", "", "",""]
+    var imageList:[String] = ["home_tab","profile_tab","post_tab","chat_tab","setting_tab"]
     
     let  kBarHeight:CGFloat = 100
     
@@ -102,20 +102,21 @@ class MyTabbarController: UITabBarController {
             
             if index == 0{
                 
-                tabViewCustom.backgroundColor = .red
+                tabViewCustom.backgroundColor = .blue
                 
             }
             else{
                 
                 
-                tabViewCustom.backgroundColor = .blue
+                tabViewCustom.backgroundColor = .lightGray
                 
             }
             
             tabViewCustom.tag = index
             
             
-            tabImageView.frame = CGRect(x: 0, y: 4.0 , width: self.tabbarWidthConst, height: 25)
+            tabImageView.frame = CGRect(x: 8, y: 8.0 , width: self.tabbarWidthConst - 16, height: self.tabBar.frame.height - 16)
+            tabImageView.contentMode = .scaleAspectFit
             tabImageView.image = UIImage(named: "\(self.imageList[index])")
             tabViewCustom.addSubview(tabImageView)
             
@@ -168,18 +169,17 @@ class MyTabbarController: UITabBarController {
     
     func changeUITabbarAfterTabSelection(tabIndex:Int){
         
-        print("\(#function) - Tab index - \(tabIndex)")
         
         _ =  self.tabViewArray.map { (view) -> UIView in
             
             if view.tag == tabIndex{
                 
-                view.backgroundColor = .red
+                view.backgroundColor = .blue
                 
             }
             else{
                 
-                view.backgroundColor = .blue
+                view.backgroundColor = .lightGray
                 
             }
             

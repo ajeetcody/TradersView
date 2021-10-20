@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+
 
 class SplashViewController: MasterViewController {
 
@@ -19,6 +21,16 @@ class SplashViewController: MasterViewController {
         
         self.appDelegate.mainNavigation = self.navigationController
         self.continueButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        
+        if Auth.auth().currentUser?.uid != nil {
+            
+            self.showTabbarController()
+            
+        }
+        else{
+            
+            print("User is not loggedin")
+        }
         
         
     }
