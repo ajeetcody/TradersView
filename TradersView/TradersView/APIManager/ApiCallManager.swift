@@ -12,8 +12,100 @@ import Foundation
 
 enum APIType:String{
     
+    
+    
+    
     case REGISTER = "register"
     case LOGIN = "login"
+    case LOGOUT = "logout"
+    case FORGOT_PASSWORD = "forgot"
+    case OTP_VERIFY = "otpverify"
+    case NEW_PASSWORD = "newpassword"
+    case RESET_PASSWORD = "resetpassword"
+    case UPDATE_PROFILE = "updateprofile"
+    case ADD_POST = "addpost"
+    case ADD_TRADE = "addtrade"                         //  10
+    
+    
+    
+    
+    
+    
+    case DELETE_POST = "deletepost"
+    case LIKE_POST = "likepost"
+    case TRADE_RATING = "traderating"
+    case FOLLOW = "follow"
+    case FOLLOW_REQUEST_LIST = "follow_reqlist"
+    case FOLLOW_ACCEPT_REJECT = "follow_accept_reject"
+    case FAV_PROFILE = "fav_profile"
+    case FAV_PROFILE_LIST = "fav_profile_list"
+    case GET_PROFILE_BY_ID = "getprofilebyid"
+    case GET_POST_BY_USER_ID = "getpostbyuserid"        //  20
+    
+    
+    
+    
+    
+    
+    case GET_POST_BY_ID = "getpostbyid"
+    case GET_TRADE_BY_ID = "gettradebyid"
+    case ADD_COMMENT = "addcomment"
+    case GET_COMMENT_BY_ID = "getcommentbyid"
+    case LIKE_COMMENT = "likecomment"
+    case GET_COMMENT_REPLY_BY_ID = "getcommentreplybyid"
+    case USER_PLAN = "userplan"
+    case DELETE_COMMENT = "deletecomment"
+    case SEARCH = "search"
+    case GET_NOTIFICATION = "getnotification"           //  30
+    
+    
+    
+    
+    
+    
+    case COMMUNITY = "community"
+    case MOST_POPULAR = "mostpopular"                   // POST
+    case TOP_PROFILE = "topprofile"                     // POST
+    case BLOCK_USER = "blockuser"
+    case GET_BLOCK_USER = "getblockuser"
+    case GET_SYMBOL = "getsymbol"
+    case GET_PLAN = "getplan"
+    case DELETE_IMAGE = "deleteimg"
+    case FOLLOW_LIST = "followlist"
+    case REMOVE_FOLLOWER = "remove_follower"            //  40
+    
+    
+    
+    
+    
+    case USER_BAN_BY_POLICE = "userbanbypolice"
+    case REMOVE_POST_BY_POLICE = "removepostbypolice"
+    case GET_BAN_USER_BY_POLICE = "getbanuserbypolice"
+    case GET_BAN_POST_BY_POLICE = "getbanpostbypolice"
+    case GET_PROFILE_BY_ID = "getprofilebyid"
+    case UNBAN_USER = "unbanuser"
+    case CONTACT_US = "contactus"
+    case SHARE_POST = "share_post"
+    case REPORT_USER = "reportuser"
+    case UPDATE_USER_NAME = "updateusername"             //  50
+    
+    
+    
+    
+    
+    
+    case SETMPI_PASS_VERIFY = "setmpinpassverify"
+    case MUTE_USER = "muteuser"
+    case GET_MUTE_USER = "getmuteuser"
+    case GET_PAGE = "getpage"
+    case GET_PAGE_BY_ID = "getpagebyid"
+    case COMMENT_PER_USER = "comment_per_user"
+    case COMMENT_PER_LIST = "comment_per_list"
+    case COMMENT_PER_REMOVE = "comment_per_remove"       //  58
+
+    
+    
+
 }
 
 class ApiCallManager{
@@ -42,6 +134,7 @@ class ApiCallManager{
             print("--- Request json ---")
             
             print(request.toObject())
+            
             
             
             let username = "admin"

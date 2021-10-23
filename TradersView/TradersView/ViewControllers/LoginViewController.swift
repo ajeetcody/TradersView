@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import GoogleSignIn
+
 
 class LoginViewController: MasterViewController {
 
@@ -66,6 +68,32 @@ class LoginViewController: MasterViewController {
 
     }
     
+    @IBAction func googlePlusButtonAction(_ sender: Any) {
+        let signInConfig = GIDConfiguration.init(clientID: "817066305522-o8nbn48ivi486l9vgm8bnmvjsqu94n6c.apps.googleusercontent.com")
+        
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+           guard error == nil else { return }
+
+            guard let user = user else { return }
+
+                let emailAddress = user.profile?.email
+
+                let fullName = user.profile?.name
+                let givenName = user.profile?.givenName
+                let familyName = user.profile?.familyName
+
+                let profilePicUrl = user.profile?.imageURL(withDimension: 320)
+            
+            print("\(fullName ?? "") \(givenName ?? "") \(familyName ?? "") \(profilePicUrl)")
+            print("\(user.userID ?? "")")
+            
+            
+           
+            
+         }
+        
+        
+    }
     
     //MARK:- Api call for registration ----
     

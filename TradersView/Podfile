@@ -10,6 +10,9 @@ target 'TradersView' do
 
 pod 'Firebase/Auth'
 pod 'SDWebImage', '~> 5.0'
-
+pod 'GoogleSignIn'
+pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'FacebookShare'
 
 end
