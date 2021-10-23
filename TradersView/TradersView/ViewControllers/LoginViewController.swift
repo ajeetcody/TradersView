@@ -40,8 +40,8 @@ class LoginViewController: MasterViewController {
         self.passwordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
 
 
-        self.emailIDTextfield.text = "ajeet.cody@gmail.com"
-        self.passwordTextfield.text = "qwerty"
+        self.emailIDTextfield.text = "a168@gmail.com"
+        self.passwordTextfield.text = "qwerty123"
 
     }
     
@@ -53,24 +53,7 @@ class LoginViewController: MasterViewController {
         if !self.isTextfieldEmpty(textFields: [self.emailIDTextfield, self.passwordTextfield]){
             
                 
-            FirebaseManager.login(emailId: self.emailIDTextfield.text!, password: self.passwordTextfield.text!) {
-                
-
-                
-                self.showTabbarController()
-                
-                self.dismiss(animated: true, completion: nil)
-                
-                
-                
-                
-            } failureHandler: { (error) in
-                
-                self.showErrorMessage(error: error)
-                
-                
-            }
-
+            self.callLoginApi()
             
         }
         
@@ -84,8 +67,46 @@ class LoginViewController: MasterViewController {
     }
     
     
+    //MARK:- Api call for registration ----
     
+    
+    func callLoginApi(){
+        
+        
+        let loginApiRequest = LoginRequest(email: self.emailIDTextfield.text!, password: self.passwordTextfield.text!, device_token: "", device_type: "")
 
+        
+        ApiCallManager.apiCall(request: loginApiRequest, apiType: .LOGIN) { (responseString, data) in
+            
+            
+            print("Response : - \(responseString)")
+            
+            let parseManager:ParseManager = ParseManager()
+            
+            parseManager.delegate = self
+            parseManager.parse(data: data, apiType: .LOGIN)
+            
+            
+        } failureHandler: { (error) in
+            
+            
+            self.showErrorMessage(error: error)
+            
+            
+        } somethingWentWrong: {
+            
+            self.showAlertSomethingWentWrong()
+            
+        }
+
+        
+        
+        
+        
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -96,4 +117,46 @@ class LoginViewController: MasterViewController {
     }
     */
 
+}
+
+
+extension LoginViewController:ParseManagerDelegate{
+   
+    
+    func parseSuccessHandler(response: ResponseModel) {
+        
+        print("\(#function)")
+        
+        
+        
+        let registerResponse:LoginResponse = response as! LoginResponse
+        
+        if registerResponse.userdata == nil {
+            
+            self.showAlertPopupWithMessage(msg: registerResponse.messages)
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessageWithHandler(msg: "Login Successfully!!") {
+                
+                self.showTabbarController()
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+            
+            
+        }
+        
+    }
+    func parseErrorHandler(error: Error) {
+        print("\(#function)")
+        self.showErrorMessage(error: error)
+    }
+    
+    func parseSomethingWentWrong() {
+        print("\(#function)")
+        self.showAlertSomethingWentWrong()
+        
+    }
 }

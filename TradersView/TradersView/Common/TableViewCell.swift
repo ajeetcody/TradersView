@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 import SDWebImage
 
+
 class MessageTableViewCell:UITableViewCell{
     
-    @IBOutlet var profilePicture:SDWebImage!
+    @IBOutlet var profilePicture:UIImage!
     @IBOutlet var userNameLabel:UILabel!
     @IBOutlet var onlineStatusLabel:UILabel!
     
@@ -20,7 +21,7 @@ class MessageTableViewCell:UITableViewCell{
 
 class GroupTableViewCell:UITableViewCell{
     
-    @IBOutlet var profilePicture:SDWebImage!
+    @IBOutlet var profilePicture:UIImage!
     @IBOutlet var userNameLabel:UILabel!
     @IBOutlet var dateLabel:UILabel!
     
@@ -32,7 +33,7 @@ class GroupTableViewCell:UITableViewCell{
 class ChannelTableViewCell:UITableViewCell{
     
     
-    @IBOutlet var profilePicture:SDWebImage!
+    @IBOutlet var profilePicture:UIImage!
     @IBOutlet var userNameLabel:UILabel!
     @IBOutlet var dateLabel:UILabel!
     

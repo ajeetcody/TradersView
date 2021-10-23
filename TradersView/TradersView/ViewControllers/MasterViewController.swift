@@ -21,7 +21,7 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Navigation ----
     
-
+    
     
     func showTabbarController(){
         
@@ -56,28 +56,68 @@ class MasterViewController: UIViewController {
     //MARK:- Alert popup ----
     
     
-    
-    func showErrorMessage(error:Error){
+    fileprivate func masterAlertPopup(title:String, message:String){
         
         
-        let alertController = UIAlertController(title: "Error", message: "\(error.localizedDescription). Please try again.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertController.addAction(defaultAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        
+        
+    }
+    
+    func showErrorMessage(error:Error){
+        
+        self.masterAlertPopup(title: "Error", message: "\(error.localizedDescription). Please try again.")
+        
+        
+        
         
     }
     
     
     func showAlertPopupWithMessage(msg:String){
         
-        let alertController = UIAlertController(title: "Message", message: msg, preferredStyle: .alert)
+        self.masterAlertPopup(title: "Message", message: msg)
         
-        let defaultAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        
+    }
+    
+    
+    func showAlertSomethingWentWrong(){
+        
+        self.masterAlertPopup(title: "Message", message: "Something went wrong")
+        
+        
+        
+    }
+    
+    func showAlertPopupWithMessageWithHandler(msg:String, handler:@escaping()->Void){
+        
+        let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        
+        let defaultAction = UIAlertAction(title: "Ok", style: .cancel) { (action) in
+            
+            handler()
+            
+            
+        }
         alertController.addAction(defaultAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+        }
+        
+        
         
     }
     

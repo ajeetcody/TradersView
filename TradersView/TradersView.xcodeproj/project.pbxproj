@@ -11,6 +11,11 @@
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
+		7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86227240B8300A81FAA /* ApiCallManager.swift */; };
+		7747D86627240BF900A81FAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86527240BF900A81FAA /* Constants.swift */; };
+		7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86927240E8A00A81FAA /* ApiRequestModel.swift */; };
+		7747D87A272428BF00A81FAA /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D879272428BF00A81FAA /* ParseManager.swift */; };
+		7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D87C2724295F00A81FAA /* ApiResponse.swift */; };
 		777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA939271B657C00C1256D /* AppDelegate.swift */; };
 		777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93B271B657C00C1256D /* SceneDelegate.swift */; };
 		777DA93E271B657C00C1256D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93D271B657C00C1256D /* ViewController.swift */; };
@@ -34,6 +39,11 @@
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		7747D86227240B8300A81FAA /* ApiCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCallManager.swift; sourceTree = "<group>"; };
+		7747D86527240BF900A81FAA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7747D86927240E8A00A81FAA /* ApiRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequestModel.swift; sourceTree = "<group>"; };
+		7747D879272428BF00A81FAA /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
+		7747D87C2724295F00A81FAA /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		777DA936271B657C00C1256D /* TradersView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradersView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		777DA939271B657C00C1256D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		777DA93B271B657C00C1256D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +98,26 @@
 			path = TabbarController;
 			sourceTree = "<group>";
 		};
+		7747D86027240B4B00A81FAA /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				7747D86827240CBB00A81FAA /* Api Model */,
+				7747D86227240B8300A81FAA /* ApiCallManager.swift */,
+				7747D879272428BF00A81FAA /* ParseManager.swift */,
+			);
+			path = APIManager;
+			sourceTree = "<group>";
+		};
+		7747D86827240CBB00A81FAA /* Api Model */ = {
+			isa = PBXGroup;
+			children = (
+				7747D86927240E8A00A81FAA /* ApiRequestModel.swift */,
+				7747D87C2724295F00A81FAA /* ApiResponse.swift */,
+			);
+			name = "Api Model";
+			path = "TradersView/Api Model";
+			sourceTree = SOURCE_ROOT;
+		};
 		777DA92D271B657C00C1256D = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +139,7 @@
 		777DA938271B657C00C1256D /* TradersView */ = {
 			isa = PBXGroup;
 			children = (
+				7747D86027240B4B00A81FAA /* APIManager */,
 				771D4B31271C244300AD2131 /* TabbarController */,
 				771D4B29271C21F000AD2131 /* FirebaseManager */,
 				779D3082271B7AD70021EEFC /* GoogleService-Info.plist */,
@@ -141,6 +172,7 @@
 		779D307C271B6B800021EEFC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7747D86527240BF900A81FAA /* Constants.swift */,
 				779D307D271B6B8B0021EEFC /* Extensions.swift */,
 				77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */,
 			);
@@ -272,16 +304,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */,
 				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
+				7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */,
+				7747D87A272428BF00A81FAA /* ParseManager.swift in Sources */,
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
 				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
 				771D4B2C271C221D00AD2131 /* FirebaseManager.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
+				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,
 				77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */,
+				7747D86627240BF900A81FAA /* Constants.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
 				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
 			);

@@ -26,28 +26,59 @@ class SignupViewController: MasterViewController {
         
         super.viewDidLoad()
 
+        self.uiChanges()
+        
+        self.nameTextfield.text = "ajeet sharma"
+        self.userNameTextfield.text = "a168"
+        self.emailIDTextfield.text = "a168@gmail.com"
+        self.phoneTextfield.text = "+919009241741"
+        self.passwordTextfield.text = "qwerty123"
+        self.confirmPasswordTextfield.text = "qwerty123"
+
+    }
+    
+    //MARK:- UI Changes -----
+    
+    
+    func uiChanges(){
+        
+        
         self.signupButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-
-        
         self.nameTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-
         self.userNameTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-
-        
         self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-
         self.phoneTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-
-        
         self.passwordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-
         self.confirmPasswordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
 
+        
+        
     }
     
     //MARK:- UIButton Action -----
     
     @IBAction func signupButtonAction(_ sender: Any) {
+        
+        
+        if !self.isTextfieldEmpty(textFields: [self.nameTextfield, self.userNameTextfield, self.emailIDTextfield, self.phoneTextfield, self.passwordTextfield, self.confirmPasswordTextfield]){
+            
+            if self.passwordTextfield.text == self.confirmPasswordTextfield.text {
+                
+                
+                self.callRegisterApi()
+                
+                
+            }
+            else{
+                
+                
+                self.showAlertPopupWithMessage(msg: "Both password should be same.")
+                
+            }
+           
+            
+        }
+        
         
         
     }
@@ -65,6 +96,49 @@ class SignupViewController: MasterViewController {
 
     }
     
+    
+    //MARK:- Api call for registration ----
+    
+    
+    func callRegisterApi(){
+        
+        
+        let registerAPIRequest = RegisterRequest(name: self.nameTextfield.text!, username: self.userNameTextfield.text!, email: self.emailIDTextfield.text!, mobile_no: self.phoneTextfield.text!, password: self.passwordTextfield.text!, facebook_id: "", google_id: "", device_token: "", device_type: "iOS")
+        
+        
+        
+        
+        ApiCallManager.apiCall(request: registerAPIRequest, apiType: .REGISTER) { (responseString, data) in
+            
+            
+            print("Response : - \(responseString)")
+            
+            let parseManager:ParseManager = ParseManager()
+            
+            parseManager.delegate = self
+            parseManager.parse(data: data, apiType: .REGISTER)
+            
+            
+        } failureHandler: { (error) in
+            
+            
+            self.showErrorMessage(error: error)
+            
+            
+        } somethingWentWrong: {
+            
+            self.showAlertSomethingWentWrong()
+            
+        }
+
+        
+        
+        
+        
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -75,4 +149,43 @@ class SignupViewController: MasterViewController {
     }
     */
 
+}
+
+
+extension SignupViewController:ParseManagerDelegate{
+   
+    
+    func parseSuccessHandler(response: ResponseModel) {
+        
+        print("\(#function)")
+        
+        let registerResponse:RegisterResponse = response as! RegisterResponse
+        
+        if registerResponse.userdata == nil {
+            
+            self.showAlertPopupWithMessage(msg: registerResponse.messages)
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessageWithHandler(msg: "Register Successfully!!") {
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+            
+            
+        }
+        
+    }
+    func parseErrorHandler(error: Error) {
+        print("\(#function)")
+        self.showErrorMessage(error: error)
+    }
+    
+    func parseSomethingWentWrong() {
+        print("\(#function)")
+        self.showAlertSomethingWentWrong()
+        
+    }
 }
