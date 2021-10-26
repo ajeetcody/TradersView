@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 import GoogleSignIn
 
 @main
@@ -15,12 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var mainNavigation:UINavigationController?
     
+    var loginResponse:LoginResponse?
+    
 
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         
-        let signInConfig = GIDConfiguration.init(clientID: "817066305522-o8nbn48ivi486l9vgm8bnmvjsqu94n6c.apps.googleusercontent.com")
-        FirebaseApp.configure()
         
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
            if error != nil || user == nil {

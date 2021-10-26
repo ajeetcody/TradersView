@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		771D4B2C271C221D00AD2131 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B2B271C221D00AD2131 /* FirebaseManager.swift */; };
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
@@ -27,7 +26,7 @@
 		777DA959271B674300C1256D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA958271B674300C1256D /* SignupViewController.swift */; };
 		778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778A1B44271C1D0A008A4665 /* MasterViewController.swift */; };
 		779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779D307D271B6B8B0021EEFC /* Extensions.swift */; };
-		779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779D3082271B7AD70021EEFC /* GoogleService-Info.plist */; };
+		77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */; };
 		77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */; };
 		77CC35D62724905500D65EDC /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC35D52724905500D65EDC /* credentials.plist */; };
 		D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */; };
@@ -36,7 +35,6 @@
 /* Begin PBXFileReference section */
 		1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradersView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73842C881FD9C6453521C7C7 /* Pods-TradersView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.debug.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.debug.xcconfig"; sourceTree = "<group>"; };
-		771D4B2B271C221D00AD2131 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +56,7 @@
 		777DA958271B674300C1256D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		778A1B44271C1D0A008A4665 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		779D307D271B6B8B0021EEFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		779D3082271B7AD70021EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		77CC35D52724905500D65EDC /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.release.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,14 +80,6 @@
 				1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		771D4B29271C21F000AD2131 /* FirebaseManager */ = {
-			isa = PBXGroup;
-			children = (
-				771D4B2B271C221D00AD2131 /* FirebaseManager.swift */,
-			);
-			path = FirebaseManager;
 			sourceTree = "<group>";
 		};
 		771D4B31271C244300AD2131 /* TabbarController */ = {
@@ -144,8 +134,6 @@
 				77CC35D52724905500D65EDC /* credentials.plist */,
 				7747D86027240B4B00A81FAA /* APIManager */,
 				771D4B31271C244300AD2131 /* TabbarController */,
-				771D4B29271C21F000AD2131 /* FirebaseManager */,
-				779D3082271B7AD70021EEFC /* GoogleService-Info.plist */,
 				779D307C271B6B800021EEFC /* Common */,
 				777DA951271B672200C1256D /* ViewControllers */,
 				777DA939271B657C00C1256D /* AppDelegate.swift */,
@@ -163,6 +151,7 @@
 		777DA951271B672200C1256D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				77AB7ED8272694B300E16F9A /* SettingsViewControllers */,
 				777DA952271B672E00C1256D /* SplashViewController.swift */,
 				777DA955271B673900C1256D /* LoginViewController.swift */,
 				777DA958271B674300C1256D /* SignupViewController.swift */,
@@ -180,6 +169,14 @@
 				77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		77AB7ED8272694B300E16F9A /* SettingsViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */,
+			);
+			path = SettingsViewControllers;
 			sourceTree = "<group>";
 		};
 		F44CFBC7E61AA099648A208C /* Pods */ = {
@@ -252,7 +249,6 @@
 			files = (
 				777DA946271B657D00C1256D /* LaunchScreen.storyboard in Resources */,
 				77CC35D62724905500D65EDC /* credentials.plist in Resources */,
-				779D3083271B7AD70021EEFC /* GoogleService-Info.plist in Resources */,
 				777DA943271B657D00C1256D /* Assets.xcassets in Resources */,
 				777DA941271B657C00C1256D /* Main.storyboard in Resources */,
 				771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */,
@@ -315,7 +311,6 @@
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
 				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
-				771D4B2C271C221D00AD2131 /* FirebaseManager.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
@@ -325,6 +320,7 @@
 				7747D86627240BF900A81FAA /* Constants.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
 				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
+				77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,15 +468,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EH362898Q2;
+				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.vello.driiver;
+				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.thetrradersv1ew2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -492,15 +491,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EH362898Q2;
+				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.vello.driiver;
+				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.thetrradersv1ew2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -82,12 +82,11 @@ enum APIType:String{
     case REMOVE_POST_BY_POLICE = "removepostbypolice"
     case GET_BAN_USER_BY_POLICE = "getbanuserbypolice"
     case GET_BAN_POST_BY_POLICE = "getbanpostbypolice"
-    case GET_PROFILE_BY_ID = "getprofilebyid"
     case UNBAN_USER = "unbanuser"
     case CONTACT_US = "contactus"
     case SHARE_POST = "share_post"
-    case REPORT_USER = "reportuser"
-    case UPDATE_USER_NAME = "updateusername"             //  50
+    case REPORT_USER = "reportuser"                      // 50
+    case UPDATE_USER_NAME = "updateusername"
     
     
     
@@ -101,7 +100,7 @@ enum APIType:String{
     case GET_PAGE_BY_ID = "getpagebyid"
     case COMMENT_PER_USER = "comment_per_user"
     case COMMENT_PER_LIST = "comment_per_list"
-    case COMMENT_PER_REMOVE = "comment_per_remove"       //  58
+    case COMMENT_PER_REMOVE = "comment_per_remove"       //  57
 
     
     
@@ -164,7 +163,6 @@ class ApiCallManager{
                 
                 if data != nil {
                     
-                    print(String(data: data!, encoding: .utf8)!, data!)
                     successHandler(String(data: data!, encoding: .utf8)!, data!)
                     
                 }

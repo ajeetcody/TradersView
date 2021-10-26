@@ -7,9 +7,12 @@
 //
 
 import Foundation
-import Firebase
-
+import UIKit
 struct Constants {
+    
+    //USERDefault key ---
+    
+    static let USER_DEFAULT_KEY_USER_DATA = "USER_DEFAULT_KEY_USER_DATA"
     
     static let BASE_URL = "https://spsofttech.com/projects/treader/api"
     

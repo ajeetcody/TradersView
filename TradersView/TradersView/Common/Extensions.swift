@@ -42,6 +42,21 @@ extension UIButton{
         self.layer.cornerRadius = cornerRadius
         
     }
+    func underlineTextButton(title: String?, forState state: UIControl.State)
+       {
+           self.setTitle(title, for: .normal)
+           self.setAttributedTitle(self.attributedString(), for: .normal)
+       }
+
+       private func attributedString() -> NSAttributedString? {
+           let attributes = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18.0),
+            NSAttributedString.Key.foregroundColor : UIColor.black,
+            NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue
+           ] as [NSAttributedString.Key : Any] 
+           let attributedString = NSAttributedString(string: self.currentTitle!, attributes: attributes)
+           return attributedString
+       }
     
 }
 

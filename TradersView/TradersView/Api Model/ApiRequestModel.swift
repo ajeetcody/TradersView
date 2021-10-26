@@ -90,30 +90,19 @@ class LoginRequest:ApiRequestModel {
     
 }
 
-class LogoutResponse:ApiRequestModel {
+class LogoutRequest:ApiRequestModel {
     
-    var email:String?
-    var password:String?
-    var device_type:String?
-    var device_token:String?
+    var _id:String?
     
-    init(email:String, password:String, device_token:String, device_type:String) {
+    init(id:String) {
         
-        self.email = email
-        self.password = password
-        self.device_type = device_type
-        self.device_token = device_token
-        
+        self._id = id
     }
     
     
     override func toObject() -> [String:Any]{
         
-        return [ "email":self.email ?? "",
-                "password":self.password ?? "",
-                "device_type":self.device_type ?? "",
-                "device_token":self.device_token ?? ""]
-        
+        return [ "_id":self._id ?? ""]
     }
     
 }

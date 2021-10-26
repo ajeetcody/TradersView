@@ -12,6 +12,16 @@ protocol ResponseModel {
     
 }
 
+//MARK:- Logout response ---
+
+struct LogoutResponse:Codable, ResponseModel {
+    
+    let status: Int
+    let messages: String
+
+    
+}
+
 
 // MARK: - RegisterResponse
 

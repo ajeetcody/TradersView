@@ -11,12 +11,18 @@ class MasterViewController: UIViewController {
     
     let appDelegate:AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     
+    var appVersion:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            self.appVersion = version
+       }
+        
         // Do any additional setup after loading the view.
     }
+    
     
     
     //MARK:- Viewcontroller Navigation ----
@@ -24,12 +30,14 @@ class MasterViewController: UIViewController {
     
     
     func showTabbarController(){
-        
+       
+        DispatchQueue.main.async {
         
         let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
         let tbBarController = dashBoardStoryBoard.instantiateViewController(identifier: "MyTabbarController")
         self.appDelegate.mainNavigation?.pushViewController(tbBarController, animated: true)
         
+        }
         
     }
     
@@ -58,13 +66,13 @@ class MasterViewController: UIViewController {
     
     fileprivate func masterAlertPopup(title:String, message:String){
         
-        
+        DispatchQueue.main.async {
+
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertController.addAction(defaultAction)
         
-        DispatchQueue.main.async {
             
             self.present(alertController, animated: true, completion: nil)
         }
@@ -75,9 +83,12 @@ class MasterViewController: UIViewController {
     
     func showErrorMessage(error:Error){
         
+        DispatchQueue.main.async {
+
+        
         self.masterAlertPopup(title: "Error", message: "\(error.localizedDescription). Please try again.")
         
-        
+        }
         
         
     }
@@ -85,34 +96,44 @@ class MasterViewController: UIViewController {
     
     func showAlertPopupWithMessage(msg:String){
         
+        
+        DispatchQueue.main.async {
+
         self.masterAlertPopup(title: "Message", message: msg)
         
-        
+        }
     }
     
     
     func showAlertSomethingWentWrong(){
         
+        
+        DispatchQueue.main.async {
+
         self.masterAlertPopup(title: "Message", message: "Something went wrong")
         
-        
+        }
         
     }
     
     func showAlertPopupWithMessageWithHandler(msg:String, handler:@escaping()->Void){
         
-        let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
-        
-        let defaultAction = UIAlertAction(title: "Ok", style: .cancel) { (action) in
-            
-            handler()
-            
-            
-        }
-        alertController.addAction(defaultAction)
         
         DispatchQueue.main.async {
+
+       
             
+            let alertController = UIAlertController(title: "Message", message: msg, preferredStyle: .alert)
+            
+            let defaultAction = UIAlertAction(title: "Ok", style: .cancel) { (action) in
+                
+                handler()
+                
+                
+            }
+            alertController.addAction(defaultAction)
+        
+        
             self.present(alertController, animated: true, completion: nil)
             
         }
@@ -120,6 +141,8 @@ class MasterViewController: UIViewController {
         
         
     }
+    
+    
     
     
     /*

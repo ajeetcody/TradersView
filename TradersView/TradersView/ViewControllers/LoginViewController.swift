@@ -69,25 +69,26 @@ class LoginViewController: MasterViewController {
     }
     
     @IBAction func googlePlusButtonAction(_ sender: Any) {
-        let signInConfig = GIDConfiguration.init(clientID: "817066305522-o8nbn48ivi486l9vgm8bnmvjsqu94n6c.apps.googleusercontent.com")
+        let signInConfig = GIDConfiguration.init(clientID: "477146900600-j15835agol5sg82r8j2arur69r2gmd24.apps.googleusercontent.com")
+        
         
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
            guard error == nil else { return }
 
             guard let user = user else { return }
 
-                let emailAddress = user.profile?.email
-
-                let fullName = user.profile?.name
-                let givenName = user.profile?.givenName
-                let familyName = user.profile?.familyName
-
-                let profilePicUrl = user.profile?.imageURL(withDimension: 320)
-            
-            print("\(fullName ?? "") \(givenName ?? "") \(familyName ?? "") \(profilePicUrl)")
-            print("\(user.userID ?? "")")
-            
-            
+//                let emailAddress = user.profile?.email
+//
+//                let fullName = user.profile?.name
+//                let givenName = user.profile?.givenName
+//                let familyName = user.profile?.familyName
+//
+//                let profilePicUrl = user.profile?.imageURL(withDimension: 320)
+//            
+//            print("\(fullName ?? "") \(givenName ?? "") \(familyName ?? "") \(profilePicUrl)")
+//            print("\(user.userID ?? "")")
+//            
+//            
            
             
          }
@@ -109,8 +110,9 @@ class LoginViewController: MasterViewController {
             
             print("Response : - \(responseString)")
             
+            UserDefaults.standard.setValue(data, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
+
             let parseManager:ParseManager = ParseManager()
-            
             parseManager.delegate = self
             parseManager.parse(data: data, apiType: .LOGIN)
             
@@ -166,10 +168,14 @@ extension LoginViewController:ParseManagerDelegate{
         }
         else{
             
+            DispatchQueue.main.async {
+            
             self.showAlertPopupWithMessageWithHandler(msg: "Login Successfully!!") {
                 
                 self.showTabbarController()
                 self.dismiss(animated: true, completion: nil)
+                
+            }
                 
             }
             

@@ -42,3 +42,39 @@ class ChannelTableViewCell:UITableViewCell{
     
 }
 
+
+//MARK:- Settings Tableview Cell --------
+
+
+
+class SettingsCellTwoLabels:UITableViewCell{
+    
+    @IBOutlet var titleLabelSetting:UILabel!
+    @IBOutlet var detailsLabel:UILabel!
+
+    
+    
+}
+
+class SettingsCellLabelAndSwitch:UITableViewCell{
+    
+    @IBOutlet var titleLabelSetting:UILabel!
+    @IBOutlet var switchButton:UISwitch!
+
+    
+    
+}
+
+class SettingsCellLabelAndButton:UITableViewCell{
+    
+    @IBOutlet var titleLabelSetting:UILabel!
+    @IBOutlet var linkButton:UIButton!
+    
+}
+class SettingsCellButtonOnly:UITableViewCell{
+    
+    
+    @IBOutlet var logoutButton:UIButton!
+    
+}
+

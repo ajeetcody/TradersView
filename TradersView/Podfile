@@ -8,7 +8,6 @@ target 'TradersView' do
 
   # Pods for TradersView
 
-pod 'Firebase/Auth'
 pod 'SDWebImage', '~> 5.0'
 pod 'GoogleSignIn'
 pod 'FacebookCore'
