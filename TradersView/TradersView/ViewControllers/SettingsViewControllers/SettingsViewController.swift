@@ -30,51 +30,154 @@ class SettingsViewController: MasterViewController {
     }
     
     
-    //MARK:- UIButton action methods -----
-    
-    
-    @objc func logoutButtonAction(){
-        
-        print("\(#function)")
-        
-        self.callLogOutApi()
-        
-        
-    }
+ 
     
     //MARK:- Cell button action methods -----
     
     
-    @objc func editProfileButtonAction(sender:UIButton){
+    @objc func linkButtonAction(sender:UIButton){
         
-        print("\(#function) - \(sender.tag)")
+        print("\(#function) - row - \(sender.tag)")
+        print("\(#function) - section - \(sender.superview?.tag ?? 0)")
         
         
+        if sender.superview?.tag == 0 {
+            
+
+            
+            if sender.tag == 0{
+
+                self.editProfileAction()
+                
+                
+            }
+            
+            
+        }
+        else  if sender.superview?.tag == 2 {
+            
+            
+            if sender.tag == 1{
+                
+                print("Block user")
+                self.blockAccountAction()
+                
+                
+            }
+            else if sender.tag == 2{
+                
+                print("Mute user")
+                self.muteUserAction()
+                
+                
+            }
+            else  if sender.tag == 3{
+                
+                print("Post Ban by You")
+
+                self.postBanByYou()
+                
+            }
+            else  if sender.tag == 4{
+                
+                
+                print("User ban by You")
+                self.userBanByYou()
+                
+            }
+            
+        }
+        else if sender.superview?.tag == 5 {
+            
+            
+            if sender.tag == 0{
+                
+                
+                self.viewSubscriptionPlan()
+                
+                
+            }
+            else  if sender.tag == 2{
+                
+                
+                self.rateOurAppAction()
+                
+                
+            }
+            else  if sender.tag == 3{
+                
+                self.privacyPolicy()
+                
+            }
+            
+            else  if sender.tag == 6{
+                
+                self.logoutAction()
+                
+            }
+        }
         
     }
     
+    //MARK:-  Operation methods -------
     
-    @objc func accountLinkButtonAction(sender:UIButton){
+    
+    func editProfileAction(){
         
-        print("\(#function) - \(sender.tag)")
-        
-        
+        print("\(#function)")
         
     }
     
-    @objc func privacyLinkButtonAction(sender:UIButton){
-        
-        print("\(#function) - \(sender.tag)")
-        
-        
+    func blockAccountAction(){
+        print("\(#function)")
         
     }
     
-    @objc func lastSectionLinkButtonAction(sender:UIButton){
+    func muteUserAction(){
         
-        print("\(#function) - \(sender.tag)")
+        print("\(#function)")
+    }
+    
+    func postBanByYou(){
+        
+        print("\(#function)")
+    }
+    
+    func userBanByYou(){
+        print("\(#function)")
+        
+    }
+    
+    func viewSubscriptionPlan(){
+        print("\(#function)")
+        
+    }
+    
+    func rateOurAppAction(){
+        
+        print("\(#function)")
+    }
+    
+    func privacyPolicy(){
+        
+        print("\(#function)")
+    }
+    
+    func logoutAction(){
+        
+
+        self.areYouSureAlertPopup(title: "Logout?", msg: "Are you sure for logout?") {
+            
+        
+            self.callLogOutApi()
+            
+        } noHandler: {
+            
+            
+        }
 
         
+
         
     }
     
@@ -199,7 +302,9 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 cell.linkButton.tag = indexPath.row
-                cell.linkButton.addTarget(self, action: #selector(editProfileButtonAction), for: .touchUpInside)
+                cell.linkButton.superview?.tag = indexPath.section
+                
+                cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
 
                 print("Title buttons ----- \(rowValueArray[indexPath.row])")
                 return cell
@@ -225,7 +330,17 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
 
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
-                cell.detailsLabel.text = "<User Name>"
+                if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+
+                    cell.detailsLabel.text = userData.username
+                    
+                }
+                else{
+                    
+                    cell.detailsLabel.text = "<NA>"
+                    
+                }
+                
                 
                 return cell
                 
@@ -238,7 +353,9 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 
                 cell.linkButton.tag = indexPath.row
-                cell.linkButton.addTarget(self, action: #selector(accountLinkButtonAction), for: .touchUpInside)
+                cell.linkButton.superview?.tag = indexPath.section
+
+                cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
 
                 
                 return cell
@@ -270,7 +387,9 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 cell.linkButton.tag = indexPath.row
-                cell.linkButton.addTarget(self, action: #selector(privacyLinkButtonAction), for: .touchUpInside)
+                cell.linkButton.superview?.tag = indexPath.section
+
+                cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
 
 
                 return cell
@@ -339,7 +458,9 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 cell.linkButton.tag = indexPath.row
-                cell.linkButton.addTarget(self, action: #selector(lastSectionLinkButtonAction), for: .touchUpInside)
+                cell.linkButton.superview?.tag = indexPath.section
+
+                cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
 
                 
                 
@@ -355,8 +476,11 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 
             cell.logoutButton.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
                 
+            cell.logoutButton.tag = indexPath.row
+            cell.logoutButton.superview?.tag = indexPath.section
 
-            cell.logoutButton.addTarget(self, action: #selector(logoutButtonAction), for: .touchUpInside)
+            
+            cell.logoutButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
             
             return cell
             }

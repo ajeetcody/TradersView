@@ -3,7 +3,7 @@
 //  TradersView
 //
 //  Created by Ajeet Sharma on 23/10/21.
-//
+// 338
 
 import Foundation
 
@@ -103,6 +103,28 @@ class LogoutRequest:ApiRequestModel {
     override func toObject() -> [String:Any]{
         
         return [ "_id":self._id ?? ""]
+    }
+    
+}
+class BlockActionRequest:ApiRequestModel {
+    
+    var user_id:String?
+    var block_user_id:String?
+    
+    init(id:String, blockUserId:String) {
+        
+        self.user_id = id
+        self.block_user_id = blockUserId
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return [ "user_id":self.user_id ?? "",
+        
+                 "block_user_id":self.block_user_id ?? ""
+        ]
     }
     
 }

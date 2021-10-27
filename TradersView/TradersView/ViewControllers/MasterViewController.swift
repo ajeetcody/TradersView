@@ -142,6 +142,40 @@ class MasterViewController: UIViewController {
         
     }
     
+    func areYouSureAlertPopup(title:String, msg:String, yesHandler:@escaping()->Void, noHandler:@escaping()->Void ){
+        
+        
+        DispatchQueue.main.async {
+
+       
+            
+            let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+            
+            let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+                
+                yesHandler()
+                
+                
+            }
+            
+            let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
+                
+                noHandler()
+                
+                
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+
+        
+            self.present(alertController, animated: true, completion: nil)
+            
+        }
+        
+        
+        
+    }
+    
     
     
     

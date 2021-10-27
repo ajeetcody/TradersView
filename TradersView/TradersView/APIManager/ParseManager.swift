@@ -192,7 +192,11 @@ class ParseManager{
     
     private func parseLogin(responseData:Data) {
         
-        let appDelegate:AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+        DispatchQueue.main.async {
+        
+            let appDelegate:AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+        
+        
 
         let decoder = JSONDecoder()
         
@@ -220,7 +224,7 @@ class ParseManager{
       
         
         
-        
+        }
     }
     
     

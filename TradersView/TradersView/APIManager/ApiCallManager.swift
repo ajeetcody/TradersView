@@ -151,6 +151,7 @@ class ApiCallManager{
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
             urlRequest.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
 
+            
             let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
                 
                 guard  error == nil else{

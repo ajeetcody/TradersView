@@ -98,3 +98,11 @@ struct LoginUserData: Codable {
         case updatedAt = "updated_at"
     }
 }
+
+
+
+// MARK: - Block-Action-Response
+struct BlockActionResponse: Codable, ResponseModel {
+    let status: Int
+    let messages: String
+}
