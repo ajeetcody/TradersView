@@ -106,34 +106,35 @@ class SignupViewController: MasterViewController {
         let registerAPIRequest = RegisterRequest(name: self.nameTextfield.text!, username: self.userNameTextfield.text!, email: self.emailIDTextfield.text!, mobile_no: self.phoneTextfield.text!, password: self.passwordTextfield.text!, facebook_id: "", google_id: "", device_token: "", device_type: "iOS")
         
         
-        
-        
-        ApiCallManager.shared.apiCall(request: registerAPIRequest, apiType: .REGISTER) { (responseString, data) in
+        ApiCallManager.shared.apiCall(request: registerAPIRequest, apiType: .REGISTER, responseType: RegisterResponse.self, requestMethod:.POST) { (result) in
             
             
-            print("Response : - \(responseString)")
+            let registerResponse:RegisterResponse = result as! RegisterResponse
             
-            let parseManager:ParseManager = ParseManager()
+            if registerResponse.userdata == nil {
+                
+                self.showAlertPopupWithMessage(msg: registerResponse.messages)
+                
+            }
+            else{
+                
+                self.showAlertPopupWithMessageWithHandler(msg: "Register Successfully!!") {
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                }
+                
+                
+            }
             
-            parseManager.delegate = self
-            parseManager.parse(data: data, apiType: .REGISTER)
+            
             
             
         } failureHandler: { (error) in
             
-            
             self.showErrorMessage(error: error)
-            
-            
-        } somethingWentWrong: {
-            
-            self.showAlertSomethingWentWrong()
-            
         }
 
-        
-        
-        
         
         
         

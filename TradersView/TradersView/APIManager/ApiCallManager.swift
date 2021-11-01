@@ -9,6 +9,13 @@ import Foundation
 import UIKit
 
 
+enum RequestMethod:String{
+    
+    case GET = "GET"
+    case POST = "POST"
+    
+    
+}
 
 enum APIType:String{
     
@@ -101,10 +108,10 @@ enum APIType:String{
     case COMMENT_PER_USER = "comment_per_user"
     case COMMENT_PER_LIST = "comment_per_list"
     case COMMENT_PER_REMOVE = "comment_per_remove"       //  57
-
     
     
-
+    
+    
 }
 
 class ApiCallManager{
@@ -115,7 +122,7 @@ class ApiCallManager{
         
     }
     
-     func apiCall(request:ApiRequestModel, apiType:APIType,successHandler:@escaping(String, Data)->Void, failureHandler:@escaping(Error)->Void, somethingWentWrong:@escaping()->Void){
+    func apiCall<T:Codable>(request:ApiRequestModel, apiType:APIType,responseType:T.Type, requestMethod:RequestMethod , compilationHandler:@escaping(_ results:T)->Void, failureHandler:@escaping(Error)->Void){
         
         
         let urlStr = "\(Constants.BASE_URL)/\(apiType.rawValue)"
@@ -146,15 +153,24 @@ class ApiCallManager{
             let loginString = String(format: "%@:%@", username, password)
             let loginData = loginString.data(using: String.Encoding.utf8)!
             let base64LoginString = loginData.base64EncodedString()
-
             
             
             
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: request.toObject(), options: [])
-            urlRequest.httpMethod = "POST"
+            
+            urlRequest.httpMethod = requestMethod.rawValue
+            
+            
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
             urlRequest.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+            
+
+            if requestMethod == .POST{
+                
+                
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: request.toObject(), options: [])
+
+            }
 
             
             let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
@@ -169,8 +185,24 @@ class ApiCallManager{
                 
                 if data != nil {
                     
-                    successHandler(String(data: data!, encoding: .utf8)!, data!)
-                    
+                    if(error == nil && data != nil && data?.count != 0){
+                        do {
+                            
+                            print(String(data: data!, encoding: .utf8))
+                            let response = try JSONDecoder().decode(T.self, from: data!)
+                            compilationHandler(response)
+                        }
+                        
+                        catch let decodingError {
+                            debugPrint(decodingError)
+                            
+                            failureHandler(decodingError as! Error)
+                        }
+                    }else{
+                        
+                        failureHandler(error as! Error)
+                        
+                    }
                 }
                 else{
                     
@@ -195,81 +227,81 @@ class ApiCallManager{
     }
     
     func UploadImage<T:Codable>(request:AddPostRequest, apiType:APIType, uiimagePic:UIImage, responseType:T.Type, compilationHandler:@escaping(_ results:T)->Void, failureHandler:@escaping(Error)->Void){
-            
+        
         let username = "admin"
         let password = "123"
         let loginString = String(format: "%@:%@", username, password)
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()
-
+        
         // your image from Image picker, as of now I am picking image from the bundle
-            let imageData = uiimagePic.jpegData(compressionQuality: 0.7)
-
-            let url = "\(Constants.BASE_URL)/\(apiType.rawValue)"
-            var urlRequest = URLRequest(url: URL(string: url)!)
-
-            urlRequest.httpMethod = "post"
-            let bodyBoundary = "--------------------------\(UUID().uuidString)"
-            urlRequest.addValue("multipart/form-data; boundary=\(bodyBoundary)", forHTTPHeaderField: "Content-Type")
-          
-            //attachmentKey is the api parameter name for your image do ask the API developer for this
-           // file name is the name which you want to give to the file
+        let imageData = uiimagePic.jpegData(compressionQuality: 0.7)
+        
+        let url = "\(Constants.BASE_URL)/\(apiType.rawValue)"
+        var urlRequest = URLRequest(url: URL(string: url)!)
+        
+        urlRequest.httpMethod = "post"
+        let bodyBoundary = "--------------------------\(UUID().uuidString)"
+        urlRequest.addValue("multipart/form-data; boundary=\(bodyBoundary)", forHTTPHeaderField: "Content-Type")
+        
+        //attachmentKey is the api parameter name for your image do ask the API developer for this
+        // file name is the name which you want to give to the file
         let requestData = createRequestBody(imageData: imageData!, parameters:request.toObjectString() , boundary: bodyBoundary, attachmentKey: "post", fileName: "post.jpg")
+        
+        urlRequest.addValue("\(requestData.count)", forHTTPHeaderField: "content-length")
+        urlRequest.httpBody = requestData
+        urlRequest.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: urlRequest) { (data, httpUrlResponse, error) in
             
-            urlRequest.addValue("\(requestData.count)", forHTTPHeaderField: "content-length")
-            urlRequest.httpBody = requestData
-            urlRequest.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
-
-            URLSession.shared.dataTask(with: urlRequest) { (data, httpUrlResponse, error) in
-
-                if(error == nil && data != nil && data?.count != 0){
-                    do {
-                        
-                        print(String(data: data!, encoding: .utf8))
-                        let response = try JSONDecoder().decode(T.self, from: data!)
-                        compilationHandler(response)
-                        print(response)
-                    }
-
-                    catch let decodingError {
-                        debugPrint(decodingError)
+            if(error == nil && data != nil && data?.count != 0){
+                do {
                     
-                        failureHandler(decodingError as! Error)
-                    }
-                }else{
-                    
-                    failureHandler(error as! Error)
-                    
+                    print(String(data: data!, encoding: .utf8))
+                    let response = try JSONDecoder().decode(T.self, from: data!)
+                    compilationHandler(response)
+                    print(response)
                 }
-            }.resume()
-        }
-
-   private func createRequestBody(imageData: Data, parameters:[String:String] , boundary: String, attachmentKey: String, fileName: String) -> Data{
-            
-            
-            let lineBreak = "\r\n"
-            var requestBody = Data()
-
-            
+                
+                catch let decodingError {
+                    debugPrint(decodingError)
+                    
+                    failureHandler(decodingError as! Error)
+                }
+            }else{
+                
+                failureHandler(error as! Error)
+                
+            }
+        }.resume()
+    }
+    
+    private func createRequestBody(imageData: Data, parameters:[String:String] , boundary: String, attachmentKey: String, fileName: String) -> Data{
+        
+        
+        let lineBreak = "\r\n"
+        var requestBody = Data()
+        
+        
         parameters.forEach { (key, value) in
             
             requestBody.append("--\(boundary)\r\n".data(using: .utf8)!)
             requestBody.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
             requestBody.append("\(value)\r\n".data(using: .utf8)!)
-            }
-            
-            
-            
-            requestBody.append("\(lineBreak)--\(boundary + lineBreak)" .data(using: .utf8)!)
-            requestBody.append("Content-Disposition: form-data; name=\"\(attachmentKey)\"; filename=\"\(fileName)\"\(lineBreak)" .data(using: .utf8)!)
-            requestBody.append("Content-Type: image/jpeg \(lineBreak + lineBreak)" .data(using: .utf8)!) // you can change the type accordingly if you want to
-            requestBody.append(imageData)
-            requestBody.append("\(lineBreak)--\(boundary)--\(lineBreak)" .data(using: .utf8)!)
-
-            return requestBody
         }
+        
+        
+        
+        requestBody.append("\(lineBreak)--\(boundary + lineBreak)" .data(using: .utf8)!)
+        requestBody.append("Content-Disposition: form-data; name=\"\(attachmentKey)\"; filename=\"\(fileName)\"\(lineBreak)" .data(using: .utf8)!)
+        requestBody.append("Content-Type: image/jpeg \(lineBreak + lineBreak)" .data(using: .utf8)!) // you can change the type accordingly if you want to
+        requestBody.append(imageData)
+        requestBody.append("\(lineBreak)--\(boundary)--\(lineBreak)" .data(using: .utf8)!)
+        
+        return requestBody
     }
-    
+}
+
 
 
 

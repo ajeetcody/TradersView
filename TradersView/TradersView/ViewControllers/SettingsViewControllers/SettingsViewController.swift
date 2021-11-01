@@ -193,27 +193,35 @@ class SettingsViewController: MasterViewController {
 
             let logoutRequest = LogoutRequest(id: userData.id)
             
-            ApiCallManager.shared.apiCall(request: logoutRequest, apiType: .LOGOUT) { (responseString, data) in
+            ApiCallManager.shared.apiCall(request: logoutRequest, apiType: .LOGOUT, responseType: LogoutResponse.self, requestMethod:.POST) { (results) in
                 
                 
-                print("Response : - \(responseString)")
+                let logoutResonse:LogoutResponse = results 
                 
-                UserDefaults.standard.setValue(data, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
-
-                let parseManager:ParseManager = ParseManager()
-                parseManager.delegate = self
-                parseManager.parse(data: data, apiType: .LOGOUT)
+                if logoutResonse.status != 1 {
+                    
+                    self.showAlertPopupWithMessage(msg: logoutResonse.messages)
+                    
+                }
+                else{
+                    
+                    self.showAlertPopupWithMessageWithHandler(msg: "Logout Successfully Successfully!!") {
+                        
+                        
+                        self.appDelegate.loginResponse = nil
+                        UserDefaults.standard.setValue(nil, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
+                        
+                        self.navigationController?.tabBarController?.navigationController?.popViewController(animated: true)
+                    }
+                    
+                    
+                }
                 
                 
             } failureHandler: { (error) in
                 
                 
-                self.showErrorMessage(error: error)
                 
-                
-            } somethingWentWrong: {
-                
-                self.showAlertSomethingWentWrong()
                 
             }
 

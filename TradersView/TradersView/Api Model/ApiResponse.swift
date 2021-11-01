@@ -30,6 +30,159 @@ import Foundation
 
 /// like_comment
 
+// MARK: - PostByUserIDResponse
+struct PostByUserIDResponse: Codable {
+    let data: [PostByUserIDDatum]
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct PostByUserIDDatum: Codable {
+    
+    
+    let postid, userID, username: String
+    let profileImg: String
+    let date, message, like: String
+    let isLike: Int
+    let comment: String
+    let isComment: Int
+    let share: String
+    let isShare: Int
+    let imageVideo: [ImageVideo]?
+    let sharelink: String
+    let isFollow, isBlock, isMute, commentPer: Int
+    let tagPer, mentionPer: Int
+
+    enum CodingKeys: String, CodingKey {
+        case postid
+        case userID = "user_id"
+        case username
+        case profileImg = "profile_img"
+        case date, message, like
+        case isLike = "is_like"
+        case comment
+        case isComment = "is_comment"
+        case share
+        case isShare = "is_share"
+        case imageVideo = "image_video"
+        case sharelink
+        case isFollow = "is_follow"
+        case isBlock = "is_block"
+        case isMute = "is_mute"
+        case commentPer = "comment_per"
+        case tagPer = "tag_per"
+        case mentionPer = "mention_per"
+    }
+}
+
+// MARK: - CommunityResponse
+struct CommunityResponse: Codable {
+    let data: [CommunityResponseDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct CommunityResponseDatum: Codable {
+    let postid, userID, username: String
+    let profileImg: String
+    let date, message, like: String
+    let isLike: Int
+    let comment: String
+    let isComment: Int
+    let share: String
+    let isShare: Int
+    let imageVideo: [ImageVideo]?
+    let sharelink: String
+    let isFollow, isBlock, isMute, commentPer: Int
+    let tagPer, mentionPer: Int
+
+    enum CodingKeys: String, CodingKey {
+        case postid
+        case userID = "user_id"
+        case username
+        case profileImg = "profile_img"
+        case date, message, like
+        case isLike = "is_like"
+        case comment
+        case isComment = "is_comment"
+        case share
+        case isShare = "is_share"
+        case imageVideo = "image_video"
+        case sharelink
+        case isFollow = "is_follow"
+        case isBlock = "is_block"
+        case isMute = "is_mute"
+        case commentPer = "comment_per"
+        case tagPer = "tag_per"
+        case mentionPer = "mention_per"
+    }
+}
+
+// MARK: - ImageVideo
+struct ImageVideo: Codable {
+    let imgid: Imgid
+    let image: Image
+}
+
+enum Image: Codable {
+    case integer(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let x = try? container.decode(Int.self) {
+            self = .integer(x)
+            return
+        }
+        if let x = try? container.decode(String.self) {
+            self = .string(x)
+            return
+        }
+        throw DecodingError.typeMismatch(Image.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Image"))
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .integer(let x):
+            try container.encode(x)
+        case .string(let x):
+            try container.encode(x)
+        }
+    }
+}
+
+enum Imgid: Codable {
+    case integer(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let x = try? container.decode(Int.self) {
+            self = .integer(x)
+            return
+        }
+        if let x = try? container.decode(String.self) {
+            self = .string(x)
+            return
+        }
+        throw DecodingError.typeMismatch(Imgid.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Imgid"))
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .integer(let x):
+            try container.encode(x)
+        case .string(let x):
+            try container.encode(x)
+        }
+    }
+}
+
+
 // MARK: - AddPostResponse
 struct AddPostResponse: Codable, ResponseModel {
     let status: Int
@@ -251,11 +404,7 @@ struct GetPostbyuseridDatum: Codable {
     }
 }
 
-// MARK: - ImageVideo
-struct ImageVideo: Codable {
-    let imgid: String
-    let image: String
-}
+
 
 // MARK: - Encode/decode helpers
 
@@ -303,6 +452,21 @@ struct LogoutResponse:Codable, ResponseModel {
 
     
 }
+
+// MARK: - MostPopularResponse
+struct MostPopularResponse: Codable {
+    let data: [MostPopularDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct MostPopularDatum: Codable {
+    let id, title, msg: String
+    let image: String
+    let link: String
+}
+
 
 
 // MARK: - RegisterResponse

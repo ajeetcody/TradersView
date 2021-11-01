@@ -35,6 +35,8 @@ class MasterViewController: UIViewController {
         
         let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
         let tbBarController = dashBoardStoryBoard.instantiateViewController(identifier: "MyTabbarController")
+            
+            print("Show tabbar controller")
         self.appDelegate.mainNavigation?.pushViewController(tbBarController, animated: true)
         
         }
