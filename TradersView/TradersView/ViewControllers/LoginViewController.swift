@@ -42,9 +42,13 @@ class LoginViewController: MasterViewController {
         self.passwordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
 
 
-        self.emailIDTextfield.text = "a168@gmail.com"
+        self.emailIDTextfield.text = "ra168@gmail.com"
         self.passwordTextfield.text = "qwerty123"
 
+//        self.emailIDTextfield.text = "kek@gmail.com"
+//        self.passwordTextfield.text = "123456"
+
+        
     }
     
     //MARK:- UIButton Action -----
@@ -105,7 +109,7 @@ class LoginViewController: MasterViewController {
         let loginApiRequest = LoginRequest(email: self.emailIDTextfield.text!, password: self.passwordTextfield.text!, device_token: "", device_type: "")
 
         
-        ApiCallManager.apiCall(request: loginApiRequest, apiType: .LOGIN) { (responseString, data) in
+        ApiCallManager.shared.apiCall(request: loginApiRequest, apiType: .LOGIN) { (responseString, data) in
             
             
             print("Response : - \(responseString)")

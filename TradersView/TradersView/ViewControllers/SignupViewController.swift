@@ -108,7 +108,7 @@ class SignupViewController: MasterViewController {
         
         
         
-        ApiCallManager.apiCall(request: registerAPIRequest, apiType: .REGISTER) { (responseString, data) in
+        ApiCallManager.shared.apiCall(request: registerAPIRequest, apiType: .REGISTER) { (responseString, data) in
             
             
             print("Response : - \(responseString)")

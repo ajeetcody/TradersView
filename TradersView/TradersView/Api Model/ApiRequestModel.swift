@@ -5,6 +5,8 @@
 //  Created by Ajeet Sharma on 23/10/21.
 // 338
 
+//319
+
 import Foundation
 
 class ApiRequestModel{
@@ -14,6 +16,41 @@ class ApiRequestModel{
         return [:]
     }
     
+    
+}
+
+class AddPostRequest:ApiRequestModel{
+   
+    var id:String?
+    var user_id:String?
+    var message:String?
+    var location:String?
+    var latitude:String?
+    var longitude:String?
+    
+    
+    init(_id:String, _user_id:String, _message:String, _location:String, _latitude:String, _longitude:String) {
+        
+        self.id = _id
+        self.user_id = _user_id
+        self.message = _message
+        self.location = _location
+        self.latitude = _latitude
+        self.longitude = _longitude
+        
+    }
+    
+    
+     func toObjectString() -> [String:String]{
+        
+        return ["id":self.id ?? "",
+                "user_id":self.user_id ?? "",
+                "message":self.message ?? "",
+                "location":self.location ?? "",
+                "latitude":self.latitude ?? "",
+                "longitude":self.longitude ?? ""]
+        
+    }
     
 }
 

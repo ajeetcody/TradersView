@@ -32,6 +32,21 @@ extension UIColor{
     
 }
 
+extension UITextView{
+    
+    func changeBorder(width:CGFloat, borderColor:UIColor, cornerRadius:CGFloat){
+        
+        self.layer.borderWidth = width
+        self.layer.borderColor = borderColor.cgColor
+        self.layer.cornerRadius = cornerRadius
+        
+    }
+    
+    func leftSpace() {
+        self.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    }
+}
+
 extension UIButton{
 
     

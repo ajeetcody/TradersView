@@ -33,6 +33,7 @@ class MyTabbarController: UITabBarController {
     
     
     
+    
     //MARK: Data variables ---
     
     let appDelegate:AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -156,10 +157,29 @@ class MyTabbarController: UITabBarController {
     @objc func tabbarSelection(gesture: UITapGestureRecognizer) {
         
         
+        
         if let tag = gesture.view?.tag{
         
-            self.selectedIndex = tag
-            self.changeUITabbarAfterTabSelection(tabIndex: tag)
+            if tag == 2 {
+                
+                let storyBoardDashboard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+                
+                let vc:PostViewController = storyBoardDashboard.instantiateViewController(identifier: "PostViewController") as! PostViewController
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+                
+                
+                
+                
+            }
+            else{
+                
+            
+                self.selectedIndex = tag
+                self.changeUITabbarAfterTabSelection(tabIndex: tag)
+                
+                
+            }
             
         }
       

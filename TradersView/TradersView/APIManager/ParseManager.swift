@@ -109,8 +109,13 @@ class ParseManager{
         case .TOP_PROFILE:
             print("")
         case .BLOCK_USER:
+            
+            self.parseBlockUser(responseData:data)
+
             print("")
         case .GET_BLOCK_USER:
+            self.parseGetBlockUsers(responseData:data)
+
             print("")
         case .GET_SYMBOL:
             print("")
@@ -157,6 +162,64 @@ class ParseManager{
         case .COMMENT_PER_REMOVE:
             print("")
         }
+        
+        
+    }
+    
+    private func parseBlockUser(responseData:Data) {
+        
+        
+        let decoder = JSONDecoder()
+        
+        
+            
+            do {
+                
+                
+                let logoutResponse:LogoutResponse = try decoder.decode(LogoutResponse.self, from: responseData)
+                
+                
+                print("logoutResponse  - \(logoutResponse.messages)")
+                
+                self.delegate?.parseSuccessHandler(response: logoutResponse)
+                
+                
+            }
+            catch{
+                
+                self.delegate?.parseErrorHandler(error: error)
+            }
+      
+        
+        
+        
+    }
+    
+    private func parseGetBlockUsers(responseData:Data) {
+        
+        
+        let decoder = JSONDecoder()
+        
+        
+            
+            do {
+                
+                
+                let logoutResponse:LogoutResponse = try decoder.decode(LogoutResponse.self, from: responseData)
+                
+                
+                print("logoutResponse  - \(logoutResponse.messages)")
+                
+                self.delegate?.parseSuccessHandler(response: logoutResponse)
+                
+                
+            }
+            catch{
+                
+                self.delegate?.parseErrorHandler(error: error)
+            }
+      
+        
         
         
     }

@@ -193,7 +193,7 @@ class SettingsViewController: MasterViewController {
 
             let logoutRequest = LogoutRequest(id: userData.id)
             
-            ApiCallManager.apiCall(request: logoutRequest, apiType: .LOGOUT) { (responseString, data) in
+            ApiCallManager.shared.apiCall(request: logoutRequest, apiType: .LOGOUT) { (responseString, data) in
                 
                 
                 print("Response : - \(responseString)")
