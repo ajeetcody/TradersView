@@ -32,15 +32,23 @@ extension UIColor{
     
 }
 
-extension UITextView{
+
+extension UIView{
+    
     
     func changeBorder(width:CGFloat, borderColor:UIColor, cornerRadius:CGFloat){
         
         self.layer.borderWidth = width
         self.layer.borderColor = borderColor.cgColor
         self.layer.cornerRadius = cornerRadius
-        
+        self.clipsToBounds = true
     }
+    
+}
+
+extension UITextView{
+    
+   
     
     func leftSpace() {
         self.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
@@ -50,13 +58,7 @@ extension UITextView{
 extension UIButton{
 
     
-    func changeBorder(width:CGFloat, borderColor:UIColor, cornerRadius:CGFloat){
-        
-        self.layer.borderWidth = width
-        self.layer.borderColor = borderColor.cgColor
-        self.layer.cornerRadius = cornerRadius
-        
-    }
+  
     func underlineTextButton(title: String?, forState state: UIControl.State)
        {
            self.setTitle(title, for: .normal)
@@ -75,14 +77,4 @@ extension UIButton{
     
 }
 
-extension UITextField{
-    
-    func changeBorder(width:CGFloat, borderColor:UIColor, cornerRadius:CGFloat){
-        
-        self.layer.borderWidth = width
-        self.layer.borderColor = borderColor.cgColor
-        self.layer.cornerRadius = cornerRadius
-        
-    }
-    
-}
+

@@ -20,7 +20,7 @@ class CollectionViewCellTopProfile:UICollectionViewCell{
     
     @IBOutlet weak var topProfileImageView: UIImageView!
     @IBOutlet weak var topProfileNameLabel: UILabel!
-
+    
     
 }
 
@@ -96,13 +96,13 @@ class HomeViewController: MasterViewController {
             else{
                 
                 if let popularList = response.data{
-                
+                    
                     self.arrayPopular = popularList
                     
                 }
                 
                 DispatchQueue.main.async {
-                
+                    
                     self.tableViewHome.reloadData()
                 }
                 
@@ -115,7 +115,7 @@ class HomeViewController: MasterViewController {
             
             self.showErrorMessage(error: error)
         }
-
+        
         
     }
     
@@ -148,13 +148,18 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate{
         
         if indexPath.section == 0{
             
-            return Constants.screenWidth / 3
+            return Constants.screenHeight / 4.0
             
         }
         else if indexPath.section == 1{
             
             
-            return Constants.screenWidth / 4
+            return Constants.screenHeight / 6.0
+        }
+        else if indexPath.section == 2{
+            
+            
+            return Constants.screenHeight
         }
         
         return UITableView.automaticDimension
@@ -251,28 +256,40 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate{
 
 extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-      
-        return CGSize(width: 150.0, height: 190.0)
+        
+    
+        
+        return CGSize(width: Constants.screenWidth / 2.8, height: Constants.screenHeight/2.5)
+        
+        
+        
         
     }
     
     
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//            return UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-//        }
-//
-//
-//
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 5
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+       
+        
+        return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 0)
+        
+        
+    }
     
-//        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//            return 20
-//        }
-
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        
+        return 35
+        
+    }
+    
+    //        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    //            return 20
+    //        }
+    
     // MARK: - UICollectionViewDataSource protocol
     
     // tell the collection view how many cells to make
@@ -305,14 +322,15 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             
             let cell:CollectionViewCellMostPopular = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellMostPopular", for: indexPath as IndexPath) as! CollectionViewCellMostPopular
             
-
+            
             let popular:MostPopularDatum = self.arrayPopular[indexPath.row]
             
             print(popular.image)
             cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: "placeholder.png"))
-
+            
             cell.popularImageView.contentMode = .scaleAspectFit
-           // popular.
+            cell.popularImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            // popular.
             
             
             return cell
@@ -323,7 +341,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             let cell:CollectionViewCellTopProfile = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellTopProfile", for: indexPath as IndexPath) as! CollectionViewCellTopProfile
             
             cell.topProfileNameLabel.text  = "Test"
-
+            
             // Use the outlet in our custom class to get a reference to the UILabel in the cell
             // cell.myLabel.text = self.items[indexPath.row] // The row value is the same as the index of the desired text within the array.
             // cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
