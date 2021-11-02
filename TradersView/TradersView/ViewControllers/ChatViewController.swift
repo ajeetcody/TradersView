@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatViewController: UIViewController {
+class ChatViewController: MasterViewController {
 
     //MARK:- Autolayout declaration -----
 
@@ -46,7 +46,7 @@ class ChatViewController: UIViewController {
     
     @IBAction func searchButtonAction(_ sender: Any) {
         
-        
+        self.showSearchViewController()
     }
     
     @IBAction func notificationButtonAction(_ sender: Any) {

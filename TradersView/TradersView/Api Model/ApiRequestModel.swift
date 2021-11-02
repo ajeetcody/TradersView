@@ -19,6 +19,32 @@ class ApiRequestModel{
     
 }
 
+class SearchRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var search:String?
+    var page:Int?
+    
+    
+    init(_user_id:String, _search:String, _page:Int) {
+        
+        self.user_id = _user_id
+        self.search = _search
+        self.page = _page
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "search":self.search ?? "",
+                "page":self.page ?? 0]
+        
+    }
+    
+}
+
 class AddPostRequest:ApiRequestModel{
    
     var id:String?

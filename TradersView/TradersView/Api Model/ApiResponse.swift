@@ -30,6 +30,24 @@ import Foundation
 
 /// like_comment
 
+// MARK: - SearchResponse
+struct SearchResponse: Codable {
+    let data: [SearchDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct SearchDatum: Codable {
+    let userid, name, username: String
+    let profileImg: String
+
+    enum CodingKeys: String, CodingKey {
+        case userid, name, username
+        case profileImg = "profile_img"
+    }
+}
+
 // MARK: - PostByUserIDResponse
 struct PostByUserIDResponse: Codable {
     let data: [PostByUserIDDatum]

@@ -23,7 +23,23 @@ class MasterViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //MARK:- Viewcontroller Present ----
     
+    
+    
+    func showSearchViewController(){
+       
+        DispatchQueue.main.async {
+        
+        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+        let vc = dashBoardStoryBoard.instantiateViewController(identifier: "SearchViewController")
+            
+            print("Show tabbar controller")
+        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+        
+        }
+        
+    }
     
     //MARK:- Viewcontroller Navigation ----
     

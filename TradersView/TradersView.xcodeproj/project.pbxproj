@@ -28,6 +28,7 @@
 		777DA959271B674300C1256D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA958271B674300C1256D /* SignupViewController.swift */; };
 		778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778A1B44271C1D0A008A4665 /* MasterViewController.swift */; };
 		779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779D307D271B6B8B0021EEFC /* Extensions.swift */; };
+		77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AAD6142731CAF2001CE95A /* SearchViewController.swift */; };
 		77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */; };
 		77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */; };
 		77CC35D62724905500D65EDC /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC35D52724905500D65EDC /* credentials.plist */; };
@@ -60,6 +61,7 @@
 		777DA958271B674300C1256D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		778A1B44271C1D0A008A4665 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		779D307D271B6B8B0021EEFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		77AAD6142731CAF2001CE95A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		77CC35D52724905500D65EDC /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				771D4B40271E81D200AD2131 /* ChatViewController.swift */,
 				7742A4BC272FDEE70081F28E /* PostViewController.swift */,
 				7742A4FE273037350081F28E /* HomeViewController.swift */,
+				77AAD6142731CAF2001CE95A /* SearchViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
+				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
