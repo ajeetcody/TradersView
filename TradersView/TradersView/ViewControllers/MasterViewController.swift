@@ -23,6 +23,22 @@ class MasterViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    func fetchCurrentUserData()->LoginUserData?{
+        
+        
+        
+        if let userData =  appDelegate.loginResponse?.userdata?[0]{
+            
+            return userData
+            
+        }
+        
+        return nil
+
+        
+        
+    }
+    
     //MARK:- Viewcontroller Present ----
     
     

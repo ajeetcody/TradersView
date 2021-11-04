@@ -108,16 +108,17 @@ class LoginViewController: MasterViewController {
         
         let loginApiRequest = LoginRequest(email: self.emailIDTextfield.text!, password: self.passwordTextfield.text!, device_token: "", device_type: "")
         
-        ApiCallManager.shared.apiCall(request: loginApiRequest, apiType: .LOGIN, responseType: LogoutResponse.self, requestMethod:.POST) { (results) in
+        ApiCallManager.shared.apiCall(request: loginApiRequest, apiType: .LOGIN, responseType: LoginResponse.self, requestMethod:.POST) { (results) in
             
             
             
             
-            let registerResponse:LoginResponse = results as! LoginResponse
+            let loginResponse:LoginResponse = results
             
-            if registerResponse.userdata == nil {
+            self.appDelegate.loginResponse = loginResponse
+            if loginResponse.userdata == nil {
                 
-                self.showAlertPopupWithMessage(msg: registerResponse.messages)
+                self.showAlertPopupWithMessage(msg: loginResponse.messages)
                 
             }
             else{

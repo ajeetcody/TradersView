@@ -35,14 +35,20 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
     @IBAction func postButtonAction(_ sender: Any) {
         
         print("\(#function)")
+        if self.fetchCurrentUserData() == nil {
+            
+         return
+            
+        }
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
+        // self.fetchCurrentUserData()?.id
         
-        let loginResponse:LoginUserData = (appDelegate?.loginResponse?.userdata![0])!
+        guard let userID = self.fetchCurrentUserData()?.id else {
+            return
+        }
         
-        
-        let requestPost = AddPostRequest(_id: "", _user_id:loginResponse.id , _message: self.postTextview.text, _location: "Indore", _latitude: "22.2332", _longitude: "75.2323")
+        let requestPost = AddPostRequest(_id: "", _user_id:userID , _message: self.postTextview.text, _location: "Indore", _latitude: "22.2332", _longitude: "75.2323")
         
         
         if let postImage = self.postImageView.image{
@@ -80,7 +86,36 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         }
         else{
             
+            print("Request object post without image - \(#function)")
+
             print(requestPost.toObjectString())
+            
+            ApiCallManager.shared.apiCall(request: requestPost, apiType: .ADD_POST, responseType: AddPostResponse.self, requestMethod: .POST) { (results) in
+                
+                let result:AddPostResponse = results
+                print("Result - \(result.messages) -- ")
+                
+                if result.status == 1 {
+                    
+                    self.showAlertPopupWithMessageWithHandler(msg: result.messages) {
+                        
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                }
+                else{
+                    
+                    self.showAlertPopupWithMessage(msg: result.messages)
+                    
+                }
+                
+                
+            } failureHandler: { (error) in
+                
+                self.showErrorMessage(error: error)
+                
+            }
+
             
 //            ApiCallManager.shared.apiCall(request: requestPost, apiType: .ADD_POST) { (success, data) in
 //                

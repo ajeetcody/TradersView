@@ -145,6 +145,7 @@ struct ImageVideo: Codable {
 }
 
 enum Image: Codable {
+    
     case integer(Int)
     case string(String)
 
@@ -380,7 +381,7 @@ struct Blockuser: Codable {
 /// get_postbyuserid
 // MARK: - GetPostbyuserid
 struct GetPostbyuserid: Codable {
-    let data: [GetPostbyuseridDatum]
+    let data: [GetPostbyuseridDatum]?
     let status: Int
     let messages: String
 }
@@ -395,7 +396,7 @@ struct GetPostbyuseridDatum: Codable {
     let isComment: Int
     let share: String
     let isShare: Int
-    let imageVideo: [ImageVideo]
+    let imageVideo: [ImageVideo]?
     let sharelink: String
     let isFollow, isBlock, isMute, commentPer: Int
     let tagPer, mentionPer: Int

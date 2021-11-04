@@ -19,6 +19,76 @@ class ApiRequestModel{
     
 }
 
+class PostListByUserIdRequest:ApiRequestModel{
+   
+    var id:String?
+    var page:Int?
+    
+    
+    init(_user_id:String, _page:Int) {
+        
+        self.id = _user_id
+        self.page = _page
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["id":self.id ?? "",
+                "page":self.page ?? 0]
+        
+    }
+    
+}
+class CommunityRequest:ApiRequestModel{
+   
+    var userid:String?
+    var page:Int?
+    
+    
+    init(_user_id:String, _page:Int) {
+        
+        self.userid = _user_id
+        self.page = _page
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["userid":self.userid ?? "",
+                "page":self.page ?? 0]
+        
+    }
+    
+}
+
+
+class TopProfileRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var page:Int?
+    
+    
+    init(_user_id:String, _page:Int) {
+        
+        self.user_id = _user_id
+        self.page = _page
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "page":self.page ?? 0]
+        
+    }
+    
+}
+
+
 class SearchRequest:ApiRequestModel{
    
     var user_id:String?
@@ -67,7 +137,7 @@ class AddPostRequest:ApiRequestModel{
     }
     
     
-     func toObjectString() -> [String:String]{
+  override   func toObject() -> [String:Any]{
         
         return ["id":self.id ?? "",
                 "user_id":self.user_id ?? "",
@@ -77,6 +147,16 @@ class AddPostRequest:ApiRequestModel{
                 "longitude":self.longitude ?? ""]
         
     }
+    func toObjectString() -> [String:String]{
+         
+         return ["id":self.id ?? "",
+                 "user_id":self.user_id ?? "",
+                 "message":self.message ?? "",
+                 "location":self.location ?? "",
+                 "latitude":self.latitude ?? "",
+                 "longitude":self.longitude ?? ""]
+         
+     }
     
 }
 
