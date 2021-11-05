@@ -97,7 +97,8 @@ class HomeViewController: MasterViewController {
     var arrayCommunity: [CommunityResponseDatum] = []
     var arrayMyPost:[GetPostbyuseridDatum] = []
     
-    
+    private var userID:String?
+
     
     override func viewDidLoad() {
         
@@ -107,12 +108,89 @@ class HomeViewController: MasterViewController {
         self.tableViewHome.rowHeight = UITableView.automaticDimension
         
         
+      
+        
+        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.callAllApis()
+        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+            
+            
+            self.userID = userData.id
+            self.callAllApis()
+
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
+        }
+        
+        
+    }
+    
+    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
+        
+        
+        let requestObj = LikePostRequest(_user_id: self.userID!, _notify_user_id: _notifyUserId, _post_id: _postId)
+        
+        
+        
+        ApiCallManager.shared.apiCall(request: requestObj, apiType: .LIKE_POST, responseType: LikePostResponse.self, requestMethod: .POST) { (results) in
+            
+            if results.status == 1 {
+                
+                
+                DispatchQueue.main.async {
+                
+                    self.apiCallCommunity()
+                    self.apiCallMyFeed()
+                }
+                
+                
+//                if results.like == 0 {
+//
+//                    print("Dislike comment action")
+//
+//                    DispatchQueue.main.async {
+//                        imgLike.image = UIImage(named: "like-empty")
+//                    }
+//
+//                }
+//                else {
+//
+//                    print("Like comment action")
+//
+//                    DispatchQueue.main.async {
+//
+//                        imgLike.image = UIImage(named: "like-filled")
+//                    }
+//
+//
+//
+//                }
+                
+                
+            }
+            else{
+                
+                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                
+            }
+            
+            
+            
+        } failureHandler: { (error) in
+
+            
+            self.showErrorMessage(error: error)
+            
+        }
+
+        
         
     }
     
@@ -293,12 +371,16 @@ class HomeViewController: MasterViewController {
     
     @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
 
-        print("\(gesture.view?.tag)")
-        print("\(gesture.view?.superview?.tag)")
         
+        var postID:String = ""
+        var notifyUserId:String = ""
+
         if gesture.view!.superview!.tag == 101{
         
             let postObj = self.arrayCommunity[gesture.view!.tag]
+            postID = postObj.postid
+            notifyUserId = postObj.userID
+
             print("post id - \(postObj.postid)")
             
         }
@@ -306,19 +388,23 @@ class HomeViewController: MasterViewController {
             
             
             let postObj = self.arrayMyPost[gesture.view!.tag]
+            postID = postObj.postid
+            notifyUserId = postObj.userID
+
             print("post id - \(postObj.postid)")
         }
         
+        
+        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!)
+        
+       
         
     }
     @objc func commentImageViewTapGesture(gesture: UITapGestureRecognizer) {
 
         
-        print("\(gesture.view?.tag)")
-        print("\(gesture.view?.superview?.tag)")
-
-        
         var postID:String = ""
+        var notifyUserId:String = ""
         
         
         if gesture.view!.superview!.tag == 101{
@@ -326,6 +412,8 @@ class HomeViewController: MasterViewController {
             let postObj = self.arrayCommunity[gesture.view!.tag]
             
             postID = postObj.postid
+            notifyUserId = postObj.userID
+            
             print("post id - \(postObj.postid)")
             
         }
@@ -334,10 +422,12 @@ class HomeViewController: MasterViewController {
             
             let postObj = self.arrayMyPost[gesture.view!.tag]
             postID = postObj.postid
+            notifyUserId = postObj.userID
             print("post id - \(postObj.postid)")
         }
         
-        self.presentCommentScreen(postId: postID)
+        
+        self.pushCommentScreen(postId: postID, notifyUserId: notifyUserId)
         
         
         
@@ -345,10 +435,6 @@ class HomeViewController: MasterViewController {
     @objc func shareImageViewTapGesture(gesture: UITapGestureRecognizer) {
 
         
-        
-        print("\(gesture.view?.tag)")
-        print("\(gesture.view?.superview?.tag)")
-        
         if gesture.view!.superview!.tag == 101{
         
             let postObj = self.arrayCommunity[gesture.view!.tag]
@@ -361,6 +447,37 @@ class HomeViewController: MasterViewController {
             let postObj = self.arrayMyPost[gesture.view!.tag]
             print("post id - \(postObj.postid)")
         }
+        
+        
+    }
+    
+    @objc func profilePicImageViewTapGesture(gesture:UITapGestureRecognizer){
+        
+        
+        var profileUserId:String = ""
+        
+        
+        if gesture.view!.superview!.tag == 101{
+        
+            let postObj = self.arrayCommunity[gesture.view!.tag]
+            
+            profileUserId = postObj.userID
+            
+            print("post id - \(postObj.postid)")
+            
+        }
+        else if gesture.view!.superview!.tag == 102{
+            
+            
+            let postObj = self.arrayMyPost[gesture.view!.tag]
+            
+            profileUserId = postObj.userID
+            
+            print("post id - \(postObj.postid)")
+        }
+        
+        self.pushUserProfileScreen(userId: profileUserId, currentUserId:self.userID!)
+        
         
         
     }
@@ -564,11 +681,16 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.shareImageView.superview!.tag = tableView.tag
 
                 
+                cell.profilePicImageView.tag = indexPath.row
+
+                cell.profilePicImageView.superview!.tag = tableView.tag
+                
                 cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
                 cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
                 cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
 
-                
+                cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+
                 
                 if obj.isLike != 0 {
                     
@@ -611,6 +733,10 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
                 cell.postCaptionLabel.text = obj.message
                 
+                cell.likeCountLabel.text = obj.like
+                cell.commentCountLabel.text = obj.comment
+                cell.shareCountLabel.text = obj.share
+                
                 cell.heightPostImageView.constant = 0.0
                 
                 cell.likeImageView.tag = indexPath.row
@@ -621,9 +747,16 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.commentImageView.superview!.tag = tableView.tag
                 cell.shareImageView.superview!.tag = tableView.tag
 
+                cell.profilePicImageView.tag = indexPath.row
+
+                cell.profilePicImageView.superview!.tag = tableView.tag
+
+                
+                
                 cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
                 cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
                 cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+                cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
 
                 
                 
@@ -637,6 +770,8 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     cell.likeImageView.image = UIImage(named: "like-empty")
                     
                 }
+                
+                
                 if let imgVideo = obj.imageVideo{
                     
                     let imgObj = imgVideo[0]
@@ -648,6 +783,8 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     
                     
                 }
+                
+                
                 return cell
                 
                 
@@ -669,10 +806,13 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-    
+        if collectionView.tag == 101{
         
         return CGSize(width: Constants.screenWidth / 2.8, height: Constants.screenHeight/2.5)
+        }
         
+        return CGSize(width: Constants.screenWidth / 4.8, height: Constants.screenHeight/5.5)
+
         
         
         
@@ -683,8 +823,13 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
        
         
+        if collectionView.tag == 101{
+            
         return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 0)
-        
+            
+        }
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 0)
+
         
     }
     
@@ -755,7 +900,13 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             // cell.myLabel.text = self.items[indexPath.row] // The row value is the same as the index of the desired text within the array.
             // cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
             
-            cell.backgroundColor = .systemPink
+            
+            
+            cell.topProfileImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/dummy.png"), placeholderImage: UIImage(named: "placeholder.png"))
+
+            cell.topProfileImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 45.0/2.0)
+            
+           // cell.backgroundColor = .systemPink
             
             print("fggfgfg")
             return cell

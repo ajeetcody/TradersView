@@ -21,6 +21,57 @@ class ApiRequestModel{
     
 }
 
+class GetprofileByIdRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var id:String?
+    
+    
+    init(_user_id:String, _id:String) {
+        
+        self.user_id = _user_id
+        self.id = _id
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "id":self.id ?? ""]
+        
+        
+    }
+    
+}
+
+class LikePostRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var notify_user_id:String?
+    var post_id:String?
+    
+    init(_user_id:String, _notify_user_id:String, _post_id:String) {
+        
+        self.user_id = _user_id
+        self.notify_user_id = _notify_user_id
+        self.post_id = _post_id
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "notify_user_id":self.notify_user_id ?? "",
+                "post_id":self.post_id ?? ""]
+        
+        
+    }
+    
+}
+
 class AddCommentRequest:ApiRequestModel{
    
     var user_id:String?
@@ -42,7 +93,7 @@ class AddCommentRequest:ApiRequestModel{
         
         return ["user_id":self.user_id ?? "",
                 "notify_user_id":self.notify_user_id ?? "",
-                "post_id":self.post_id ?? 0, "comment":self.comment]
+                "post_id":self.post_id ?? "", "comment":self.comment ?? ""]
         
         
     }

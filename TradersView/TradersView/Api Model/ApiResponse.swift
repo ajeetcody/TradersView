@@ -28,6 +28,58 @@ import Foundation
 
 
 
+// MARK: - GetProfileByID
+struct GetProfileByIDResponse: Codable {
+    let data: GetProfileByIDDatum?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - GetProfileByIDDatum
+struct GetProfileByIDDatum: Codable {
+    let id, name, username, email: String?
+    let mobileNo: String?
+    let profileImg: String?
+    let coverImg: String?
+    let planname, planimg, followers, following: String?
+    let favouriteProfile, post: Int?
+    let accuracy: String?
+    let isFollow: Int?
+    let isPolice, isPremium: String?
+    let isBlock, isMute: Int?
+    let acType, commentPerType, tagPerType, mentionPerType: String?
+    let dateTime: String?
+    let isFavPro: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, username, email
+        case mobileNo = "mobile_no"
+        case profileImg = "profile_img"
+        case coverImg = "cover_img"
+        case planname, planimg, followers, following
+        case favouriteProfile = "favourite_profile"
+        case post, accuracy
+        case isFollow = "is_follow"
+        case isPolice = "is_police"
+        case isPremium = "is_premium"
+        case isBlock = "is_block"
+        case isMute = "is_mute"
+        case acType = "ac_type"
+        case commentPerType = "comment_per_type"
+        case tagPerType = "tag_per_type"
+        case mentionPerType = "mention_per_type"
+        case dateTime = "date_time"
+        case isFavPro = "is_fav_pro"
+    }
+}
+
+
+// MARK: - LikePostResponse
+struct LikePostResponse: Codable {
+    let status, like: Int
+    let messages: String
+}
+
 
 
 // MARK: - AddCommentResponse

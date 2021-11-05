@@ -128,13 +128,11 @@ class LoginViewController: MasterViewController {
                 
                 DispatchQueue.main.async {
                     
-                    self.showAlertPopupWithMessageWithHandler(msg: "Login Successfully!!") {
-                        
+                   
                         self.showTabbarController()
                         self.dismiss(animated: true, completion: nil)
                         
-                    }
-                    
+                  
                 }
                 
                 

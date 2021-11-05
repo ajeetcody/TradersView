@@ -23,7 +23,9 @@ class SplashViewController: MasterViewController {
         
         if UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) != nil{
             
-            self.appDelegate.loginResponse = UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) as! LoginResponse
+            print("Login data response ----")
+            
+            self.appDelegate.loginResponse = UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) as? LoginResponse
             
         }
     

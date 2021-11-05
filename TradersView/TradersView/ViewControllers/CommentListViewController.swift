@@ -31,6 +31,9 @@ class CommentListViewController: MasterViewController {
     private var arrayCommentList:[CommentListByPostIDDatum]?
     
     var postId:String?
+    var notifyToUserOfPost:String?
+    
+    
     
     private var userID:String?
     
@@ -44,6 +47,8 @@ class CommentListViewController: MasterViewController {
         
         self.commentTextView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 5.0)
         self.commentTextView.leftSpace()
+        
+        self.tableViewComment.isHidden = true
         
         if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
             
@@ -66,7 +71,6 @@ class CommentListViewController: MasterViewController {
     
     func getCommentByPostId(){
         
-        print("Post id -\(self.postId)")
         if let _postId = self.postId{
             
             
@@ -84,6 +88,7 @@ class CommentListViewController: MasterViewController {
                         
                         DispatchQueue.main.async {
                             
+                            self.tableViewComment.isHidden = false
                             self.tableViewComment.reloadData()
                             
                         }
@@ -91,8 +96,8 @@ class CommentListViewController: MasterViewController {
                     }
                     else{
                         
-                        
-                        self.showAlertPopupWithMessage(msg: results.messages)
+                        self.tableViewComment.isHidden = true
+                        //self.showAlertPopupWithMessage(msg: results.messages)
                         
                         
                     }
@@ -200,9 +205,16 @@ class CommentListViewController: MasterViewController {
             
             
             if results.status == 1 {
+                DispatchQueue.main.async {
+                    
                 
-                
+                self.commentTextView.text = ""
+                self.commentTextView.resignFirstResponder()
+                    
+                }
                 self.getCommentByPostId()
+                    
+                    
                 
             }
             else {
@@ -247,7 +259,7 @@ class CommentListViewController: MasterViewController {
         let obj = self.arrayCommentList![gesture.view!.tag]
 
         
-        self.pushUserProfileScreen(userId: obj.userID)
+        self.pushUserProfileScreen(userId: obj.userID, currentUserId:self.userID!)
         
         
         
@@ -257,14 +269,30 @@ class CommentListViewController: MasterViewController {
     
     @IBAction func cancelButtonAction(_ sender: Any) {
         
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
         
     }
     
     @IBAction func sendButtonAction(_ sender: Any) {
         
+        if self.commentTextView.text?.trimmingCharacters(in: .whitespaces).count == 0 {
+
+            return
+            
+        }
         
-        self.addCommentByUserId(_commentStr: self.commentTextView.text, _notifyUserId: <#T##String#>, _postId: self.postId)
+        
+        if let _postId = self.postId, let _notifyUserId = self.notifyToUserOfPost{
+
+            self.addCommentByUserId(_commentStr: self.commentTextView.text, _notifyUserId: _notifyUserId, _postId: _postId)
+        
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "Important data is not available")
+            
+        }
+        
         
         
     }

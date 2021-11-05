@@ -27,12 +27,16 @@ class SearchViewController: MasterViewController {
     var searchTextStr:String = ""
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.tableViewSearch.isHidden = true
+
     }
     
     func callSearchApi(){
+        
+        
         
         if self.searchTextStr.trimmingCharacters(in: .whitespaces).count == 0 {
             
@@ -58,9 +62,12 @@ class SearchViewController: MasterViewController {
                         
                         self.searchResult = data
                       
+                        
+                        self.tableViewSearch.isHidden = false
                         DispatchQueue.main.async {
                         
                             self.tableViewSearch.reloadData()
+                            
                         }
                         
                         
@@ -68,6 +75,7 @@ class SearchViewController: MasterViewController {
                     }
                     else{
                         
+                        self.tableViewSearch.isHidden = true
                         self.searchResult?.removeAll()
                         self.tableViewSearch.reloadData()
 
@@ -78,6 +86,8 @@ class SearchViewController: MasterViewController {
                 }
                 else{
                     
+                    
+                    self.tableViewSearch.isHidden = true
                     self.searchResult?.removeAll()
                     DispatchQueue.main.async {
                     
@@ -91,6 +101,7 @@ class SearchViewController: MasterViewController {
                 
             } failureHandler: { (error) in
                 
+                self.tableViewSearch.isHidden = true
                 self.showErrorMessage(error: error)
             }
 
@@ -109,6 +120,27 @@ class SearchViewController: MasterViewController {
     }
     
 
+    
+    @objc func profilePicImageViewTapGesture(gesture:UITapGestureRecognizer){
+        
+        
+        
+        let obj = self.searchResult![gesture.view!.tag]
+            
+        
+        
+        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+
+        
+            self.pushUserProfileScreen(userId: obj.userid, currentUserId: userData.id)
+            
+        }
+            
+            
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -130,10 +162,15 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource{
         let cell:SearchCell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as! SearchCell
         
         let searchUser = self.searchResult![indexPath.row]
+        
         print("imageURL - \(searchUser.profileImg)")
         cell.profileImageView.sd_setImage(with: URL(string: "\(searchUser.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
         cell.profileImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
         
+        cell.profileImageView.tag = indexPath.row
+        
+        cell.profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+
         cell.userNameLabel.text = searchUser.name.capitalized
         return cell
         
