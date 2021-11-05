@@ -7,18 +7,62 @@
 
 import UIKit
 
-class UserProfileViewController: MasterViewController {
+class CellMyPost:UITableViewCell{
 
     
+}
+
+
+class CellMyTreds:UITableViewCell{
+
     
+}
+
+class CellUserProfileDetails:UITableViewCell{
+    
+    @IBOutlet weak var coverImageView: UIImageView!
+    
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var accuracyLabel: UILabel!
+    
+    
+    @IBOutlet weak var followingLabel: UILabel!
+    
+    @IBOutlet weak var followersLabel: UILabel!
+    
+    
+    @IBOutlet weak var postLabel: UILabel!
+    
+}
+class UserProfileViewController: MasterViewController {
+    
+    
+    
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var userNameHeaderLabel: UILabel!
-   
+    
     var userIDOfProfile:String = ""
     var currentUserId:String = ""
     
     
+    var arrayMyPost:[GetPostListByUserIdResponseDatum] = []
+    var arrayMyTreds:[GetPostListByUserIdResponseDatum] = []
+
+
+    var userProfileObj:GetProfileByIDDatum?
+    
+    
+    @IBOutlet weak var tableViewUserProfile: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableViewUserProfile.estimatedRowHeight = 88.0
+        self.tableViewUserProfile.rowHeight = UITableView.automaticDimension
 
         // Do any additional setup after loading the view.
     }
@@ -26,7 +70,33 @@ class UserProfileViewController: MasterViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         
-        self.callApiToFetchUserProfile()
+        if self.currentUserId.count == 0{
+            
+            self.cancelButton.isHidden = true
+            
+            if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+                
+                
+                self.currentUserId = userData.id
+                self.userIDOfProfile = userData.id
+                self.callApiToFetchUserProfile()
+                self.apiCallMyPost()
+
+            }
+            else{
+                
+                self.showAlertPopupWithMessage(msg: "User Data is not available")
+            }
+            
+            
+        }
+        else{
+            self.cancelButton.isHidden = false
+            
+            self.callApiToFetchUserProfile()
+            self.apiCallMyPost()
+            
+        }
         
         
     }
@@ -35,6 +105,47 @@ class UserProfileViewController: MasterViewController {
     @IBAction func cancelButtonAction(_ sender: Any) {
         
         self.navigationController?.popViewController(animated: true)
+        
+        
+    }
+    
+    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
+        
+        
+        let requestObj = LikePostRequest(_user_id: self.currentUserId, _notify_user_id: self.userIDOfProfile, _post_id: _postId)
+        
+        
+        
+        ApiCallManager.shared.apiCall(request: requestObj, apiType: .LIKE_POST, responseType: LikePostResponse.self, requestMethod: .POST) { (results) in
+            
+            if results.status == 1 {
+                
+                
+                DispatchQueue.main.async {
+                
+                    self.apiCallMyPost()
+                    //self.apiCallMyPost()
+                }
+                
+
+                
+            }
+            else{
+                
+                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                
+            }
+            
+            
+            
+        } failureHandler: { (error) in
+
+            
+            self.showErrorMessage(error: error)
+            
+        }
+
         
         
     }
@@ -51,8 +162,14 @@ class UserProfileViewController: MasterViewController {
                 
                 if let userData = results.data{
                     
-                    DispatchQueue.main.async {
+                    self.userProfileObj = userData
                     
+                    
+                    
+                    DispatchQueue.main.async {
+                        
+                        self.tableViewUserProfile.reloadData()
+                        
                         self.userNameHeaderLabel.text = userData.name?.capitalized
                         
                     }
@@ -94,15 +211,478 @@ class UserProfileViewController: MasterViewController {
         
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func apiCallMyPost(){
+        
+        
+       
+        let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: 0)
+        
+        
+        ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
+            
+            
+            if results.status == 1{
+                
+                
+                if let data = results.data{
+                    
+                    self.arrayMyPost = data
+                    
+                }
+                else{
+                    
+                    self.arrayMyPost.removeAll()
+                    
+                    
+                }
+                
+                DispatchQueue.main.async {
+                    
+                    self.tableViewUserProfile.reloadData()
+                }
+            }
+            else {
+                
+                
+                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                
+            }
+            
+            
+        } failureHandler: { (error) in
+            
+            self.showErrorMessage(error: error)
+            
+        }
+        
     }
-    */
+    
+    @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
 
+        
+        var postID:String = ""
+        var notifyUserId:String = ""
+
+        if gesture.view!.superview!.tag == 101{
+        
+            let postObj = self.arrayMyPost[gesture.view!.tag]
+            postID = postObj.postid
+            notifyUserId = postObj.userID
+
+            print("post id - \(postObj.postid)")
+            
+        }
+        else if gesture.view!.superview!.tag == 102{
+            
+            
+            let postObj = self.arrayMyTreds[gesture.view!.tag]
+            postID = postObj.postid
+            notifyUserId = postObj.userID
+
+            print("post id - \(postObj.postid)")
+        }
+        
+        
+        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!)
+        
+       
+        
+    }
+    @objc func commentImageViewTapGesture(gesture: UITapGestureRecognizer) {
+
+        
+        var postID:String = ""
+        var notifyUserId:String = ""
+        
+        
+        if gesture.view!.superview!.tag == 101{
+        
+            let postObj = self.arrayMyPost[gesture.view!.tag]
+            
+            postID = postObj.postid
+            notifyUserId = postObj.userID
+            
+            print("post id - \(postObj.postid)")
+            
+        }
+        else if gesture.view!.superview!.tag == 102{
+            
+            
+            let postObj = self.arrayMyTreds[gesture.view!.tag]
+            postID = postObj.postid
+            notifyUserId = postObj.userID
+            print("post id - \(postObj.postid)")
+        }
+        
+        
+        self.pushCommentScreen(postId: postID, notifyUserId: notifyUserId)
+        
+        
+        
+    }
+    @objc func shareImageViewTapGesture(gesture: UITapGestureRecognizer) {
+
+        
+        if gesture.view!.superview!.tag == 101{
+        
+            let postObj = self.arrayMyPost[gesture.view!.tag]
+            print("post id - \(postObj.postid)")
+            
+        }
+        else if gesture.view!.superview!.tag == 102{
+            
+            
+            let postObj = self.arrayMyTreds[gesture.view!.tag]
+            print("post id - \(postObj.postid)")
+        }
+        
+        
+    }
+    
+    @objc func profilePicImageViewTapGesture(gesture:UITapGestureRecognizer){
+        
+        
+        var profileUserId:String = ""
+        
+        
+        if gesture.view!.superview!.tag == 101{
+        
+            let postObj = self.arrayMyPost[gesture.view!.tag]
+            
+            profileUserId = postObj.userID
+            
+            print("post id - \(postObj.postid)")
+            
+        }
+        else if gesture.view!.superview!.tag == 102{
+            
+            
+            let postObj = self.arrayMyTreds[gesture.view!.tag]
+            
+            profileUserId = postObj.userID
+            
+            print("post id - \(postObj.postid)")
+        }
+        
+        self.pushUserProfileScreen(userId: profileUserId, currentUserId:self.currentUserId)
+        
+        
+        
+    }
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+}
+extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        
+
+        return UITableView.automaticDimension
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        
+        if section == 1 {
+            
+            return 40.0
+        }
+        
+        return 0.0
+        
+        
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
+        let sectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: 40))
+        
+        sectionHeaderView.backgroundColor = .white
+        let headingLabel = UILabel(frame: CGRect(x: 15, y: 0, width: Constants.screenWidth, height: 40))
+        
+        headingLabel.text = "Post"
+        headingLabel.textColor = .black
+        sectionHeaderView.addSubview(headingLabel)
+        
+        return sectionHeaderView
+        
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        if tableView.tag == 100 {
+            
+            return 2
+            
+        }
+        
+        return 1
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if tableView.tag == 100 {
+            
+
+            if section == 0 {
+                
+                
+                if self.userProfileObj != nil {
+                    
+                    return 1
+                }
+                
+                return 0
+            }
+            else if section == 1 {
+                
+                
+                return 1
+                
+                
+            }
+            
+        }
+        else if tableView.tag == 101 {
+            
+            print("\(#function) - arrayMyPost - \(self.arrayMyPost.count)")
+            return  self.arrayMyPost.count
+            
+            
+        }
+        else if tableView.tag == 102 {
+            
+            print("\(#function) - arrayMyTreds - \(self.arrayMyTreds.count)")
+            return  self.arrayMyTreds.count
+            
+            
+        }
+        
+        return 0
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if tableView.tag == 100{
+            
+            
+            
+            if indexPath.section == 0 {
+                
+                
+                let cell:CellUserProfileDetails = tableView.dequeueReusableCell(withIdentifier: "CellUserProfileDetails") as! CellUserProfileDetails
+                
+                
+                cell.nameLabel.text = self.userProfileObj?.name?.capitalized
+                
+                cell.accuracyLabel.text = self.userProfileObj?.accuracy
+                cell.followingLabel.text = self.userProfileObj?.following
+                cell.followersLabel.text = self.userProfileObj?.followers
+                cell.postLabel.text =  "\(self.userProfileObj?.post ?? 0)"
+                
+                cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: ""))
+                
+                cell.profileImageView.changeBorder(width: 2.0, borderColor: .darkGray, cornerRadius: 45.0)
+                
+                cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: ""))
+                
+                cell.coverImageView.contentMode = .scaleToFill
+                
+                return cell
+                
+                
+                
+            }
+            
+            else if indexPath.section == 1 {
+                
+                
+                let cell:CellFeedAndCommunity = tableView.dequeueReusableCell(withIdentifier: "CellFeedAndCommunity") as! CellFeedAndCommunity
+                
+                cell.tableViewCommunity.reloadData()
+                cell.tableViewMyFeed.reloadData()
+                
+                cell.tableViewCommunity.estimatedRowHeight = 88.0
+                cell.tableViewCommunity.rowHeight = UITableView.automaticDimension
+
+                
+                cell.tableViewMyFeed.estimatedRowHeight = 88.0
+                cell.tableViewMyFeed.rowHeight = UITableView.automaticDimension
+
+                
+                
+                return cell
+                
+                
+            }
+            
+        }
+        else if tableView.tag == 101{
+            
+            let cell:CellMyPost = tableView.dequeueReusableCell(withIdentifier: "CellMyPost") as! CellMyPost
+            
+            let obj = self.arrayMyPost[indexPath.row]
+            
+            //cell.nameLabel.text = obj.username
+            
+            print("userName - \(obj.username) ----")
+//            cell.dateLabel.text = obj.date
+//            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+//            cell.postCaptionLabel.text = obj.message
+//
+//           // cell.heightPostImageView.constant = 0.0
+//
+//            cell.likeCountLabel.text = obj.like
+//            cell.commentCountLabel.text = obj.comment
+//            cell.shareCountLabel.text = obj.share
+//
+//            cell.likeImageView.tag = indexPath.row
+//            cell.commentImageView.tag = indexPath.row
+//            cell.shareImageView.tag = indexPath.row
+//
+//            cell.likeImageView.superview!.tag = tableView.tag
+//            cell.commentImageView.superview!.tag = tableView.tag
+//            cell.shareImageView.superview!.tag = tableView.tag
+//
+//
+//            cell.profilePicImageView.tag = indexPath.row
+//
+//            cell.profilePicImageView.superview!.tag = tableView.tag
+//
+//            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
+//            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
+//            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+//
+//            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+//
+//
+//            if obj.isLike != 0 {
+//
+//
+//                cell.likeImageView.image = UIImage(named: "like-filled")
+//            }
+//            else{
+//
+//                cell.likeImageView.image = UIImage(named: "like-empty")
+//
+//            }
+//
+//
+//            if let imgVideo = obj.imageVideo{
+//
+//                let imgObj = imgVideo[0]
+//
+//                let imgUrl = imgObj.image
+//
+//
+//                cell.postImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/post/442601635179441.png"), placeholderImage: UIImage(named: ""))
+//               // cell.heightPostImageView.constant = 130.0
+//
+//
+//            }
+//
+//            print("*********  \(indexPath.row)")
+//
+//           // cell.backgroundColor = .red
+//            cell.contentView.backgroundColor = .yellow
+            
+            
+            print("sdfsfsdffd dfds fdsf fd")
+            return cell
+            
+            
+        }
+        else if tableView.tag == 102{
+            
+            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostMyFeed") as! CellPost
+            
+            
+            
+            let obj = self.arrayMyTreds[indexPath.row]
+            
+            cell.nameLabel.text = obj.username
+            cell.dateLabel.text = obj.date
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.postCaptionLabel.text = obj.message
+            
+            cell.likeCountLabel.text = obj.like
+            cell.commentCountLabel.text = obj.comment
+            cell.shareCountLabel.text = obj.share
+            
+            cell.heightPostImageView.constant = 0.0
+            
+            cell.likeImageView.tag = indexPath.row
+            cell.commentImageView.tag = indexPath.row
+            cell.shareImageView.tag = indexPath.row
+            
+            cell.likeImageView.superview!.tag = tableView.tag
+            cell.commentImageView.superview!.tag = tableView.tag
+            cell.shareImageView.superview!.tag = tableView.tag
+            
+            cell.profilePicImageView.tag = indexPath.row
+            
+            cell.profilePicImageView.superview!.tag = tableView.tag
+            
+            
+            
+            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
+            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
+            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+            
+            
+            
+            if obj.isLike != 0 {
+                
+                
+                cell.likeImageView.image = UIImage(named: "like-filled")
+            }
+            else{
+                
+                cell.likeImageView.image = UIImage(named: "like-empty")
+                
+            }
+            
+            
+            if let imgVideo = obj.imageVideo{
+                
+                let imgObj = imgVideo[0]
+                
+                let imgUrl = imgObj.image
+                
+                cell.postImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/post/442601635179441.png"), placeholderImage: UIImage(named: ""))
+                cell.heightPostImageView.constant = 130.0
+                
+                
+            }
+            
+            
+            return cell
+            
+            
+            
+        }
+        
+        return UITableViewCell()
+    }
+    
+    
 }

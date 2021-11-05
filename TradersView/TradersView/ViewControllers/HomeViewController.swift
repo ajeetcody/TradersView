@@ -95,7 +95,7 @@ class HomeViewController: MasterViewController {
     var topProfile = ["Ajit", "Amit","Rakesh", "Ramesh", "Kapil", "chintoo", "Sourach", "Ravi"]
    
     var arrayCommunity: [CommunityResponseDatum] = []
-    var arrayMyPost:[GetPostbyuseridDatum] = []
+    var arrayMyPost:[GetPostListByUserIdResponseDatum] = []
     
     private var userID:String?
 
@@ -131,6 +131,8 @@ class HomeViewController: MasterViewController {
         
     }
     
+    
+    
     func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
         
         
@@ -149,29 +151,7 @@ class HomeViewController: MasterViewController {
                     self.apiCallMyFeed()
                 }
                 
-                
-//                if results.like == 0 {
-//
-//                    print("Dislike comment action")
-//
-//                    DispatchQueue.main.async {
-//                        imgLike.image = UIImage(named: "like-empty")
-//                    }
-//
-//                }
-//                else {
-//
-//                    print("Like comment action")
-//
-//                    DispatchQueue.main.async {
-//
-//                        imgLike.image = UIImage(named: "like-filled")
-//                    }
-//
-//
-//
-//                }
-                
+
                 
             }
             else{
@@ -259,16 +239,9 @@ class HomeViewController: MasterViewController {
     func apiCallCommunity(){
         
         
-        if self.fetchCurrentUserData() == nil {
-            
-         return
-            
-        }
+     
         
-        
-        let userData = self.fetchCurrentUserData()
-        
-        let request = CommunityRequest(_user_id: userData!.id, _page: 0)
+        let request = CommunityRequest(_user_id: self.userID!, _page: 0)
         
         ApiCallManager.shared.apiCall(request: request, apiType: .COMMUNITY, responseType: CommunityResponse.self, requestMethod: .POST) { (results) in
             
@@ -317,19 +290,11 @@ class HomeViewController: MasterViewController {
     func apiCallMyFeed(){
         
         
-        if self.fetchCurrentUserData() == nil {
-            
-            return
-            
-        }
+      
+        let request = GetPostListByUserIdRequest(_id: self.userID!, _page: 0)
         
         
-        let userData = self.fetchCurrentUserData()
-        
-        let request = PostListByUserIdRequest(_user_id: userData!.id, _page: 0)
-        
-        
-        ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostbyuserid.self, requestMethod: .POST) { (results) in
+        ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
             
             
             if results.status == 1{

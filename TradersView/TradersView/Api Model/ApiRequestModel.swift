@@ -152,16 +152,17 @@ class GetCommentByPostIdRequest:ApiRequestModel{
     
 }
 
-class PostListByUserIdRequest:ApiRequestModel{
+class GetPostListByUserIdRequest:ApiRequestModel{
    
     var id:String?
     var page:Int?
     
     
-    init(_user_id:String, _page:Int) {
+    init(_id:String, _page:Int) {
         
-        self.id = _user_id
+        self.id = _id
         self.page = _page
+        
         
     }
     

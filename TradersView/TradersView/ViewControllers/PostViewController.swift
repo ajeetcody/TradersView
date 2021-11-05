@@ -17,6 +17,8 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
     @IBOutlet weak var imgButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
+    private var userID:String?
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -28,6 +30,18 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         self.postTextview.becomeFirstResponder()
         
         self.postTextview.leftSpace()
+        
+        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+            
+            
+            self.userID = userData.id
+
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
+        }
+        
 
     }
     
@@ -35,20 +49,11 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
     @IBAction func postButtonAction(_ sender: Any) {
         
         print("\(#function)")
-        if self.fetchCurrentUserData() == nil {
-            
-         return
-            
-        }
+      
         
+      
         
-        // self.fetchCurrentUserData()?.id
-        
-        guard let userID = self.fetchCurrentUserData()?.id else {
-            return
-        }
-        
-        let requestPost = AddPostRequest(_id: "", _user_id:userID , _message: self.postTextview.text, _location: "Indore", _latitude: "22.2332", _longitude: "75.2323")
+        let requestPost = AddPostRequest(_id: "", _user_id:self.userID! , _message: self.postTextview.text, _location: "Indore", _latitude: "22.2332", _longitude: "75.2323")
         
         
         if let postImage = self.postImageView.image{

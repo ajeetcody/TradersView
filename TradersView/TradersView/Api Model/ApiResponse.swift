@@ -482,14 +482,14 @@ struct Blockuser: Codable {
 
 /// get_postbyuserid
 // MARK: - GetPostbyuserid
-struct GetPostbyuserid: Codable {
-    let data: [GetPostbyuseridDatum]?
+struct GetPostListByUserIdResponse: Codable {
+    let data: [GetPostListByUserIdResponseDatum]?
     let status: Int
     let messages: String
 }
 
 // MARK: - GetPostbyuseridDatum
-struct GetPostbyuseridDatum: Codable {
+struct GetPostListByUserIdResponseDatum: Codable {
     let postid, userID, username: String
     let profileImg: String
     let date, message, like: String

@@ -103,7 +103,7 @@ class MyTabbarController: UITabBarController {
             
             if index == 0{
                 
-                tabViewCustom.backgroundColor = .blue
+                tabViewCustom.backgroundColor = .black
                 
             }
             else{
@@ -194,7 +194,7 @@ class MyTabbarController: UITabBarController {
             
             if view.tag == tabIndex{
                 
-                view.backgroundColor = .blue
+                view.backgroundColor = .black
                 
             }
             else{
