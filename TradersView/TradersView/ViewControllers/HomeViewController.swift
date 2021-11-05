@@ -308,6 +308,8 @@ class HomeViewController: MasterViewController {
             let postObj = self.arrayMyPost[gesture.view!.tag]
             print("post id - \(postObj.postid)")
         }
+        
+        
     }
     @objc func commentImageViewTapGesture(gesture: UITapGestureRecognizer) {
 
@@ -315,9 +317,15 @@ class HomeViewController: MasterViewController {
         print("\(gesture.view?.tag)")
         print("\(gesture.view?.superview?.tag)")
 
+        
+        var postID:String = ""
+        
+        
         if gesture.view!.superview!.tag == 101{
         
             let postObj = self.arrayCommunity[gesture.view!.tag]
+            
+            postID = postObj.postid
             print("post id - \(postObj.postid)")
             
         }
@@ -325,8 +333,12 @@ class HomeViewController: MasterViewController {
             
             
             let postObj = self.arrayMyPost[gesture.view!.tag]
+            postID = postObj.postid
             print("post id - \(postObj.postid)")
         }
+        
+        self.presentCommentScreen(postId: postID)
+        
         
         
     }
@@ -349,6 +361,8 @@ class HomeViewController: MasterViewController {
             let postObj = self.arrayMyPost[gesture.view!.tag]
             print("post id - \(postObj.postid)")
         }
+        
+        
     }
     
     

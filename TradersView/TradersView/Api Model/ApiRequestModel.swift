@@ -7,6 +7,8 @@
 
 //319
 
+// 349
+
 import Foundation
 
 class ApiRequestModel{
@@ -16,6 +18,86 @@ class ApiRequestModel{
         return [:]
     }
     
+    
+}
+
+class AddCommentRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var notify_user_id:String?
+    var post_id:String?
+    var comment:String?
+    
+    init(_user_id:String, _notify_user_id:String, _post_id:String, _comment:String) {
+        
+        self.user_id = _user_id
+        self.notify_user_id = _notify_user_id
+        self.post_id = _post_id
+        self.comment = _comment
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "notify_user_id":self.notify_user_id ?? "",
+                "post_id":self.post_id ?? 0, "comment":self.comment]
+        
+        
+    }
+    
+}
+
+class LikeCommentRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var notify_user_id:String?
+    var comment_id:String?
+    
+    
+    init(_user_id:String, _notify_user_id:String, _comment_id:String) {
+        
+        self.user_id = _user_id
+        self.notify_user_id = _notify_user_id
+        self.comment_id = _comment_id
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "notify_user_id":self.notify_user_id ?? "",
+                "comment_id":self.comment_id ?? 0]
+        
+    }
+    
+}
+
+class GetCommentByPostIdRequest:ApiRequestModel{
+   
+    var userid:String?
+    var postid:String?
+    var page:Int?
+    
+    
+    init(_user_id:String, _postid:String, _page:Int) {
+        
+        self.userid = _user_id
+        self.postid = _postid
+        self.page = _page
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["userid":self.userid ?? "",
+                "postid":self.postid ?? "",
+                "page":self.page ?? 0]
+        
+    }
     
 }
 

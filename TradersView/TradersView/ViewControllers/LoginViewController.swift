@@ -116,7 +116,10 @@ class LoginViewController: MasterViewController {
             let loginResponse:LoginResponse = results
             
             self.appDelegate.loginResponse = loginResponse
+            
             if loginResponse.userdata == nil {
+                
+                UserDefaults.standard.setValue(loginResponse, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
                 
                 self.showAlertPopupWithMessage(msg: loginResponse.messages)
                 

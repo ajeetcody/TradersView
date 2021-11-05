@@ -60,6 +60,28 @@ class MasterViewController: UIViewController {
     //MARK:- Viewcontroller Navigation ----
     
     
+    func presentCommentScreen(postId:String){
+        
+        
+        print("post id before showing the comment screen - \(postId)")
+        DispatchQueue.main.async {
+        
+        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+            let vc:CommentListViewController = dashBoardStoryBoard.instantiateViewController(identifier: "CommentListViewController")
+            
+            vc.postId = postId
+        self.present(vc, animated: true, completion: nil)
+            
+        
+        }
+        
+    }
+    
+    func pushUserProfileScreen(userId:String){
+        
+        self.showAlertPopupWithMessage(msg: "We are working on this action")
+    }
+    
     
     func showTabbarController(){
        

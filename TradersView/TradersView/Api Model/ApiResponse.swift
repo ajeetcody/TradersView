@@ -28,7 +28,57 @@ import Foundation
 
 
 
-/// like_comment
+
+
+// MARK: - AddCommentResponse
+struct AddCommentResponse: Codable {
+    let status: Int
+    let messages: String
+}
+
+// MARK: - LikeCommenActionResponse
+struct LikeCommentActionResponse: Codable {
+    let status, isLike: Int
+    let messages: String
+
+    enum CodingKeys: String, CodingKey {
+        case status
+        case isLike = "is_like"
+        case messages
+    }
+}
+
+
+// MARK: - CommentListByPostID
+struct CommentListByPostIDResponse: Codable {
+    let data: [CommentListByPostIDDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct CommentListByPostIDDatum: Codable {
+    let commentid, userID, postID, comment: String
+    let commentLike, commentID, name: String
+    let profileImg: String
+    let date: String
+    let isLike: Int
+
+    enum CodingKeys: String, CodingKey {
+        case commentid
+        case userID = "user_id"
+        case postID = "post_id"
+        case comment
+        case commentLike = "comment_like"
+        case commentID = "comment_id"
+        case name
+        case profileImg = "profile_img"
+        case date
+        case isLike = "is_like"
+    }
+}
+
+
 
 // MARK: - SearchResponse
 struct SearchResponse: Codable {

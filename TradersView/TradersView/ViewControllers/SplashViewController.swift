@@ -23,11 +23,8 @@ class SplashViewController: MasterViewController {
         
         if UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) != nil{
             
-            let data:Data = UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) as! Data
+            self.appDelegate.loginResponse = UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) as! LoginResponse
             
-            let parseManager:ParseManager = ParseManager()
-            parseManager.delegate = self
-            parseManager.parse(data: data , apiType: .LOGIN)
         }
     
         
@@ -46,38 +43,4 @@ class SplashViewController: MasterViewController {
     */
 
 }
-extension SplashViewController:ParseManagerDelegate{
-   
-    
-    func parseSuccessHandler(response: ResponseModel) {
-        
-        print("\(#function)")
-        
-        
-        
-        let loginResponse:LoginResponse = response as! LoginResponse
-        
-        if loginResponse.userdata == nil {
-            
-           // self.showAlertPopupWithMessage(msg: loginResponse.messages)
-            
-        }
-        else{
-            
-            self.appDelegate.loginResponse = loginResponse
-            self.showTabbarController()
-            
-        }
-        
-    }
-    func parseErrorHandler(error: Error) {
-        print("\(#function)")
-        self.showErrorMessage(error: error)
-    }
-    
-    func parseSomethingWentWrong() {
-        print("\(#function)")
-        self.showAlertSomethingWentWrong()
-        
-    }
-}
+

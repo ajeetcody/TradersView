@@ -257,7 +257,6 @@ class ApiCallManager{
             if(error == nil && data != nil && data?.count != 0){
                 do {
                     
-                    print(String(data: data!, encoding: .utf8))
                     let response = try JSONDecoder().decode(T.self, from: data!)
                     compilationHandler(response)
                     print(response)

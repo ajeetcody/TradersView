@@ -10,6 +10,7 @@
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
+		773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520B2735646D0016BF3E /* CommentListViewController.swift */; };
 		7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7742A4BC272FDEE70081F28E /* PostViewController.swift */; };
 		7742A4FF273037350081F28E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7742A4FE273037350081F28E /* HomeViewController.swift */; };
 		7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86227240B8300A81FAA /* ApiCallManager.swift */; };
@@ -41,6 +42,7 @@
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		773C520B2735646D0016BF3E /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
 		7742A4BC272FDEE70081F28E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		7742A4FE273037350081F28E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7747D86227240B8300A81FAA /* ApiCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCallManager.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				7742A4BC272FDEE70081F28E /* PostViewController.swift */,
 				7742A4FE273037350081F28E /* HomeViewController.swift */,
 				77AAD6142731CAF2001CE95A /* SearchViewController.swift */,
+				773C520B2735646D0016BF3E /* CommentListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
+				773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,
 				77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */,
