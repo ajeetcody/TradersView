@@ -14,4 +14,7 @@ pod 'FacebookCore'
 pod 'FacebookLogin'
 pod 'FacebookShare'
 
+pod 'Alamofire', '~> 5.4'
+
+
 end

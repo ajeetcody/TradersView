@@ -273,6 +273,17 @@ enum Image: Codable {
             try container.encode(x)
         }
     }
+    
+//    func getValueInteger()->Int{
+//        
+//        
+//    }
+//    
+//    func getValueString()->String{
+//        
+//        
+//        
+//    }
 }
 
 enum Imgid: Codable {

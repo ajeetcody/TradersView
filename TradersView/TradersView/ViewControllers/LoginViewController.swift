@@ -31,19 +31,31 @@ class LoginViewController: MasterViewController {
         super.viewDidLoad()
         
         
-        self.loginButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.loginButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
         
-        self.facebookButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.facebookButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
         
-        self.googleButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.googleButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
         
-        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
         
-        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
         
         
         self.emailIDTextfield.text = "ra168@gmail.com"
         self.passwordTextfield.text = "qwerty123"
+        
+        self.emailIDTextfield.setLeftPaddingPoints(10.0)
+        self.emailIDTextfield.setRightPaddingPoints(10.0)
+
+        
+        self.passwordTextfield.setLeftPaddingPoints(10.0)
+        self.passwordTextfield.setRightPaddingPoints(10.0)
+
+        
+        self.emailIDTextfield.clearButtonMode = .always
+        self.emailIDTextfield.clearButtonMode = .whileEditing
+
         
         //        self.emailIDTextfield.text = "kek@gmail.com"
         //        self.passwordTextfield.text = "123456"
@@ -112,29 +124,41 @@ class LoginViewController: MasterViewController {
             
             
             
+            if results.status == 0{
+                
+                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                return
+            }
             
             let loginResponse:LoginResponse = results
             
-            self.appDelegate.loginResponse = loginResponse
             
-            if loginResponse.userdata == nil {
+            if let userDataLogin = loginResponse.userdata?[0] {
                 
-                UserDefaults.standard.setValue(loginResponse, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
+             //   UserDefaults.standard.setValue(userDataLogin, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
                 
-                self.showAlertPopupWithMessage(msg: loginResponse.messages)
+               
+                let userDefaults = UserDefaults.standard
+                do {
+                    try userDefaults.setObject(userDataLogin, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
+                    self.appDelegate.loginResponseData = userDataLogin
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                DispatchQueue.main.async {
+                    
+                    
+                    self.showTabbarController(animated: true)
+                    self.dismiss(animated: true, completion: nil)
+                    
+                }
                 
             }
             else{
                 
-                DispatchQueue.main.async {
-                    
-                   
-                        self.showTabbarController()
-                        self.dismiss(animated: true, completion: nil)
-                        
-                  
-                }
-                
+                self.showAlertPopupWithMessage(msg: loginResponse.messages)
                 
             }
             
@@ -143,6 +167,28 @@ class LoginViewController: MasterViewController {
             
             self.showErrorMessage(error: error)
         }
+        
+        
+        
+    }
+    
+    
+    func archiveObjectLoginData(userDataLogin:LoginUserData){
+        
+        
+        do{
+            let objData = try NSKeyedArchiver.archivedData(withRootObject: userDataLogin, requiringSecureCoding: true)
+            UserDefaults.standard.set(objData, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
+            UserDefaults.standard.synchronize()
+            
+            print("Archive Success ----")
+
+        }catch (let error){
+            #if DEBUG
+                print("Failed to convert UIColor to Data : \(error.localizedDescription)")
+            #endif
+        }
+
         
         
         

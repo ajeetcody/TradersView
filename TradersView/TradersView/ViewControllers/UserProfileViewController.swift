@@ -7,16 +7,7 @@
 
 import UIKit
 
-class CellMyPost:UITableViewCell{
 
-    
-}
-
-
-class CellMyTreds:UITableViewCell{
-
-    
-}
 
 class CellUserProfileDetails:UITableViewCell{
     
@@ -64,7 +55,20 @@ class UserProfileViewController: MasterViewController {
         self.tableViewUserProfile.estimatedRowHeight = 88.0
         self.tableViewUserProfile.rowHeight = UITableView.automaticDimension
 
-        // Do any additional setup after loading the view.
+
+        if self.navigationController?.viewControllers.count == 1{
+            
+            self.cancelButton.isHidden = true
+        }
+        else{
+            
+            self.cancelButton.isHidden = false
+            
+        }
+        
+        
+        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,15 +76,13 @@ class UserProfileViewController: MasterViewController {
         
         if self.currentUserId.count == 0{
             
-            self.cancelButton.isHidden = true
             
-            if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+            if  let userData:LoginUserData = self.appDelegate.loginResponseData {
                 
                 
                 self.currentUserId = userData.id
                 self.userIDOfProfile = userData.id
                 self.callApiToFetchUserProfile()
-                self.apiCallMyPost()
 
             }
             else{
@@ -91,10 +93,8 @@ class UserProfileViewController: MasterViewController {
             
         }
         else{
-            self.cancelButton.isHidden = false
             
             self.callApiToFetchUserProfile()
-            self.apiCallMyPost()
             
         }
         
@@ -165,7 +165,8 @@ class UserProfileViewController: MasterViewController {
                     self.userProfileObj = userData
                     
                     
-                    
+                    self.apiCallMyPost()
+
                     DispatchQueue.main.async {
                         
                         self.tableViewUserProfile.reloadData()
@@ -372,6 +373,14 @@ class UserProfileViewController: MasterViewController {
         
     }
     
+    @objc func moreInfoButtonAction(_sender:UIButton){
+        
+        
+        print("\(_sender.tag)")
+        print("\(_sender.superview?.tag ?? 0)")
+        
+    }
+    
     /*
      // MARK: - Navigation
      
@@ -411,13 +420,13 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         
-        let sectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: 40))
+        let sectionHeaderView = UIView(frame: CGRect(x: 20, y: 0, width: Constants.screenWidth - 40, height: 40))
         
-        sectionHeaderView.backgroundColor = .white
-        let headingLabel = UILabel(frame: CGRect(x: 15, y: 0, width: Constants.screenWidth, height: 40))
+        sectionHeaderView.backgroundColor = .black
+        let headingLabel = UILabel(frame: CGRect(x: 25, y: 0, width: Constants.screenWidth, height: 40))
         
         headingLabel.text = "Post"
-        headingLabel.textColor = .black
+        headingLabel.textColor = .white
         sectionHeaderView.addSubview(headingLabel)
         
         return sectionHeaderView
@@ -517,6 +526,28 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let cell:CellFeedAndCommunity = tableView.dequeueReusableCell(withIdentifier: "CellFeedAndCommunity") as! CellFeedAndCommunity
                 
+                
+                if self.arrayMyPost.count == 0 {
+                    
+                    cell.tableViewCommunity.isHidden = true
+                }
+                else{
+                    
+                    cell.tableViewCommunity.isHidden = false
+                    
+                }
+                
+                if self.arrayMyPost.count == 0 {
+                   
+                    cell.tableViewMyFeed.isHidden = true
+                    
+                }
+                else{
+                    
+                    cell.tableViewMyFeed.isHidden = false
+                    
+                    
+                }
                 cell.tableViewCommunity.reloadData()
                 cell.tableViewMyFeed.reloadData()
                 
@@ -537,118 +568,44 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         }
         else if tableView.tag == 101{
             
-            let cell:CellMyPost = tableView.dequeueReusableCell(withIdentifier: "CellMyPost") as! CellMyPost
+            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellMyPost") as! CellPost
             
             let obj = self.arrayMyPost[indexPath.row]
             
-            //cell.nameLabel.text = obj.username
-            
-            print("userName - \(obj.username) ----")
-//            cell.dateLabel.text = obj.date
-//            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
-//            cell.postCaptionLabel.text = obj.message
-//
-//           // cell.heightPostImageView.constant = 0.0
-//
-//            cell.likeCountLabel.text = obj.like
-//            cell.commentCountLabel.text = obj.comment
-//            cell.shareCountLabel.text = obj.share
-//
-//            cell.likeImageView.tag = indexPath.row
-//            cell.commentImageView.tag = indexPath.row
-//            cell.shareImageView.tag = indexPath.row
-//
-//            cell.likeImageView.superview!.tag = tableView.tag
-//            cell.commentImageView.superview!.tag = tableView.tag
-//            cell.shareImageView.superview!.tag = tableView.tag
-//
-//
-//            cell.profilePicImageView.tag = indexPath.row
-//
-//            cell.profilePicImageView.superview!.tag = tableView.tag
-//
-//            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
-//            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
-//            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
-//
-//            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-//
-//
-//            if obj.isLike != 0 {
-//
-//
-//                cell.likeImageView.image = UIImage(named: "like-filled")
-//            }
-//            else{
-//
-//                cell.likeImageView.image = UIImage(named: "like-empty")
-//
-//            }
-//
-//
-//            if let imgVideo = obj.imageVideo{
-//
-//                let imgObj = imgVideo[0]
-//
-//                let imgUrl = imgObj.image
-//
-//
-//                cell.postImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/post/442601635179441.png"), placeholderImage: UIImage(named: ""))
-//               // cell.heightPostImageView.constant = 130.0
-//
-//
-//            }
-//
-//            print("*********  \(indexPath.row)")
-//
-//           // cell.backgroundColor = .red
-//            cell.contentView.backgroundColor = .yellow
-            
-            
-            print("sdfsfsdffd dfds fdsf fd")
-            return cell
-            
-            
-        }
-        else if tableView.tag == 102{
-            
-            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostMyFeed") as! CellPost
-            
-            
-            
-            let obj = self.arrayMyTreds[indexPath.row]
-            
-            cell.nameLabel.text = obj.username
+            cell.nameLabel.text = obj.username.capitalized
             cell.dateLabel.text = obj.date
             cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
             cell.postCaptionLabel.text = obj.message
+            
+            cell.heightPostImageView.constant = 0.0
             
             cell.likeCountLabel.text = obj.like
             cell.commentCountLabel.text = obj.comment
             cell.shareCountLabel.text = obj.share
             
-            cell.heightPostImageView.constant = 0.0
-            
             cell.likeImageView.tag = indexPath.row
             cell.commentImageView.tag = indexPath.row
             cell.shareImageView.tag = indexPath.row
+            cell.moreInfoButton.tag = indexPath.row
             
+            
+
             cell.likeImageView.superview!.tag = tableView.tag
             cell.commentImageView.superview!.tag = tableView.tag
             cell.shareImageView.superview!.tag = tableView.tag
-            
+            cell.moreInfoButton.superview!.tag = tableView.tag
+
             cell.profilePicImageView.tag = indexPath.row
-            
+
             cell.profilePicImageView.superview!.tag = tableView.tag
-            
-            
             
             cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
             cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-            
-            
+            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+
             
             if obj.isLike != 0 {
                 
@@ -668,15 +625,126 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let imgUrl = imgObj.image
                 
-                cell.postImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/post/442601635179441.png"), placeholderImage: UIImage(named: ""))
+                print("imgUrl - \(imgUrl)")
+                
+                switch imgUrl {
+                case .integer(let intValue):
+                    print("Integer value -- \(intValue)")
+                    cell.heightPostImageView.constant = 0.0
+
+                 
+                case .string(let strUrl):
+                    print("String value -- \(strUrl)")
+
+                cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
                 cell.heightPostImageView.constant = 130.0
+
+                }
+                
+                
+                
+            }
+            else{
+                
+                cell.heightPostImageView.constant = 0.0
+
                 
                 
             }
             
-            
             return cell
             
+            
+        }
+        else if tableView.tag == 102{
+            
+            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellMyTreds") as! CellPost
+
+            let obj = self.arrayMyTreds[indexPath.row]
+            
+            
+            cell.nameLabel.text = obj.username
+            cell.dateLabel.text = obj.date
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.postCaptionLabel.text = obj.message
+            
+            cell.heightPostImageView.constant = 0.0
+            
+            cell.likeCountLabel.text = obj.like
+            cell.commentCountLabel.text = obj.comment
+            cell.shareCountLabel.text = obj.share
+            
+            cell.likeImageView.tag = indexPath.row
+            cell.commentImageView.tag = indexPath.row
+            cell.shareImageView.tag = indexPath.row
+            cell.moreInfoButton.tag = indexPath.row
+
+            
+            cell.moreInfoButton.superview!.tag = tableView.tag
+            cell.likeImageView.superview!.tag = tableView.tag
+            cell.commentImageView.superview!.tag = tableView.tag
+            cell.shareImageView.superview!.tag = tableView.tag
+
+            
+            cell.profilePicImageView.tag = indexPath.row
+
+            cell.profilePicImageView.superview!.tag = tableView.tag
+            
+            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
+            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
+            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+
+            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+            
+            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+
+            
+            if obj.isLike != 0 {
+                
+                
+                cell.likeImageView.image = UIImage(named: "like-filled")
+            }
+            else{
+                
+                cell.likeImageView.image = UIImage(named: "like-empty")
+                
+            }
+            
+            
+            if let imgVideo = obj.imageVideo{
+                
+                let imgObj = imgVideo[0]
+                
+                let imgUrl = imgObj.image
+                
+                print("imgUrl - \(imgUrl)")
+                
+                switch imgUrl {
+                case .integer(let intValue):
+                    print("Integer value -- \(intValue)")
+                    cell.heightPostImageView.constant = 0.0
+
+                 
+                case .string(let strUrl):
+                    print("String value -- \(strUrl)")
+
+                cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+                cell.heightPostImageView.constant = 130.0
+
+                }
+                
+                
+                
+            }
+            else{
+                
+                cell.heightPostImageView.constant = 0.0
+
+                
+                
+            }
+            
+            return cell
             
             
         }

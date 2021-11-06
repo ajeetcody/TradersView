@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
+import Alamofire
+
+struct ImageRequest : Encodable
+{
+    let attachment : String
+    let fileName : String
+}
 
 enum RequestMethod:String{
     
@@ -226,6 +233,13 @@ class ApiCallManager{
         
     }
     
+    func uploadImageUsing(){
+        
+        
+        
+        
+    }
+    
     func UploadImage<T:Codable>(request:AddPostRequest, apiType:APIType, uiimagePic:UIImage, responseType:T.Type, compilationHandler:@escaping(_ results:T)->Void, failureHandler:@escaping(Error)->Void){
         
         let username = "admin"
@@ -237,11 +251,14 @@ class ApiCallManager{
         // your image from Image picker, as of now I am picking image from the bundle
         let imageData = uiimagePic.jpegData(compressionQuality: 0.7)
         
+        
         let url = "\(Constants.BASE_URL)/\(apiType.rawValue)"
         var urlRequest = URLRequest(url: URL(string: url)!)
         
+        print(" url - \(url)")
+        
         urlRequest.httpMethod = "post"
-        let bodyBoundary = "--------------------------\(UUID().uuidString)"
+        let bodyBoundary = "\(UUID().uuidString)"
         urlRequest.addValue("multipart/form-data; boundary=\(bodyBoundary)", forHTTPHeaderField: "Content-Type")
         
         //attachmentKey is the api parameter name for your image do ask the API developer for this

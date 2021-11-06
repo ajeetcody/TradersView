@@ -31,7 +31,7 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
         self.postTextview.leftSpace()
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
             self.userID = userData.id
@@ -267,50 +267,7 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
 
 }
 
-extension PostViewController:ParseManagerDelegate{
-   
-    
-    func parseSuccessHandler(response: ResponseModel) {
-        
-        print("\(#function)")
-        
-        
-        
-        let response:AddPostResponse = response as! AddPostResponse
-        
-        if response.status !=  1{
-            
-            self.showAlertPopupWithMessage(msg: response.messages)
-            
-        }
-        else{
-            
-            DispatchQueue.main.async {
-            
-            self.showAlertPopupWithMessageWithHandler(msg: "Post Successfully!!") {
-                
-                self.showTabbarController()
-                self.dismiss(animated: true, completion: nil)
-                
-            }
-                
-            }
-            
-            
-        }
-        
-    }
-    func parseErrorHandler(error: Error) {
-        print("\(#function)")
-        self.showErrorMessage(error: error)
-    }
-    
-    func parseSomethingWentWrong() {
-        print("\(#function)")
-        self.showAlertSomethingWentWrong()
-        
-    }
-}
+
 
 //extension PostViewController:UIImagePickerControllerDelegate & UINavigationControllerDelegate{
 //

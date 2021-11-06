@@ -48,7 +48,7 @@ class SearchViewController: MasterViewController {
             
         }
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
 
         
             let request:SearchRequest = SearchRequest(_user_id: userData.id , _search: self.searchTextStr, _page: 0)
@@ -129,7 +129,7 @@ class SearchViewController: MasterViewController {
             
         
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
 
         
             self.pushUserProfileScreen(userId: obj.userid, currentUserId: userData.id)

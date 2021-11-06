@@ -50,7 +50,7 @@ class CommentListViewController: MasterViewController {
         
         self.tableViewComment.isHidden = true
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
             self.userID = userData.id
@@ -107,7 +107,7 @@ class CommentListViewController: MasterViewController {
                 }
                 else{
                     
-                    self.showAlertPopupWithMessage(msg: results.messages)
+                   // self.showAlertPopupWithMessage(msg: results.messages)
                     
                     
                 }

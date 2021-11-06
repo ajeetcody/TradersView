@@ -187,7 +187,7 @@ class SettingsViewController: MasterViewController {
     func callLogOutApi(){
         
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             print("Login id  : - \(userData.id)")
 
@@ -208,7 +208,7 @@ class SettingsViewController: MasterViewController {
                     self.showAlertPopupWithMessageWithHandler(msg: "Logout Successfully Successfully!!") {
                         
                         
-                        self.appDelegate.loginResponse = nil
+                        self.appDelegate.loginResponseData = nil
                         UserDefaults.standard.setValue(nil, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
                         
                         self.navigationController?.tabBarController?.navigationController?.popViewController(animated: true)
@@ -338,7 +338,7 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
 
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
-                if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+                if  let userData:LoginUserData = self.appDelegate.loginResponseData{
 
                     cell.detailsLabel.text = userData.username
                     
@@ -515,45 +515,4 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
     
 }
 
-extension SettingsViewController:ParseManagerDelegate{
-   
-    
-    func parseSuccessHandler(response: ResponseModel) {
-        
-        print("\(#function)")
-        
-        
-        
-        let logoutResonse:LogoutResponse = response as! LogoutResponse
-        
-        if logoutResonse.status != 1 {
-            
-            self.showAlertPopupWithMessage(msg: logoutResonse.messages)
-            
-        }
-        else{
-            
-            self.showAlertPopupWithMessageWithHandler(msg: "Logout Successfully Successfully!!") {
-                
-                
-                self.appDelegate.loginResponse = nil
-                UserDefaults.standard.setValue(nil, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
-                
-                self.navigationController?.tabBarController?.navigationController?.popViewController(animated: true)
-            }
-            
-            
-        }
-        
-    }
-    func parseErrorHandler(error: Error) {
-        print("\(#function)")
-        self.showErrorMessage(error: error)
-    }
-    
-    func parseSomethingWentWrong() {
-        print("\(#function)")
-        self.showAlertSomethingWentWrong()
-        
-    }
-}
+

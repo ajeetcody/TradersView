@@ -28,12 +28,12 @@ class SignupViewController: MasterViewController {
 
         self.uiChanges()
         
-        self.nameTextfield.text = "ajeet sharma"
-        self.userNameTextfield.text = "a168"
-        self.emailIDTextfield.text = "a168@gmail.com"
-        self.phoneTextfield.text = "+919009241741"
-        self.passwordTextfield.text = "qwerty123"
-        self.confirmPasswordTextfield.text = "qwerty123"
+//        self.nameTextfield.text = "ajeet sharma"
+//        self.userNameTextfield.text = "a168"
+//        self.emailIDTextfield.text = "a168@gmail.com"
+//        self.phoneTextfield.text = "+919009241741"
+//        self.passwordTextfield.text = "qwerty123"
+//        self.confirmPasswordTextfield.text = "qwerty123"
 
     }
     
@@ -43,13 +43,36 @@ class SignupViewController: MasterViewController {
     func uiChanges(){
         
         
-        self.signupButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-        self.nameTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-        self.userNameTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-        self.phoneTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
-        self.confirmPasswordTextfield.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.signupButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        
+        self.nameTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.userNameTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.phoneTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.confirmPasswordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        
+        
+        self.nameTextfield.setLeftPaddingPoints(10.0)
+        self.nameTextfield.setRightPaddingPoints(10.0)
+
+        
+        self.userNameTextfield.setLeftPaddingPoints(10.0)
+        self.userNameTextfield.setRightPaddingPoints(10.0)
+        
+        self.emailIDTextfield.setLeftPaddingPoints(10.0)
+        self.emailIDTextfield.setRightPaddingPoints(10.0)
+
+        
+        self.phoneTextfield.setLeftPaddingPoints(10.0)
+        self.phoneTextfield.setRightPaddingPoints(10.0)
+        
+        self.passwordTextfield.setLeftPaddingPoints(10.0)
+        self.passwordTextfield.setRightPaddingPoints(10.0)
+
+        
+        self.confirmPasswordTextfield.setLeftPaddingPoints(10.0)
+        self.confirmPasswordTextfield.setRightPaddingPoints(10.0)
 
         
         
@@ -153,7 +176,7 @@ class SignupViewController: MasterViewController {
 }
 
 
-extension SignupViewController:ParseManagerDelegate{
+extension SignupViewController{
    
     
     func parseSuccessHandler(response: ResponseModel) {

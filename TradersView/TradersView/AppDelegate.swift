@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var mainNavigation:UINavigationController?
     
-    var loginResponse:LoginResponse?
+    var loginResponseData:LoginUserData?
     
 
     

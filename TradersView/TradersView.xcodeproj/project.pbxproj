@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7712E4092736C80400036561 /* ImageReponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4032736C80400036561 /* ImageReponseModel.swift */; };
+		7712E40A2736C80400036561 /* ImageRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4042736C80400036561 /* ImageRequestModel.swift */; };
+		7712E40B2736C80400036561 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4062736C80400036561 /* ImageManager.swift */; };
+		7712E40C2736C80400036561 /* HttpUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4082736C80400036561 /* HttpUtility.swift */; };
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
@@ -17,7 +21,6 @@
 		7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86227240B8300A81FAA /* ApiCallManager.swift */; };
 		7747D86627240BF900A81FAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86527240BF900A81FAA /* Constants.swift */; };
 		7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86927240E8A00A81FAA /* ApiRequestModel.swift */; };
-		7747D87A272428BF00A81FAA /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D879272428BF00A81FAA /* ParseManager.swift */; };
 		7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D87C2724295F00A81FAA /* ApiResponse.swift */; };
 		777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA939271B657C00C1256D /* AppDelegate.swift */; };
 		777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93B271B657C00C1256D /* SceneDelegate.swift */; };
@@ -40,6 +43,10 @@
 /* Begin PBXFileReference section */
 		1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradersView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73842C881FD9C6453521C7C7 /* Pods-TradersView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.debug.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.debug.xcconfig"; sourceTree = "<group>"; };
+		7712E4032736C80400036561 /* ImageReponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageReponseModel.swift; sourceTree = "<group>"; };
+		7712E4042736C80400036561 /* ImageRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRequestModel.swift; sourceTree = "<group>"; };
+		7712E4062736C80400036561 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		7712E4082736C80400036561 /* HttpUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpUtility.swift; sourceTree = "<group>"; };
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +57,6 @@
 		7747D86227240B8300A81FAA /* ApiCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCallManager.swift; sourceTree = "<group>"; };
 		7747D86527240BF900A81FAA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7747D86927240E8A00A81FAA /* ApiRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequestModel.swift; sourceTree = "<group>"; };
-		7747D879272428BF00A81FAA /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
 		7747D87C2724295F00A81FAA /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		777DA936271B657C00C1256D /* TradersView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradersView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		777DA939271B657C00C1256D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +98,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7712E4002736C80400036561 /* Upload-CodeCat16 */ = {
+			isa = PBXGroup;
+			children = (
+				7712E4012736C80400036561 /* Models */,
+				7712E4052736C80400036561 /* Manager */,
+				7712E4072736C80400036561 /* Utility */,
+			);
+			path = "Upload-CodeCat16";
+			sourceTree = "<group>";
+		};
+		7712E4012736C80400036561 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7712E4022736C80400036561 /* ImageModels */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7712E4022736C80400036561 /* ImageModels */ = {
+			isa = PBXGroup;
+			children = (
+				7712E4032736C80400036561 /* ImageReponseModel.swift */,
+				7712E4042736C80400036561 /* ImageRequestModel.swift */,
+			);
+			path = ImageModels;
+			sourceTree = "<group>";
+		};
+		7712E4052736C80400036561 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				7712E4062736C80400036561 /* ImageManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		7712E4072736C80400036561 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				7712E4082736C80400036561 /* HttpUtility.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		771D4B31271C244300AD2131 /* TabbarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,7 +154,6 @@
 			children = (
 				7747D86827240CBB00A81FAA /* Api Model */,
 				7747D86227240B8300A81FAA /* ApiCallManager.swift */,
-				7747D879272428BF00A81FAA /* ParseManager.swift */,
 			);
 			path = APIManager;
 			sourceTree = "<group>";
@@ -141,6 +189,7 @@
 		777DA938271B657C00C1256D /* TradersView */ = {
 			isa = PBXGroup;
 			children = (
+				7712E4002736C80400036561 /* Upload-CodeCat16 */,
 				77CC35D52724905500D65EDC /* credentials.plist */,
 				7747D86027240B4B00A81FAA /* APIManager */,
 				771D4B31271C244300AD2131 /* TabbarController */,
@@ -321,15 +370,18 @@
 			files = (
 				7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */,
 				7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */,
+				7712E40A2736C80400036561 /* ImageRequestModel.swift in Sources */,
+				7712E40B2736C80400036561 /* ImageManager.swift in Sources */,
 				7742A4FF273037350081F28E /* HomeViewController.swift in Sources */,
+				7712E40C2736C80400036561 /* HttpUtility.swift in Sources */,
 				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
 				7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */,
-				7747D87A272428BF00A81FAA /* ParseManager.swift in Sources */,
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
 				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
+				7712E4092736C80400036561 /* ImageReponseModel.swift in Sources */,
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
@@ -488,18 +540,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.thetrradersv1ew2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "TradersView-Production";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -511,18 +565,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.thetrradersv1ew2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "TradersView-Production";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

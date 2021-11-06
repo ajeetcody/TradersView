@@ -8,6 +8,24 @@
 import UIKit
 import SDWebImage
 
+class MyOwnTableView: UITableView {
+        override var intrinsicContentSize: CGSize {
+            self.layoutIfNeeded()
+            return self.contentSize
+        }
+
+        override var contentSize: CGSize {
+            didSet{
+                self.invalidateIntrinsicContentSize()
+            }
+        }
+
+        override func reloadData() {
+            super.reloadData()
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+
 class CellPost:UITableViewCell{
     
     @IBOutlet weak var profilePicImageView: UIImageView!
@@ -76,8 +94,8 @@ class CellFeedAndCommunity:UITableViewCell{
     
     
     @IBOutlet weak var scrollViewFeedAndCommunity: UIScrollView!
-    @IBOutlet weak var tableViewCommunity: UITableView!
-    @IBOutlet weak var tableViewMyFeed: UITableView!
+    @IBOutlet weak var tableViewCommunity: MyOwnTableView!
+    @IBOutlet weak var tableViewMyFeed: MyOwnTableView!
 
     
     
@@ -116,7 +134,7 @@ class HomeViewController: MasterViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponse?.userdata?[0]{
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
             self.userID = userData.id
@@ -447,6 +465,25 @@ class HomeViewController: MasterViewController {
         
     }
     
+    @objc func moreInfoButtonAction(_sender:UIButton){
+        
+        
+        print("\(_sender.tag)")
+        print("\(_sender.superview?.tag ?? 0)")
+        
+    }
+    
+    @IBAction func searchButtonAction(_ sender: Any) {
+        
+        self.showSearchViewController()
+    }
+    
+    func updateHeight() {
+        UIView.setAnimationsEnabled(false)
+        self.tableViewHome.beginUpdates()
+        self.tableViewHome.endUpdates()
+        UIView.setAnimationsEnabled(true)
+    }
     
     /*
      // MARK: - Navigation
@@ -507,33 +544,39 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
            
                 
-                
-                return 40.0
-                
+        if tableView.tag == 100 {
             
+            return 40.0
+            
+        }
+            
+                
+        return 0.0
 
             
        
     }
         
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            
-                
-                let sectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: 40))
-                
-                sectionHeaderView.backgroundColor = .white
-                let headingLabel = UILabel(frame: CGRect(x: 15, y: 0, width: Constants.screenWidth, height: 40))
-                
-                headingLabel.text = self.sectionTitle[section]
-                headingLabel.textColor = .black
-                sectionHeaderView.addSubview(headingLabel)
-                
-                return sectionHeaderView
-                
-           
-            
-            
-        }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
+        let sectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: 40))
+        
+        sectionHeaderView.backgroundColor = self.hexStringToUIColor(hex: "#264653")
+        let headingLabel = UILabel(frame: CGRect(x: 15, y: 0, width: Constants.screenWidth, height: 40))
+        
+        headingLabel.text = self.sectionTitle[section]
+        headingLabel.textColor = .white
+        
+        headingLabel.font = headingLabel.font.withSize(22)
+        sectionHeaderView.addSubview(headingLabel)
+        
+        return sectionHeaderView
+        
+        
+        
+        
+    }
         
         func numberOfSections(in tableView: UITableView) -> Int {
             
@@ -600,6 +643,8 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     cell.collectionViewTopProfile.dataSource = self
                     cell.collectionViewTopProfile.reloadData()
                     
+                    
+                    
                     return cell
                     
                     
@@ -611,8 +656,13 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     
                     cell.tableViewCommunity.reloadData()
                     cell.tableViewMyFeed.reloadData()
-                    
-                    
+                   
+                    cell.tableViewCommunity.estimatedRowHeight = 120.0
+                    cell.tableViewCommunity.rowHeight = UITableView.automaticDimension
+
+                    cell.tableViewMyFeed.estimatedRowHeight = 120.0
+                    cell.tableViewMyFeed.rowHeight = UITableView.automaticDimension
+
                     
                     return cell
                     
@@ -641,6 +691,10 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.commentImageView.tag = indexPath.row
                 cell.shareImageView.tag = indexPath.row
 
+
+                cell.moreInfoButton.tag = indexPath.row
+
+                cell.moreInfoButton.superview!.tag = tableView.tag
                 cell.likeImageView.superview!.tag = tableView.tag
                 cell.commentImageView.superview!.tag = tableView.tag
                 cell.shareImageView.superview!.tag = tableView.tag
@@ -655,6 +709,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
 
                 cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+                cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
 
                 
                 if obj.isLike != 0 {
@@ -675,12 +730,34 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     
                     let imgUrl = imgObj.image
                     
+                    print("imgUrl - \(imgUrl)")
                     
-                    cell.postImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/post/442601635179441.png"), placeholderImage: UIImage(named: ""))
+                    switch imgUrl {
+                    case .integer(let intValue):
+                        print("Integer value -- \(intValue)")
+                        cell.heightPostImageView.constant = 0.0
+
+                     
+                    case .string(let strUrl):
+                        print("String value -- \(strUrl)")
+
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
                     cell.heightPostImageView.constant = 130.0
+
+                    }
+                    
                     
                     
                 }
+                else{
+                    
+                    cell.heightPostImageView.constant = 0.0
+
+                    
+                    
+                }
+                
+                
                 return cell
                 
                 
@@ -718,12 +795,18 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
 
                 
                 
+                cell.moreInfoButton.superview!.tag = tableView.tag
+                cell.moreInfoButton.tag = indexPath.row
+
+                
+                
                 cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
                 cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
                 cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
                 cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
 
-                
+                cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+
                 
                 if obj.isLike != 0 {
                     
@@ -743,11 +826,35 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     
                     let imgUrl = imgObj.image
                     
-                    cell.postImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/post/442601635179441.png"), placeholderImage: UIImage(named: ""))
+                    print("imgUrl - \(imgUrl)")
+                    
+                    switch imgUrl {
+                    case .integer(let intValue):
+                        print("Integer value -- \(intValue)")
+                        cell.heightPostImageView.constant = 0.0
+
+                     
+                    case .string(let strUrl):
+                    
+                        print("String value -- \(strUrl)")
+
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
                     cell.heightPostImageView.constant = 130.0
+
+                    }
+                    
                     
                     
                 }
+                else{
+                    
+                    cell.heightPostImageView.constant = 0.0
+
+                    
+                    
+                }
+                
+                
                 
                 
                 return cell
