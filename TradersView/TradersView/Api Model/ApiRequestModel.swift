@@ -21,6 +21,59 @@ class ApiRequestModel{
     
 }
 
+class FollowwersFollowingListRequest:ApiRequestModel{
+   
+    var userid:String?
+    var status:String?
+    var page:Int?
+    
+    
+    init(_user_id:String, _status:String, _page:Int) {
+        
+        self.userid = _user_id
+        self.status = _status
+        self.page = _page
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["userid":self.userid ?? "",
+                "status":self.status ?? "",
+                "page":self.page ?? 0]
+        
+        
+    }
+    
+}
+
+class FollowRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var follow_id:String?
+    
+    
+    init(_user_id:String, _follow_id:String) {
+        
+        self.user_id = _user_id
+        self.follow_id = _follow_id
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "follow_id":self.follow_id ?? ""]
+        
+        
+    }
+    
+}
+
 class GetprofileByIdRequest:ApiRequestModel{
    
     var user_id:String?

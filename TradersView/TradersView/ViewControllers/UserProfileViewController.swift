@@ -13,6 +13,7 @@ class CellUserProfileDetails:UITableViewCell{
     
     @IBOutlet weak var coverImageView: UIImageView!
     
+    @IBOutlet weak var followButton: UIButton!
     
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -25,6 +26,11 @@ class CellUserProfileDetails:UITableViewCell{
     
     @IBOutlet weak var followersLabel: UILabel!
     
+    
+    @IBOutlet weak var followingView: UIView!
+    
+    @IBOutlet weak var followersView: UIView!
+
     
     @IBOutlet weak var postLabel: UILabel!
     
@@ -373,6 +379,22 @@ class UserProfileViewController: MasterViewController {
         
     }
     
+    @objc func followersViewTapGesture(gesture:UITapGestureRecognizer){
+        
+        
+        
+        
+    }
+    
+    @objc func followingViewTapGesture(gesture:UITapGestureRecognizer){
+        
+       
+        
+        
+        
+        
+    }
+    
     @objc func moreInfoButtonAction(_sender:UIButton){
         
         
@@ -499,6 +521,15 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let cell:CellUserProfileDetails = tableView.dequeueReusableCell(withIdentifier: "CellUserProfileDetails") as! CellUserProfileDetails
                 
+                if self.currentUserId == self.userIDOfProfile {
+                    
+                    cell.followButton.isHidden = true
+                }
+                else{
+                    
+                    cell.followButton.isHidden = false
+                    
+                }
                 
                 cell.nameLabel.text = self.userProfileObj?.name?.capitalized
                 
@@ -514,6 +545,12 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: ""))
                 
                 cell.coverImageView.contentMode = .scaleToFill
+                
+                cell.followersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.followersViewTapGesture(gesture:))))
+                cell.followingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.followingViewTapGesture(gesture:))))
+
+                
+                
                 
                 return cell
                 

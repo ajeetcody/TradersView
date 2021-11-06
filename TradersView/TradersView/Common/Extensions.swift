@@ -80,7 +80,8 @@ extension UIView{
         self.layer.borderWidth = width
         self.layer.borderColor = borderColor.cgColor
         self.layer.cornerRadius = cornerRadius
-        self.clipsToBounds = true
+       // self.clipsToBounds = true
+        self.layer.masksToBounds =  true
     }
     
 }

@@ -9,43 +9,43 @@ import UIKit
 import SDWebImage
 
 class MyOwnTableView: UITableView {
-        override var intrinsicContentSize: CGSize {
-            self.layoutIfNeeded()
-            return self.contentSize
-        }
-
-        override var contentSize: CGSize {
-            didSet{
-                self.invalidateIntrinsicContentSize()
-            }
-        }
-
-        override func reloadData() {
-            super.reloadData()
+    override var intrinsicContentSize: CGSize {
+        self.layoutIfNeeded()
+        return self.contentSize
+    }
+    
+    override var contentSize: CGSize {
+        didSet{
             self.invalidateIntrinsicContentSize()
         }
     }
+    
+    override func reloadData() {
+        super.reloadData()
+        self.invalidateIntrinsicContentSize()
+    }
+}
 
 class CellPost:UITableViewCell{
     
     @IBOutlet weak var profilePicImageView: UIImageView!
-
+    
     
     @IBOutlet weak var postImageView: UIImageView!
-
+    
     @IBOutlet weak var likeImageView: UIImageView!
     @IBOutlet weak var commentImageView: UIImageView!
     @IBOutlet weak var shareImageView: UIImageView!
-
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var postCaptionLabel: UILabel!
-   
+    
     
     @IBOutlet weak var likeCountLabel: UILabel!
     
-   
+    
     @IBOutlet weak var commentCountLabel: UILabel!
     
     
@@ -96,7 +96,7 @@ class CellFeedAndCommunity:UITableViewCell{
     @IBOutlet weak var scrollViewFeedAndCommunity: UIScrollView!
     @IBOutlet weak var tableViewCommunity: MyOwnTableView!
     @IBOutlet weak var tableViewMyFeed: MyOwnTableView!
-
+    
     
     
 }
@@ -111,12 +111,12 @@ class HomeViewController: MasterViewController {
     
     var arrayPopular:[MostPopularDatum] = []
     var topProfile = ["Ajit", "Amit","Rakesh", "Ramesh", "Kapil", "chintoo", "Sourach", "Ravi"]
-   
+    
     var arrayCommunity: [CommunityResponseDatum] = []
     var arrayMyPost:[GetPostListByUserIdResponseDatum] = []
     
     private var userID:String?
-
+    
     
     override func viewDidLoad() {
         
@@ -126,7 +126,7 @@ class HomeViewController: MasterViewController {
         self.tableViewHome.rowHeight = UITableView.automaticDimension
         
         
-      
+        
         
         
     }
@@ -139,7 +139,7 @@ class HomeViewController: MasterViewController {
             
             self.userID = userData.id
             self.callAllApis()
-
+            
         }
         else{
             
@@ -164,12 +164,12 @@ class HomeViewController: MasterViewController {
                 
                 
                 DispatchQueue.main.async {
-                
+                    
                     self.apiCallCommunity()
                     self.apiCallMyFeed()
                 }
                 
-
+                
                 
             }
             else{
@@ -182,12 +182,12 @@ class HomeViewController: MasterViewController {
             
             
         } failureHandler: { (error) in
-
+            
             
             self.showErrorMessage(error: error)
             
         }
-
+        
         
         
     }
@@ -250,14 +250,14 @@ class HomeViewController: MasterViewController {
     func apiCallTopProfile(){
         
         
-       // ApiCallManager.shared.apiCall(request: ApiRequestModel(), apiType: .TOP_PROFILE, responseType: <#T##(Decodable & Encodable).Protocol#>, requestMethod: <#T##RequestMethod#>, compilationHandler: <#T##(Decodable & Encodable) -> Void#>, failureHandler: <#T##(Error) -> Void#>)
+        // ApiCallManager.shared.apiCall(request: ApiRequestModel(), apiType: .TOP_PROFILE, responseType: <#T##(Decodable & Encodable).Protocol#>, requestMethod: <#T##RequestMethod#>, compilationHandler: <#T##(Decodable & Encodable) -> Void#>, failureHandler: <#T##(Error) -> Void#>)
         
     }
     
     func apiCallCommunity(){
         
         
-     
+        
         
         let request = CommunityRequest(_user_id: self.userID!, _page: 0)
         
@@ -299,7 +299,7 @@ class HomeViewController: MasterViewController {
             
             
         }
-
+        
         
         
         
@@ -308,7 +308,7 @@ class HomeViewController: MasterViewController {
     func apiCallMyFeed(){
         
         
-      
+        
         let request = GetPostListByUserIdRequest(_id: self.userID!, _page: 0)
         
         
@@ -353,17 +353,17 @@ class HomeViewController: MasterViewController {
     }
     
     @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
-
+        
         
         var postID:String = ""
         var notifyUserId:String = ""
-
-        if gesture.view!.superview!.tag == 101{
         
+        if gesture.view!.superview!.tag == 101{
+            
             let postObj = self.arrayCommunity[gesture.view!.tag]
             postID = postObj.postid
             notifyUserId = postObj.userID
-
+            
             print("post id - \(postObj.postid)")
             
         }
@@ -373,25 +373,25 @@ class HomeViewController: MasterViewController {
             let postObj = self.arrayMyPost[gesture.view!.tag]
             postID = postObj.postid
             notifyUserId = postObj.userID
-
+            
             print("post id - \(postObj.postid)")
         }
         
         
         self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!)
         
-       
+        
         
     }
     @objc func commentImageViewTapGesture(gesture: UITapGestureRecognizer) {
-
+        
         
         var postID:String = ""
         var notifyUserId:String = ""
         
         
         if gesture.view!.superview!.tag == 101{
-        
+            
             let postObj = self.arrayCommunity[gesture.view!.tag]
             
             postID = postObj.postid
@@ -416,10 +416,10 @@ class HomeViewController: MasterViewController {
         
     }
     @objc func shareImageViewTapGesture(gesture: UITapGestureRecognizer) {
-
+        
         
         if gesture.view!.superview!.tag == 101{
-        
+            
             let postObj = self.arrayCommunity[gesture.view!.tag]
             print("post id - \(postObj.postid)")
             
@@ -441,7 +441,7 @@ class HomeViewController: MasterViewController {
         
         
         if gesture.view!.superview!.tag == 101{
-        
+            
             let postObj = self.arrayCommunity[gesture.view!.tag]
             
             profileUserId = postObj.userID
@@ -542,21 +542,21 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-           
-                
+        
+        
         if tableView.tag == 100 {
             
             return 40.0
             
         }
-            
-                
-        return 0.0
-
-            
-       
-    }
         
+        
+        return 0.0
+        
+        
+        
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         
@@ -577,299 +577,299 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
         
         
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         
-        func numberOfSections(in tableView: UITableView) -> Int {
+        if tableView.tag == 100 {
             
-            if tableView.tag == 100 {
-                
-                return self.sectionTitle.count
-                
-            }
-            
-            return 1
+            return self.sectionTitle.count
             
         }
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            
-            if tableView.tag == 101 {
-                
-                print("\(#function) - Community - \(self.arrayCommunity.count)")
-                return  self.arrayCommunity.count
-                
-                
-            }
-            else if tableView.tag == 102 {
-                
-                print("\(#function) - My Post - \(self.arrayMyPost.count)")
-                return  self.arrayMyPost.count
-                
-                
-            }
-            
-            return 1
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            
-            if tableView.tag == 100{
-                
-                
-                
-                if indexPath.section == 0 {
-                    
-                    
-                    let cell:CellMostPopular = tableView.dequeueReusableCell(withIdentifier: "CellMostPopular") as! CellMostPopular
-                    
-                    cell.collectionViewMostPopular.tag = 101
-                    cell.collectionViewMostPopular.delegate = self
-                    cell.collectionViewMostPopular.dataSource = self
-                    
-                    cell.collectionViewMostPopular.reloadData()
-                    
-                    return cell
-                    
-                    
-                    
-                }
-                else if indexPath.section == 1 {
-                    
-                    
-                    
-                    
-                    let cell:CellTopProfile = tableView.dequeueReusableCell(withIdentifier: "CellTopProfile") as! CellTopProfile
-                    cell.collectionViewTopProfile.tag = 102
-                    cell.collectionViewTopProfile.delegate = self
-                    cell.collectionViewTopProfile.dataSource = self
-                    cell.collectionViewTopProfile.reloadData()
-                    
-                    
-                    
-                    return cell
-                    
-                    
-                }
-                else if indexPath.section == 2 {
-                    
-                    
-                    let cell:CellFeedAndCommunity = tableView.dequeueReusableCell(withIdentifier: "CellFeedAndCommunity") as! CellFeedAndCommunity
-                    
-                    cell.tableViewCommunity.reloadData()
-                    cell.tableViewMyFeed.reloadData()
-                   
-                    cell.tableViewCommunity.estimatedRowHeight = 120.0
-                    cell.tableViewCommunity.rowHeight = UITableView.automaticDimension
-
-                    cell.tableViewMyFeed.estimatedRowHeight = 120.0
-                    cell.tableViewMyFeed.rowHeight = UITableView.automaticDimension
-
-                    
-                    return cell
-                    
-                    
-                }
-                
-            }
-            else if tableView.tag == 101{
-                
-                let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostCommunity") as! CellPost
-                
-                let obj = self.arrayCommunity[indexPath.row]
-                
-                cell.nameLabel.text = obj.username
-                cell.dateLabel.text = obj.date
-                cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
-                cell.postCaptionLabel.text = obj.message
-                
-                cell.heightPostImageView.constant = 0.0
-                
-                cell.likeCountLabel.text = obj.like
-                cell.commentCountLabel.text = obj.comment
-                cell.shareCountLabel.text = obj.share
-                
-                cell.likeImageView.tag = indexPath.row
-                cell.commentImageView.tag = indexPath.row
-                cell.shareImageView.tag = indexPath.row
-
-
-                cell.moreInfoButton.tag = indexPath.row
-
-                cell.moreInfoButton.superview!.tag = tableView.tag
-                cell.likeImageView.superview!.tag = tableView.tag
-                cell.commentImageView.superview!.tag = tableView.tag
-                cell.shareImageView.superview!.tag = tableView.tag
-
-                
-                cell.profilePicImageView.tag = indexPath.row
-
-                cell.profilePicImageView.superview!.tag = tableView.tag
-                
-                cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
-                cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
-                cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
-
-                cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-                cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
-
-                
-                if obj.isLike != 0 {
-                    
-                    
-                    cell.likeImageView.image = UIImage(named: "like-filled")
-                }
-                else{
-                    
-                    cell.likeImageView.image = UIImage(named: "like-empty")
-                    
-                }
-                
-                
-                if let imgVideo = obj.imageVideo{
-                    
-                    let imgObj = imgVideo[0]
-                    
-                    let imgUrl = imgObj.image
-                    
-                    print("imgUrl - \(imgUrl)")
-                    
-                    switch imgUrl {
-                    case .integer(let intValue):
-                        print("Integer value -- \(intValue)")
-                        cell.heightPostImageView.constant = 0.0
-
-                     
-                    case .string(let strUrl):
-                        print("String value -- \(strUrl)")
-
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = 130.0
-
-                    }
-                    
-                    
-                    
-                }
-                else{
-                    
-                    cell.heightPostImageView.constant = 0.0
-
-                    
-                    
-                }
-                
-                
-                return cell
-                
-                
-            }
-            else if tableView.tag == 102{
-                
-                let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostMyFeed") as! CellPost
-                
-                
-                
-                let obj = self.arrayMyPost[indexPath.row]
-                
-                cell.nameLabel.text = obj.username
-                cell.dateLabel.text = obj.date
-                cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
-                cell.postCaptionLabel.text = obj.message
-                
-                cell.likeCountLabel.text = obj.like
-                cell.commentCountLabel.text = obj.comment
-                cell.shareCountLabel.text = obj.share
-                
-                cell.heightPostImageView.constant = 0.0
-                
-                cell.likeImageView.tag = indexPath.row
-                cell.commentImageView.tag = indexPath.row
-                cell.shareImageView.tag = indexPath.row
-                
-                cell.likeImageView.superview!.tag = tableView.tag
-                cell.commentImageView.superview!.tag = tableView.tag
-                cell.shareImageView.superview!.tag = tableView.tag
-
-                cell.profilePicImageView.tag = indexPath.row
-
-                cell.profilePicImageView.superview!.tag = tableView.tag
-
-                
-                
-                cell.moreInfoButton.superview!.tag = tableView.tag
-                cell.moreInfoButton.tag = indexPath.row
-
-                
-                
-                cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
-                cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
-                cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
-                cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-
-                cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
-
-                
-                if obj.isLike != 0 {
-                    
-                    
-                    cell.likeImageView.image = UIImage(named: "like-filled")
-                }
-                else{
-                    
-                    cell.likeImageView.image = UIImage(named: "like-empty")
-                    
-                }
-                
-                
-                if let imgVideo = obj.imageVideo{
-                    
-                    let imgObj = imgVideo[0]
-                    
-                    let imgUrl = imgObj.image
-                    
-                    print("imgUrl - \(imgUrl)")
-                    
-                    switch imgUrl {
-                    case .integer(let intValue):
-                        print("Integer value -- \(intValue)")
-                        cell.heightPostImageView.constant = 0.0
-
-                     
-                    case .string(let strUrl):
-                    
-                        print("String value -- \(strUrl)")
-
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = 130.0
-
-                    }
-                    
-                    
-                    
-                }
-                else{
-                    
-                    cell.heightPostImageView.constant = 0.0
-
-                    
-                    
-                }
-                
-                
-                
-                
-                return cell
-                
-                
-                
-            }
-            
-            return UITableViewCell()
-        }
-        
+        return 1
         
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if tableView.tag == 101 {
+            
+            print("\(#function) - Community - \(self.arrayCommunity.count)")
+            return  self.arrayCommunity.count
+            
+            
+        }
+        else if tableView.tag == 102 {
+            
+            print("\(#function) - My Post - \(self.arrayMyPost.count)")
+            return  self.arrayMyPost.count
+            
+            
+        }
+        
+        return 1
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if tableView.tag == 100{
+            
+            
+            
+            if indexPath.section == 0 {
+                
+                
+                let cell:CellMostPopular = tableView.dequeueReusableCell(withIdentifier: "CellMostPopular") as! CellMostPopular
+                
+                cell.collectionViewMostPopular.tag = 101
+                cell.collectionViewMostPopular.delegate = self
+                cell.collectionViewMostPopular.dataSource = self
+                
+                cell.collectionViewMostPopular.reloadData()
+                
+                return cell
+                
+                
+                
+            }
+            else if indexPath.section == 1 {
+                
+                
+                
+                
+                let cell:CellTopProfile = tableView.dequeueReusableCell(withIdentifier: "CellTopProfile") as! CellTopProfile
+                cell.collectionViewTopProfile.tag = 102
+                cell.collectionViewTopProfile.delegate = self
+                cell.collectionViewTopProfile.dataSource = self
+                cell.collectionViewTopProfile.reloadData()
+                
+                
+                
+                return cell
+                
+                
+            }
+            else if indexPath.section == 2 {
+                
+                
+                let cell:CellFeedAndCommunity = tableView.dequeueReusableCell(withIdentifier: "CellFeedAndCommunity") as! CellFeedAndCommunity
+                
+                cell.tableViewCommunity.reloadData()
+                cell.tableViewMyFeed.reloadData()
+                
+                cell.tableViewCommunity.estimatedRowHeight = 120.0
+                cell.tableViewCommunity.rowHeight = UITableView.automaticDimension
+                
+                cell.tableViewMyFeed.estimatedRowHeight = 120.0
+                cell.tableViewMyFeed.rowHeight = UITableView.automaticDimension
+                
+                
+                return cell
+                
+                
+            }
+            
+        }
+        else if tableView.tag == 101{
+            
+            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostCommunity") as! CellPost
+            
+            let obj = self.arrayCommunity[indexPath.row]
+            
+            cell.nameLabel.text = obj.username
+            cell.dateLabel.text = obj.date
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.postCaptionLabel.text = obj.message
+            
+            cell.heightPostImageView.constant = 0.0
+            
+            cell.likeCountLabel.text = obj.like
+            cell.commentCountLabel.text = obj.comment
+            cell.shareCountLabel.text = obj.share
+            
+            cell.likeImageView.tag = indexPath.row
+            cell.commentImageView.tag = indexPath.row
+            cell.shareImageView.tag = indexPath.row
+            
+            
+            cell.moreInfoButton.tag = indexPath.row
+            
+            cell.moreInfoButton.superview!.tag = tableView.tag
+            cell.likeImageView.superview!.tag = tableView.tag
+            cell.commentImageView.superview!.tag = tableView.tag
+            cell.shareImageView.superview!.tag = tableView.tag
+            
+            
+            cell.profilePicImageView.tag = indexPath.row
+            
+            cell.profilePicImageView.superview!.tag = tableView.tag
+            
+            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
+            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
+            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+            
+            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+            
+            
+            if obj.isLike != 0 {
+                
+                
+                cell.likeImageView.image = UIImage(named: "like-filled")
+            }
+            else{
+                
+                cell.likeImageView.image = UIImage(named: "like-empty")
+                
+            }
+            
+            
+            if let imgVideo = obj.imageVideo{
+                
+                let imgObj = imgVideo[0]
+                
+                let imgUrl = imgObj.image
+                
+                print("imgUrl - \(imgUrl)")
+                
+                switch imgUrl {
+                case .integer(let intValue):
+                    print("Integer value -- \(intValue)")
+                    cell.heightPostImageView.constant = 0.0
+                    
+                    
+                case .string(let strUrl):
+                    print("String value -- \(strUrl)")
+                    
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+                    cell.heightPostImageView.constant = 130.0
+                    
+                }
+                
+                
+                
+            }
+            else{
+                
+                cell.heightPostImageView.constant = 0.0
+                
+                
+                
+            }
+            
+            
+            return cell
+            
+            
+        }
+        else if tableView.tag == 102{
+            
+            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostMyFeed") as! CellPost
+            
+            
+            
+            let obj = self.arrayMyPost[indexPath.row]
+            
+            cell.nameLabel.text = obj.username
+            cell.dateLabel.text = obj.date
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.postCaptionLabel.text = obj.message
+            
+            cell.likeCountLabel.text = obj.like
+            cell.commentCountLabel.text = obj.comment
+            cell.shareCountLabel.text = obj.share
+            
+            cell.heightPostImageView.constant = 0.0
+            
+            cell.likeImageView.tag = indexPath.row
+            cell.commentImageView.tag = indexPath.row
+            cell.shareImageView.tag = indexPath.row
+            
+            cell.likeImageView.superview!.tag = tableView.tag
+            cell.commentImageView.superview!.tag = tableView.tag
+            cell.shareImageView.superview!.tag = tableView.tag
+            
+            cell.profilePicImageView.tag = indexPath.row
+            
+            cell.profilePicImageView.superview!.tag = tableView.tag
+            
+            
+            
+            cell.moreInfoButton.superview!.tag = tableView.tag
+            cell.moreInfoButton.tag = indexPath.row
+            
+            
+            
+            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
+            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
+            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+            
+            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+            
+            
+            if obj.isLike != 0 {
+                
+                
+                cell.likeImageView.image = UIImage(named: "like-filled")
+            }
+            else{
+                
+                cell.likeImageView.image = UIImage(named: "like-empty")
+                
+            }
+            
+            
+            if let imgVideo = obj.imageVideo{
+                
+                let imgObj = imgVideo[0]
+                
+                let imgUrl = imgObj.image
+                
+                print("imgUrl - \(imgUrl)")
+                
+                switch imgUrl {
+                case .integer(let intValue):
+                    print("Integer value -- \(intValue)")
+                    cell.heightPostImageView.constant = 0.0
+                    
+                    
+                case .string(let strUrl):
+                    
+                    print("String value -- \(strUrl)")
+                    
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+                    cell.heightPostImageView.constant = 130.0
+                    
+                }
+                
+                
+                
+            }
+            else{
+                
+                cell.heightPostImageView.constant = 0.0
+                
+                
+                
+            }
+            
+            
+            
+            
+            return cell
+            
+            
+            
+        }
+        
+        return UITableViewCell()
+    }
+    
+    
+}
+
+
 
 
 extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -879,12 +879,12 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView.tag == 101{
-        
-        return CGSize(width: Constants.screenWidth / 2.8, height: Constants.screenHeight/2.5)
+            
+            return CGSize(width: Constants.screenWidth / 2.8, height: Constants.screenHeight/2.5)
         }
         
-        return CGSize(width: Constants.screenWidth / 4.8, height: Constants.screenHeight/5.5)
-
+        return CGSize(width: Constants.screenWidth / 4.8, height: Constants.screenHeight/4.0)
+        
         
         
         
@@ -893,22 +893,22 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-       
+        
         
         if collectionView.tag == 101{
             
-        return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 0)
+            return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 0)
             
         }
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 0)
-
+        
         
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         
-        return 35
+        return 20
         
     }
     
@@ -955,7 +955,10 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: "placeholder.png"))
             
             cell.popularImageView.contentMode = .scaleAspectFit
-            cell.popularImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+           
+            // cell.popularImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            
+          //  cell.popularImageView.superview?.backgroundColor = .red
             // popular.
             
             
@@ -975,12 +978,11 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             
             
             cell.topProfileImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/dummy.png"), placeholderImage: UIImage(named: "placeholder.png"))
-
+            
             cell.topProfileImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 45.0/2.0)
             
-           // cell.backgroundColor = .systemPink
+            // cell.backgroundColor = .systemPink
             
-            print("fggfgfg")
             return cell
             
         }

@@ -27,6 +27,31 @@ import Foundation
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
 
+// MARK: - FollowersFollowingResponse
+struct FollowersFollowingResponse: Codable {
+    let data: [FollowersFollowingResponseDatum]
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct FollowersFollowingResponseDatum: Codable {
+    let userid, name, username: String
+    let profileImg: String
+
+    enum CodingKeys: String, CodingKey {
+        case userid, name, username
+        case profileImg = "profile_img"
+    }
+}
+
+
+
+// MARK: - FollowResponse
+struct FollowResponse: Codable {
+    let status: Int
+    let messages: String
+}
 
 // MARK: - GetProfileByID
 struct GetProfileByIDResponse: Codable {

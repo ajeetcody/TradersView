@@ -10,11 +10,6 @@ import UIKit
 
 import Alamofire
 
-struct ImageRequest : Encodable
-{
-    let attachment : String
-    let fileName : String
-}
 
 enum RequestMethod:String{
     
@@ -263,23 +258,36 @@ class ApiCallManager{
         
         //attachmentKey is the api parameter name for your image do ask the API developer for this
         // file name is the name which you want to give to the file
-        let requestData = createRequestBody(imageData: imageData!, parameters:request.toObjectString() , boundary: bodyBoundary, attachmentKey: "post", fileName: "post.jpg")
+        let requestData = createRequestBody(imageData: imageData!, parameters:request.toObjectString() , boundary: bodyBoundary, attachmentKey: "images", fileName: "post.jpg")
         
         urlRequest.addValue("\(requestData.count)", forHTTPHeaderField: "content-length")
         urlRequest.httpBody = requestData
         urlRequest.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
         
+        print("Error -- 1")
         URLSession.shared.dataTask(with: urlRequest) { (data, httpUrlResponse, error) in
             
-            if(error == nil && data != nil && data?.count != 0){
+            if error != nil {
+                
+                
+                
+                print("Error - \(error!)")
+                
+                return
+            }
+            
+            if(data != nil && data?.count != 0){
                 do {
                     
+                    print("Error -- 2 \(String(decoding: data!, as: UTF8.self))")
                     let response = try JSONDecoder().decode(T.self, from: data!)
                     compilationHandler(response)
                     print(response)
                 }
                 
                 catch let decodingError {
+                    
+                    print("Error -- 3")
                     debugPrint(decodingError)
                     
                     failureHandler(decodingError as! Error)
@@ -309,9 +317,10 @@ class ApiCallManager{
         
         
         requestBody.append("\(lineBreak)--\(boundary + lineBreak)" .data(using: .utf8)!)
-        requestBody.append("Content-Disposition: form-data; name=\"\(attachmentKey)\"; filename=\"\(fileName)\"\(lineBreak)" .data(using: .utf8)!)
+        requestBody.append("Content-Disposition: form-data; name=\"\(attachmentKey)[]\"; filename=\"\(fileName)\"\(lineBreak)" .data(using: .utf8)!)
         requestBody.append("Content-Type: image/jpeg \(lineBreak + lineBreak)" .data(using: .utf8)!) // you can change the type accordingly if you want to
         requestBody.append(imageData)
+        
         requestBody.append("\(lineBreak)--\(boundary)--\(lineBreak)" .data(using: .utf8)!)
         
         return requestBody
