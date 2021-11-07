@@ -190,6 +190,17 @@ class MasterViewController: UIViewController {
         
     }
     
+    func showAlertCommingSoon(){
+        
+        
+        DispatchQueue.main.async {
+
+        self.masterAlertPopup(title: "Message", message: "We are working on this feature")
+        
+        }
+    }
+    
+    
     
     func showAlertPopupWithMessage(msg:String){
         
@@ -272,6 +283,7 @@ class MasterViewController: UIViewController {
         
         
     }
+    
     
     
     

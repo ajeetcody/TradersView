@@ -36,7 +36,8 @@ class ChatViewController: MasterViewController {
         super.viewDidLoad()
 
         self.view.layoutIfNeeded()
-        
+        self.showAlertCommingSoon()
+
         
         
     }
@@ -51,7 +52,7 @@ class ChatViewController: MasterViewController {
     
     @IBAction func notificationButtonAction(_ sender: Any) {
         
-        
+        self.showAlertCommingSoon()
     }
     
     @IBAction func messageButtonAction(_ sender: Any) {

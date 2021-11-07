@@ -30,11 +30,22 @@
                                     <segue destination="gEZ-4U-iD1" kind="presentation" modalPresentationStyle="fullScreen" id="PDg-u1-HSG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vR-rF-XAe">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5vR-rF-XAe">
                                 <rect key="frame" x="121.5" y="657" width="171" height="30"/>
-                                <state key="normal" title="Terms and Privacy Policy">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Terms and Privacy Policy">
+                                            <attributes>
+                                                <color key="NSColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <font key="NSFont" metaFont="system" size="15"/>
+                                                <integer key="NSUnderline" value="1"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                 </state>
+                                <connections>
+                                    <action selector="privacyButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gwC-mX-yyk"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to TradersView" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13u-k9-o77">
                                 <rect key="frame" x="75" y="547" width="264.5" height="30"/>
@@ -104,6 +115,9 @@
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="gEZ-4U-iD1" id="usj-m8-Iqg"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="a1A-Xe-Apj">
                                                 <rect key="frame" x="40" y="100" width="334" height="50"/>
@@ -114,6 +128,9 @@
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="gEZ-4U-iD1" id="PPr-4k-nSV"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQ6-CK-Zb6">
                                                 <rect key="frame" x="40" y="180" width="334" height="55"/>
@@ -142,6 +159,9 @@
                                                 <state key="normal" title="Facebook">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="facebookButtonAction:" destination="gEZ-4U-iD1" eventType="touchUpInside" id="uaw-1w-TNZ"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NRq-dh-gIz">
                                                 <rect key="frame" x="40" y="378" width="334" height="55"/>
@@ -155,13 +175,14 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ep-6H-tG1">
-                                                <rect key="frame" x="118" y="455" width="178" height="30"/>
+                                                <rect key="frame" x="113" y="455" width="188" height="32"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle">
                                                         <fragment content="Have an account? Sign up">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="15"/>
+                                                                <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <font key="NSFont" metaFont="system" size="18"/>
                                                                 <integer key="NSUnderline" value="1"/>
                                                             </attributes>
                                                         </fragment>
@@ -267,7 +288,7 @@
                                 <rect key="frame" x="0.0" y="100" width="414" height="762"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZO-Ye-dze">
-                                        <rect key="frame" x="0.0" y="80" width="414" height="1200"/>
+                                        <rect key="frame" x="0.0" y="40" width="414" height="1200"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NAY-Cd-vJx">
                                                 <rect key="frame" x="40" y="90" width="334" height="50"/>
@@ -276,7 +297,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="hLZ-7c-xfQ"/>
                                                 </constraints>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="5sJ-wD-n2T" id="8Hx-Vk-4e3"/>
@@ -289,7 +310,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="gii-np-9Ev"/>
                                                 </constraints>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="5sJ-wD-n2T" id="Acf-I9-hVh"/>
@@ -302,7 +323,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="soL-36-Qnj"/>
                                                 </constraints>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="5sJ-wD-n2T" id="81h-cD-Kez"/>
@@ -315,7 +336,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="P8V-TI-FC8"/>
                                                 </constraints>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="5sJ-wD-n2T" id="PJ2-Rn-2mZ"/>
@@ -372,7 +393,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="RG6-cf-w7e"/>
                                                 </constraints>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="5sJ-wD-n2T" id="hEz-uf-RuP"/>
@@ -385,7 +406,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="W6u-n2-0ex"/>
                                                 </constraints>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="5sJ-wD-n2T" id="dwm-H7-awO"/>
@@ -435,7 +456,7 @@
                                     <constraint firstItem="WZO-Ye-dze" firstAttribute="width" secondItem="2yP-mt-Nmz" secondAttribute="width" id="JZp-ll-nw9"/>
                                     <constraint firstAttribute="trailing" secondItem="WZO-Ye-dze" secondAttribute="trailing" id="PTS-pd-3Qa"/>
                                     <constraint firstItem="WZO-Ye-dze" firstAttribute="height" secondItem="2yP-mt-Nmz" secondAttribute="height" priority="750" id="TSo-5r-Y3a"/>
-                                    <constraint firstItem="WZO-Ye-dze" firstAttribute="top" secondItem="2yP-mt-Nmz" secondAttribute="top" constant="80" id="aqj-ZA-S1q"/>
+                                    <constraint firstItem="WZO-Ye-dze" firstAttribute="top" secondItem="2yP-mt-Nmz" secondAttribute="top" constant="40" id="aqj-ZA-S1q"/>
                                     <constraint firstAttribute="bottom" secondItem="WZO-Ye-dze" secondAttribute="bottom" id="iiv-sG-ybB"/>
                                     <constraint firstItem="WZO-Ye-dze" firstAttribute="leading" secondItem="2yP-mt-Nmz" secondAttribute="leading" id="w9C-gU-fOU"/>
                                 </constraints>

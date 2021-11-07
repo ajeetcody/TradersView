@@ -403,6 +403,8 @@ class UserProfileViewController: MasterViewController {
         
         print("\(_sender.tag)")
         print("\(_sender.superview?.tag ?? 0)")
+        self.showAlertCommingSoon()
+
         
     }
     
@@ -418,13 +420,20 @@ class UserProfileViewController: MasterViewController {
                     
                     if results.messages == "Follow"{
                         
-                        _sender.setTitle("Following", for: .normal)
+                        DispatchQueue.main.async {
+                        
+                            _sender.setTitle("Following", for: .normal)
+                        }
+                        
+                        
                         
                     }
                     else if results.messages == "Unfollow"{
                         
+                        DispatchQueue.main.async {
+
                         _sender.setTitle("Follow", for: .normal)
-                        
+                        }
                     }
                     self.callApiToFetchUserProfile()
                     

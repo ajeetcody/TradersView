@@ -48,6 +48,13 @@ class SplashViewController: MasterViewController {
         }
     }
     
+    @IBAction func privacyButtonAction(_ sender: Any) {
+        
+        self.showAlertCommingSoon()
+
+        
+    }
+    
 //    func unarchiveObjectLoginData(completionHandler:@escaping()->Void){
 //        
 //        

@@ -66,6 +66,14 @@ class LoginViewController: MasterViewController {
     //MARK:- UIButton Action -----
     
     
+    @IBAction func facebookButtonAction(_ sender: Any) {
+        
+        self.showAlertCommingSoon()
+
+        
+    }
+    
+    
     @IBAction func loginButtonAction(_ sender: Any) {
         
         if !self.isTextfieldEmpty(textFields: [self.emailIDTextfield, self.passwordTextfield]){
@@ -85,6 +93,8 @@ class LoginViewController: MasterViewController {
     }
     
     @IBAction func googlePlusButtonAction(_ sender: Any) {
+        
+        
         let signInConfig = GIDConfiguration.init(clientID: "477146900600-j15835agol5sg82r8j2arur69r2gmd24.apps.googleusercontent.com")
         
         
@@ -92,6 +102,8 @@ class LoginViewController: MasterViewController {
             guard error == nil else { return }
             
             guard let user = user else { return }
+            
+            self.showAlertCommingSoon()
             
             //                let emailAddress = user.profile?.email
             //
@@ -150,7 +162,7 @@ class LoginViewController: MasterViewController {
                 DispatchQueue.main.async {
                     
                     
-                    self.showTabbarController(animated: true)
+                   // self.showTabbarController(animated: true)
                     self.dismiss(animated: true, completion: nil)
                     
                 }
@@ -206,5 +218,17 @@ class LoginViewController: MasterViewController {
     
 }
 
-
+extension LoginViewController:UITextFieldDelegate{
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    
+    
+}
 

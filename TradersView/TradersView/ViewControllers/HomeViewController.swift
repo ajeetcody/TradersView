@@ -471,11 +471,17 @@ class HomeViewController: MasterViewController {
         print("\(_sender.tag)")
         print("\(_sender.superview?.tag ?? 0)")
         
+        self.showAlertCommingSoon()
+        
     }
     
     @IBAction func searchButtonAction(_ sender: Any) {
         
         self.showSearchViewController()
+    }
+    @IBAction func notificationButtonAction(_ sender: Any) {
+        
+        self.showAlertCommingSoon()
     }
     
     func updateHeight() {
@@ -995,7 +1001,30 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
         
+        
         print("You selected cell #\(indexPath.item)!")
+        
+        
+        if collectionView.tag == 101{
+            
+            let obj = self.arrayPopular[indexPath.row]
+            
+            guard let url = URL(string: obj.link) else {
+              return //be safe
+            }
+            
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+            
+        }
+        else if collectionView.tag == 102{
+            
+            
+            self.showAlertCommingSoon()
+            
+        }
+
+
         
         
         

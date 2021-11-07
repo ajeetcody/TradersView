@@ -158,13 +158,15 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
         print("\(#function)")
         
-        
+        self.showAlertCommingSoon()
+
     }
     
     @IBAction func locationButtonAction(_ sender: Any) {
         print("\(#function)")
         
-        
+        self.showAlertCommingSoon()
+
     }
     
     @IBAction func imgButtonAction(_ sender: Any) {
@@ -217,7 +219,7 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
         if UIImagePickerController.isSourceTypeAvailable(sourceType){
         
-            imgPickerController.sourceType = .photoLibrary
+            imgPickerController.sourceType = .camera
             imgPickerController.allowsEditing = true
             imgPickerController.delegate = self
             imgPickerController.modalPresentationStyle = .fullScreen
