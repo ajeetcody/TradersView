@@ -9,6 +9,8 @@
 
 // 349
 
+//345 ruchika
+
 import Foundation
 
 class ApiRequestModel{
@@ -18,6 +20,31 @@ class ApiRequestModel{
         return [:]
     }
     
+    
+}
+
+class RemoveFollowerRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var follower_id:String?
+    
+    
+    init(_user_id:String, _follower_id:String) {
+        
+        self.user_id = _user_id
+        self.follower_id = _follower_id
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "follower_id":self.follower_id ?? ""]
+        
+        
+    }
     
 }
 

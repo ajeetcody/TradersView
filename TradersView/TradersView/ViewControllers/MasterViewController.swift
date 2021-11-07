@@ -88,6 +88,24 @@ class MasterViewController: UIViewController {
         
     }
     
+    func pushFollowerFollowingList(userId:String, currentUserId:String, flag:String){
+        
+        
+        DispatchQueue.main.async {
+            
+            let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+            let vc:FollowersFollowingViewController = dashBoardStoryBoard.instantiateViewController(identifier: "FollowersFollowingViewController")
+            
+            vc.currentUserId = currentUserId
+            vc.userId = userId
+            vc.fetchFlag = flag
+            
+            self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+            
+        }
+        
+    }
+    
     func pushUserProfileScreen(userId:String, currentUserId:String){
         
         

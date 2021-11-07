@@ -27,9 +27,16 @@ import Foundation
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
 
+// MARK: - Remove_follower
+struct RemoveFollowerResponse: Codable {
+    let status: Int
+    let messages: String
+}
+
+
 // MARK: - FollowersFollowingResponse
 struct FollowersFollowingResponse: Codable {
-    let data: [FollowersFollowingResponseDatum]
+    let data: [FollowersFollowingResponseDatum]?
     let status: Int
     let messages: String
 }
@@ -420,12 +427,7 @@ struct FollowerFollowinglistDatum: Codable {
     }
 }
 
-/// Remove Follower
-// MARK: - RemoveFollower
-struct RemoveFollower: Codable {
-    let status: Int
-    let messages: String
-}
+
 
 /// Contactus
 // MARK: - Contactus

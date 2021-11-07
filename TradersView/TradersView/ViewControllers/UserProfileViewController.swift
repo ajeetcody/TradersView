@@ -381,16 +381,19 @@ class UserProfileViewController: MasterViewController {
     
     @objc func followersViewTapGesture(gesture:UITapGestureRecognizer){
         
+        print("\(#function)")
         
+        self.pushFollowerFollowingList(userId: self.currentUserId, currentUserId: self.userIDOfProfile, flag: "0")
         
         
     }
     
     @objc func followingViewTapGesture(gesture:UITapGestureRecognizer){
         
-       
+        print("\(#function)")
         
-        
+        self.pushFollowerFollowingList(userId: self.currentUserId, currentUserId: self.userIDOfProfile, flag: "1")
+
         
         
     }
@@ -400,6 +403,44 @@ class UserProfileViewController: MasterViewController {
         
         print("\(_sender.tag)")
         print("\(_sender.superview?.tag ?? 0)")
+        
+    }
+    
+    @objc func followButtonAction(_sender:UIButton){
+        
+        
+                    
+        let request = FollowRequest(_user_id: self.currentUserId, _follow_id: self.userIDOfProfile)
+            
+            ApiCallManager.shared.apiCall(request: request, apiType: .FOLLOW, responseType: FollowResponse.self, requestMethod: .POST) { (results) in
+                
+                if results.status == 1{
+                    
+                    if results.messages == "Follow"{
+                        
+                        _sender.setTitle("Following", for: .normal)
+                        
+                    }
+                    else if results.messages == "Unfollow"{
+                        
+                        _sender.setTitle("Follow", for: .normal)
+                        
+                    }
+                    self.callApiToFetchUserProfile()
+                    
+                }
+                else if results.status == 0 {
+                    
+                    
+                    self.showAlertPopupWithMessage(msg: results.messages)
+                }
+                
+            } failureHandler: { (error) in
+                
+                self.showErrorMessage(error: error)
+            }
+       
+        
         
     }
     
@@ -531,6 +572,18 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                     
                 }
                 
+                if self.userProfileObj?.isFollow == 1 {
+                    
+                    cell.followButton.setTitle("Following", for: .normal)
+                    
+                }
+                else {
+                    
+                    
+                    cell.followButton.setTitle("Follow", for: .normal)
+                    
+                }
+                
                 cell.nameLabel.text = self.userProfileObj?.name?.capitalized
                 
                 cell.accuracyLabel.text = self.userProfileObj?.accuracy
@@ -546,9 +599,14 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 cell.coverImageView.contentMode = .scaleToFill
                 
+                
                 cell.followersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.followersViewTapGesture(gesture:))))
                 cell.followingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.followingViewTapGesture(gesture:))))
 
+                cell.followButton.addTarget(self, action: #selector(self.followButtonAction(_sender:)), for: .touchUpInside)
+                
+                
+                
                 
                 
                 
