@@ -530,7 +530,7 @@ struct GetPostListByUserIdResponse: Codable {
 struct GetPostListByUserIdResponseDatum: Codable {
     let postid, userID, username: String
     let profileImg: String
-    let date, message, like: String
+    var date, message, like: String
     let isLike: Int
     let comment: String
     let isComment: Int

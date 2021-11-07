@@ -284,8 +284,34 @@ class MasterViewController: UIViewController {
         
     }
     
-    
-    
+    func changeDateFormateToDisplay(dateString:String)->String{
+        
+        
+        print("Date before - \(dateString) \n ")
+        
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        dateFormatter.locale = NSLocale.current
+
+           
+
+        
+        guard let myDate = dateFormatter.date(from: dateString) else {
+            fatalError("ERROR: Date conversion failed due to mismatched format.")
+        }
+            dateFormatter.dateFormat = "MMM dd, YYYY, hh:mm a"
+            let somedateString = dateFormatter.string(from: myDate)
+        
+        
+        
+
+        print("Date after - \(somedateString)")
+        return somedateString
+        
+    }
+   
     
 
     

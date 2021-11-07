@@ -677,7 +677,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             let obj = self.arrayMyPost[indexPath.row]
             
             cell.nameLabel.text = obj.username.capitalized
-            cell.dateLabel.text = obj.date
+            cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
             cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
             cell.postCaptionLabel.text = obj.message
             
@@ -768,7 +768,8 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             
             
             cell.nameLabel.text = obj.username
-            cell.dateLabel.text = obj.date
+            
+            cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
             cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
             cell.postCaptionLabel.text = obj.message
             
