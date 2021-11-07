@@ -42,8 +42,8 @@ class LoginViewController: MasterViewController {
         self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
         
         
-        self.emailIDTextfield.text = "ra168@gmail.com"
-        self.passwordTextfield.text = "qwerty123"
+       // self.emailIDTextfield.text = "ra168@gmail.com"
+       // self.passwordTextfield.text = "qwerty123"
         
         self.emailIDTextfield.setLeftPaddingPoints(10.0)
         self.emailIDTextfield.setRightPaddingPoints(10.0)
