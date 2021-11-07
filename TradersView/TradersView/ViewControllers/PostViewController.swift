@@ -219,7 +219,7 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
         if UIImagePickerController.isSourceTypeAvailable(sourceType){
         
-            imgPickerController.sourceType = .camera
+            imgPickerController.sourceType = sourceType
             imgPickerController.allowsEditing = true
             imgPickerController.delegate = self
             imgPickerController.modalPresentationStyle = .fullScreen
