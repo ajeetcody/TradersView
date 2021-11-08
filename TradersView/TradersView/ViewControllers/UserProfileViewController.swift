@@ -91,7 +91,6 @@ class UserProfileViewController: MasterViewController {
             
             if  let userData:LoginUserData = self.appDelegate.loginResponseData {
                 
-                
                 self.currentUserId = userData.id
                 self.userIDOfProfile = userData.id
                 self.callApiToFetchUserProfile()
@@ -262,6 +261,7 @@ class UserProfileViewController: MasterViewController {
                     
                     if self.myPostPageNumber == 0 {
                         
+                        
                         self.arrayMyPost.removeAll()
                         
                     }
@@ -271,6 +271,7 @@ class UserProfileViewController: MasterViewController {
                 
                 DispatchQueue.main.async {
                     
+                    print("post count - 1 - \(self.arrayMyPost.count)")
                     self.tableViewUserProfile.reloadData()
                 }
             }
@@ -285,6 +286,8 @@ class UserProfileViewController: MasterViewController {
                     if self.myPostPageNumber == 0 {
                         
                         self.arrayMyPost.removeAll()
+                        print("post count - 2 - \(self.arrayMyPost.count)")
+
                         self.tableViewUserProfile.reloadData()
                         self.showAlertPopupWithMessage(msg: results.messages)
 
