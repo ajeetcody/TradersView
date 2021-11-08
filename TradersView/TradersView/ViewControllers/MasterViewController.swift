@@ -50,6 +50,20 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Present ----
     
+    func showBlockAndMuteScreen(isBLock:Bool){
+       
+        DispatchQueue.main.async {
+        
+        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+            let vc:BlockAndMuteViewController = dashBoardStoryBoard.instantiateViewController(identifier: "BlockAndMuteViewController")
+            
+            vc.isBlockUserList = isBLock
+            
+        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+        
+        }
+        
+    }
     
     func showResetPasswordScreen(){
        

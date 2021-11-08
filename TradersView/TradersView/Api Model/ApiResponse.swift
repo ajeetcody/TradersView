@@ -26,6 +26,33 @@ import Foundation
 //   let blockuser = try? newJSONDecoder().decode(Blockuser.self, from: jsonData)
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
+
+
+
+// MARK: - GetBlockResponse
+struct GetBlockAndMuteResponse: Codable {
+    let data: [GetBlockAndMuteResponseDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct GetBlockAndMuteResponseDatum: Codable {
+    let userid, name, username: String
+    let profileImg: String
+    let datatime: String
+
+    enum CodingKeys: String, CodingKey {
+        case userid, name, username
+        case profileImg = "profile_img"
+        case datatime
+    }
+}
+
+
+
+
+
 // MARK: - Change_Password
 struct ChangePasswordResponse: Codable {
     let status: Int
@@ -712,6 +739,13 @@ struct LoginUserData: Codable {
 
 // MARK: - Block-Action-Response
 struct BlockActionResponse: Codable, ResponseModel {
+    let status: Int
+    let messages: String
+}
+
+
+// MARK: - MuteActionResponse
+struct MuteActionResponse: Codable, ResponseModel {
     let status: Int
     let messages: String
 }

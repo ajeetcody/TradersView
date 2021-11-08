@@ -40,6 +40,35 @@ class FollowersFollowingViewController: MasterViewController {
        
         super.viewDidLoad()
 
+        if let flag = self.fetchFlag{
+            
+            
+            if flag == "0"{
+                
+                // - Remove operation (followers)
+                
+                self.screenHeadingLabel.text = "Followers"
+                
+            }
+            else if flag == "1"{
+                
+                // - Unfollowe operation (following)
+                
+                
+                self.screenHeadingLabel.text = "Following"
+                
+            }
+            
+            
+            
+        }
+        else{
+            
+            self.screenHeadingLabel.text = ""
+
+            
+        }
+        
         
         
     }

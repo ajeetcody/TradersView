@@ -131,11 +131,15 @@ class SettingsViewController: MasterViewController {
     func blockAccountAction(){
         print("\(#function)")
         
+        self.showBlockAndMuteScreen(isBLock: true)
+        
     }
     
     func muteUserAction(){
         
         print("\(#function)")
+        
+        self.showBlockAndMuteScreen(isBLock: false)
     }
     
     func postBanByYou(){

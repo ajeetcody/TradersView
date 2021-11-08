@@ -11,6 +11,24 @@
 
 //345 ruchika
 
+/*
+ 
+ {
+     "data": [
+         {
+             "userid": "319",
+             "name": "k",
+             "username": "Vibrate Google ",
+             "profile_img": "https://spsofttech.com/projects/treader/images/profilepic/1635241586_ed4fbb31b2131c8f167b.png",
+             "datatime": "22-10-2021 17:03"
+         }
+     ],
+     "status": 1,
+     "messages": "Mute User Load SuccessFully..."
+ }
+ 
+ */
+
 import Foundation
 
 class ApiRequestModel{
@@ -21,7 +39,12 @@ class ApiRequestModel{
     }
     
     
+    
+    
+    
 }
+
+
 
 class ResetPasswordRequest:ApiRequestModel{
    
@@ -494,6 +517,31 @@ class LogoutRequest:ApiRequestModel {
     }
     
 }
+
+class MuteActionRequest:ApiRequestModel {
+    
+    var user_id:String?
+    var mute_user_id:String?
+    
+    init(_user_id:String, _mute_user_id:String) {
+        
+        self.user_id = _user_id
+        self.mute_user_id = _mute_user_id
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return [ "user_id":self.user_id ?? "",
+        
+                 "mute_user_id":self.mute_user_id ?? ""
+        ]
+    }
+    
+}
+
+
 class BlockActionRequest:ApiRequestModel {
     
     var user_id:String?
@@ -512,6 +560,30 @@ class BlockActionRequest:ApiRequestModel {
         return [ "user_id":self.user_id ?? "",
         
                  "block_user_id":self.block_user_id ?? ""
+        ]
+    }
+    
+}
+
+
+class GetBlockAndMuteUserRequest:ApiRequestModel {
+    
+    var user_id:String?
+    var page:Int?
+    
+    init(_user_id:String, _page:Int) {
+        
+        self.user_id = _user_id
+        self.page = _page
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return [ "user_id":self.user_id ?? "",
+        
+                 "page":self.page ?? 0
         ]
     }
     
