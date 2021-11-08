@@ -23,6 +23,37 @@ class ApiRequestModel{
     
 }
 
+class ResetPasswordRequest:ApiRequestModel{
+   
+    var id:String?
+    var old_password:String?
+    var new_password:String?
+    var confirm_password:String?
+    
+    
+    init(_id:String, _old_password:String, _new_password:String, _confirm_password:String) {
+    
+        self.id = _id
+        self.old_password = _old_password
+        self.new_password = _new_password
+        self.confirm_password = _confirm_password
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["id":self.id ?? "",
+                "old_password":self.old_password ?? "",
+                "new_password":self.new_password ?? "",
+                "confirm_password":  self.confirm_password ?? ""]
+        
+        
+    }
+    
+}
+
 class RemoveFollowerRequest:ApiRequestModel{
    
     var user_id:String?

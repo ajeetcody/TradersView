@@ -51,6 +51,19 @@ class MasterViewController: UIViewController {
     //MARK:- Viewcontroller Present ----
     
     
+    func showResetPasswordScreen(){
+       
+        DispatchQueue.main.async {
+        
+        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+        let vc = dashBoardStoryBoard.instantiateViewController(identifier: "ChangePasswordViewController")
+            
+        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+        
+        }
+        
+    }
+    
     
     func showSearchViewController(){
        

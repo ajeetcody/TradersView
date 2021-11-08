@@ -231,6 +231,7 @@ class SettingsViewController: MasterViewController {
         }
         
         
+        
 
         
         
@@ -252,6 +253,25 @@ class SettingsViewController: MasterViewController {
 }
 
 extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+    
+    
+    if indexPath.section == 1 {
+    
+    if indexPath.row == 1{
+    
+    
+    self.showResetPasswordScreen()
+    
+    
+    }
+    
+    
+    }
+    
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
@@ -511,6 +531,9 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
         
         return UITableViewCell()
     }
+    
+    
+    
     
     
 }

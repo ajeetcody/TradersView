@@ -26,7 +26,11 @@ import Foundation
 //   let blockuser = try? newJSONDecoder().decode(Blockuser.self, from: jsonData)
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
-
+// MARK: - Change_Password
+struct ChangePasswordResponse: Codable {
+    let status: Int
+    let messages: String
+}
 // MARK: - Remove_follower
 struct RemoveFollowerResponse: Codable {
     let status: Int
