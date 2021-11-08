@@ -26,6 +26,8 @@ class SearchViewController: MasterViewController {
     
     var searchTextStr:String = ""
     
+    //MARK:- UIViewcontroller lifecycle methods ---
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -112,6 +114,9 @@ class SearchViewController: MasterViewController {
         
     }
     
+    //MARK:- UIButton action methods ----
+
+    
     @IBAction func closeButtonAction(_ sender: Any) {
         
         self.navigationController?.popViewController(animated: true)
@@ -120,7 +125,8 @@ class SearchViewController: MasterViewController {
     }
     
 
-    
+    //MARK:- UITapgesture action methods ----
+
     @objc func profilePicImageViewTapGesture(gesture:UITapGestureRecognizer){
         
         
@@ -163,7 +169,6 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource{
         
         let searchUser = self.searchResult![indexPath.row]
         
-        print("imageURL - \(searchUser.profileImg)")
         cell.profileImageView.sd_setImage(with: URL(string: "\(searchUser.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
         cell.profileImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
         

@@ -22,6 +22,7 @@ class SignupViewController: MasterViewController {
     
     
     //MARK:- UIViewcontroller lifecycle methods ---
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -132,16 +133,16 @@ class SignupViewController: MasterViewController {
         ApiCallManager.shared.apiCall(request: registerAPIRequest, apiType: .REGISTER, responseType: RegisterResponse.self, requestMethod:.POST) { (result) in
             
             
-            let registerResponse:RegisterResponse = result as! RegisterResponse
+            let registerResponse:RegisterResponse = result
             
-            if registerResponse.userdata == nil {
+            if registerResponse.status == 0  {
                 
                 self.showAlertPopupWithMessage(msg: registerResponse.messages)
                 
             }
             else{
                 
-                self.showAlertPopupWithMessageWithHandler(msg: "Register Successfully!!") {
+                self.showAlertPopupWithMessageWithHandler(msg: registerResponse.messages) {
                     
                     self.dismiss(animated: true, completion: nil)
                     

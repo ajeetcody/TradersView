@@ -8,7 +8,7 @@
 import UIKit
 
 class SettingsViewController: MasterViewController {
-
+    
     
     @IBOutlet weak var tableViewSettings: UITableView!
     
@@ -19,18 +19,20 @@ class SettingsViewController: MasterViewController {
     let rowHeadings:[[String]] =  [["Profile", "Push Notification", "Dark mode"], ["Username","Password","Security"],["Private Account","Blocked Account", "Mute User", "Post ban by You (Police)", "User ban by you (Police)", "Comment", "Tag", "Mention"],["Contact Us"],["SP Softech", "Privacy Policy"],["Subscription", "App version", "Rate our app", "Privacy Policy", "Ads", "Verify ME",""]]
     
     let rowValueTitle:[[String]] =  [["Edit", "", ""], ["","",""],["","View All", "View All", "View All", "View All", "", "", ""],[""],["", ""],["View Plan", "" , "Rate", "Read", "Available Soon", "",""]]
-
+    
+    
+    //MARK:- UIViewcontroller lifecycle methods ----
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.tableViewSettings.estimatedRowHeight = 88.0
         self.tableViewSettings.rowHeight = UITableView.automaticDimension
         // Do any additional setup after loading the view.
     }
     
     
- 
+    
     
     //MARK:- Cell button action methods -----
     
@@ -43,10 +45,10 @@ class SettingsViewController: MasterViewController {
         
         if sender.superview?.tag == 0 {
             
-
+            
             
             if sender.tag == 0{
-
+                
                 self.editProfileAction()
                 
                 
@@ -74,7 +76,7 @@ class SettingsViewController: MasterViewController {
             else  if sender.tag == 3{
                 
                 print("Post Ban by You")
-
+                
                 self.postBanByYou()
                 
             }
@@ -169,19 +171,19 @@ class SettingsViewController: MasterViewController {
     
     func logoutAction(){
         
-
+        
         self.areYouSureAlertPopup(title: "Logout?", msg: "Are you sure for logout?") {
             
-        
+            
             self.callLogOutApi()
             
         } noHandler: {
             
             
         }
-
         
-
+        
+        
         
     }
     
@@ -194,7 +196,7 @@ class SettingsViewController: MasterViewController {
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             print("Login id  : - \(userData.id)")
-
+            
             let logoutRequest = LogoutRequest(id: userData.id)
             
             ApiCallManager.shared.apiCall(request: logoutRequest, apiType: .LOGOUT, responseType: LogoutResponse.self, requestMethod:.POST) { (results) in
@@ -228,7 +230,7 @@ class SettingsViewController: MasterViewController {
                 
                 
             }
-
+            
             
             
             
@@ -236,55 +238,55 @@ class SettingsViewController: MasterViewController {
         
         
         
-
+        
         
         
         
         
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-    
-    
-    if indexPath.section == 1 {
-    
-    if indexPath.row == 1{
-    
-    
-    self.showResetPasswordScreen()
-    
-    
-    }
-    
-    
-    }
-    else if indexPath.section == 3{
         
         
-        self.showContactUsScreen()
+        if indexPath.section == 1 {
+            
+            if indexPath.row == 1{
+                
+                
+                self.showResetPasswordScreen()
+                
+                
+            }
+            
+            
+        }
+        else if indexPath.section == 3{
+            
+            
+            self.showContactUsScreen()
+            
+        }
         
-    }
-    
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         
         return UITableView.automaticDimension
         
@@ -341,14 +343,14 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             if indexPath.row == 0 {
                 
                 let cell:SettingsCellLabelAndButton = tableView.dequeueReusableCell(withIdentifier: "SettingsCellLabelAndButton") as! SettingsCellLabelAndButton
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 cell.linkButton.tag = indexPath.row
                 cell.linkButton.superview?.tag = indexPath.section
                 
                 cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
-
+                
                 print("Title buttons ----- \(rowValueArray[indexPath.row])")
                 return cell
                 
@@ -356,7 +358,7 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             else{
                 
                 let cell:SettingsCellLabelAndSwitch = tableView.dequeueReusableCell(withIdentifier: "SettingsCellLabelAndSwitch") as! SettingsCellLabelAndSwitch
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 
                 return cell
@@ -367,14 +369,14 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
         }
         else if indexPath.section == 1 {
             
-           
+            
             if indexPath.row == 0 {
                 
                 let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 if  let userData:LoginUserData = self.appDelegate.loginResponseData{
-
+                    
                     cell.detailsLabel.text = userData.username
                     
                 }
@@ -391,15 +393,15 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             else{
                 
                 let cell:SettingsCellLabelAndButton = tableView.dequeueReusableCell(withIdentifier: "SettingsCellLabelAndButton") as! SettingsCellLabelAndButton
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 
                 cell.linkButton.tag = indexPath.row
                 cell.linkButton.superview?.tag = indexPath.section
-
+                
                 cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
-
+                
                 
                 return cell
                 
@@ -415,7 +417,7 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             if indexPath.row == 0 {
                 
                 let cell:SettingsCellLabelAndSwitch = tableView.dequeueReusableCell(withIdentifier: "SettingsCellLabelAndSwitch") as! SettingsCellLabelAndSwitch
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 
                 return cell
@@ -426,15 +428,15 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 
                 
                 let cell:SettingsCellLabelAndButton = tableView.dequeueReusableCell(withIdentifier: "SettingsCellLabelAndButton") as! SettingsCellLabelAndButton
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 cell.linkButton.tag = indexPath.row
                 cell.linkButton.superview?.tag = indexPath.section
-
+                
                 cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
-
-
+                
+                
                 return cell
                 
             }
@@ -443,11 +445,11 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 
                 
                 let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.detailsLabel.text = "<Working>"
                 return cell
-
+                
                 
                 
             }
@@ -458,12 +460,12 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             
             
             let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
-
+            
             cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
             cell.detailsLabel.text = rowValueArray[indexPath.row]
-
+            
             return cell
-
+            
             
             
             
@@ -473,27 +475,27 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             
             
             let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
-
+            
             cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
             cell.detailsLabel.text = rowValueArray[indexPath.row]
             return cell
-
+            
             
             
         }
         else if indexPath.section == 5 {
             
-             if indexPath.row == 1 {
+            if indexPath.row == 1 {
                 
                 let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
-
+                
                 cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
                 cell.detailsLabel.text = self.appVersion
                 return cell
-
-               
+                
+                
             }
-             else if indexPath.row == 0 || indexPath.row == 2 || indexPath.row == 3 {
+            else if indexPath.row == 0 || indexPath.row == 2 || indexPath.row == 3 {
                 
                 let cell:SettingsCellLabelAndButton = tableView.dequeueReusableCell(withIdentifier: "SettingsCellLabelAndButton") as! SettingsCellLabelAndButton
                 
@@ -502,9 +504,9 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 cell.linkButton.underlineTextButton(title: rowValueArray[indexPath.row], forState: .normal)
                 cell.linkButton.tag = indexPath.row
                 cell.linkButton.superview?.tag = indexPath.section
-
+                
                 cell.linkButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
-
+                
                 
                 
                 
@@ -512,34 +514,34 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 
                 
                 
-             }
-           else if indexPath.row == 6 {
+            }
+            else if indexPath.row == 6 {
                 
                 let cell:SettingsCellButtonOnly = tableView.dequeueReusableCell(withIdentifier: "SettingsCellButtonOnly") as! SettingsCellButtonOnly
                 
-            cell.logoutButton.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+                cell.logoutButton.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
                 
-            cell.logoutButton.tag = indexPath.row
-            cell.logoutButton.superview?.tag = indexPath.section
-
-            
-            cell.logoutButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
-            
-            return cell
+                cell.logoutButton.tag = indexPath.row
+                cell.logoutButton.superview?.tag = indexPath.section
+                
+                
+                cell.logoutButton.addTarget(self, action: #selector(linkButtonAction), for: .touchUpInside)
+                
+                return cell
             }
             
-           else{
-               
-               let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
-
-               cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
-               cell.detailsLabel.text = rowValueArray[indexPath.row]
-               return cell
-
-
-           }
+            else{
+                
+                let cell:SettingsCellTwoLabels = tableView.dequeueReusableCell(withIdentifier: "SettingsCellTwoLabels") as! SettingsCellTwoLabels
+                
+                cell.titleLabelSetting.text = rowTitleArray[indexPath.row]
+                cell.detailsLabel.text = rowValueArray[indexPath.row]
+                return cell
+                
+                
+            }
             
-           
+            
             
             
         }

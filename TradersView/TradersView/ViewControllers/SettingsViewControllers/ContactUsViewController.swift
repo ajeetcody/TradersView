@@ -8,7 +8,7 @@
 import UIKit
 
 class ContactUsViewController: MasterViewController {
-
+    
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var nameTextfield: UITextField!
     
@@ -21,8 +21,12 @@ class ContactUsViewController: MasterViewController {
     
     @IBOutlet weak var commentTextView: UITextView!
     
+    
+    //MARK:- UIViewcontroller lifecycle ---
+    
+    
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
         
         
@@ -32,7 +36,7 @@ class ContactUsViewController: MasterViewController {
         self.sendButton.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 5.0)
         
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
-         
+            
             
             self.nameTextfield.text = userData.name
             self.emailIdTextfield.text = userData.email
@@ -41,7 +45,7 @@ class ContactUsViewController: MasterViewController {
             
         }
         
-
+        
     }
     
     
@@ -88,7 +92,7 @@ class ContactUsViewController: MasterViewController {
         
         
         let request = ContactRequest(_user_id: userID, _name: self.nameTextfield.text!, _phone: self.phoneNumberTextfield.text!, _email: self.emailIdTextfield.text!, _msg: self.commentTextView.text!)
-
+        
         
         ApiCallManager.shared.apiCall(request: request, apiType: .CONTACT_US, responseType: ContactusResponse.self, requestMethod: .POST) { (results) in
             
@@ -100,7 +104,7 @@ class ContactUsViewController: MasterViewController {
                 self.showAlertPopupWithMessageWithHandler(msg: results.messages) {
                     
                     DispatchQueue.main.async {
-                    
+                        
                         self.navigationController?.popViewController(animated: true)
                     }
                     
@@ -124,21 +128,21 @@ class ContactUsViewController: MasterViewController {
             
             
         }
-
+        
         
         
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension ContactUsViewController:UITextFieldDelegate{

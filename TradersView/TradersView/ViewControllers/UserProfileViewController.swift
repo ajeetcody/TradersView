@@ -52,8 +52,14 @@ class UserProfileViewController: MasterViewController {
 
     var userProfileObj:GetProfileByIDDatum?
     
+    private var myPostPageNumber:Int = 0
+    
+    private var shouldStopMyPostLoadMore:Bool = false
     
     @IBOutlet weak var tableViewUserProfile: UITableView!
+    
+    //MARK:- UIViewcontroller lifecycle ---
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,6 +113,7 @@ class UserProfileViewController: MasterViewController {
         
     }
     
+    //MARK:- UIButton action methods ---
     
     @IBAction func cancelButtonAction(_ sender: Any) {
         
@@ -114,6 +121,9 @@ class UserProfileViewController: MasterViewController {
         
         
     }
+    
+    //MARK:- API call methods -----
+    
     
     func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
         
@@ -130,7 +140,6 @@ class UserProfileViewController: MasterViewController {
                 DispatchQueue.main.async {
                 
                     self.apiCallMyPost()
-                    //self.apiCallMyPost()
                 }
                 
 
@@ -223,8 +232,9 @@ class UserProfileViewController: MasterViewController {
         
         
        
-        let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: 0)
+        let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: self.myPostPageNumber)
         
+        print("self.myPostPageNumber - \(self.myPostPageNumber)")
         
         ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
             
@@ -234,12 +244,27 @@ class UserProfileViewController: MasterViewController {
                 
                 if let data = results.data{
                     
-                    self.arrayMyPost = data
+                    if self.myPostPageNumber == 0 {
+                        
+                        self.shouldStopMyPostLoadMore = false
+                        self.arrayMyPost = data
+                    }
+                    else{
+                        
+                        self.arrayMyPost.append(contentsOf: data)
+                        
+                    }
+                    
+                    
                     
                 }
                 else{
                     
-                    self.arrayMyPost.removeAll()
+                    if self.myPostPageNumber == 0 {
+                        
+                        self.arrayMyPost.removeAll()
+                        
+                    }
                     
                     
                 }
@@ -252,7 +277,27 @@ class UserProfileViewController: MasterViewController {
             else {
                 
                 
-                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                DispatchQueue.main.async {
+                    
+                    
+                    
+                    if self.myPostPageNumber == 0 {
+                        
+                        self.arrayMyPost.removeAll()
+                        self.tableViewUserProfile.reloadData()
+                        self.showAlertPopupWithMessage(msg: results.messages)
+
+                    }
+                    else{
+                        
+                        self.shouldStopMyPostLoadMore = true
+                        
+                    }
+                    
+                    
+                }
+                
                 
                 
             }
@@ -265,6 +310,8 @@ class UserProfileViewController: MasterViewController {
         }
         
     }
+    
+    //MARK:- UITapgesture ----
     
     @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
 
@@ -756,6 +803,20 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
             }
             
+            if self.arrayMyPost.count - 1 == indexPath.row{
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    
+                    if !self.shouldStopMyPostLoadMore{
+                    
+                        self.myPostPageNumber = self.myPostPageNumber + 1
+                        self.apiCallMyPost()
+                        
+                    }
+                    
+                }
+            }
+            
             return cell
             
             
@@ -828,14 +889,14 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 case .integer(let intValue):
                     print("Integer value -- \(intValue)")
                     cell.heightPostImageView.constant = 0.0
-
-                 
+                    
+                    
                 case .string(let strUrl):
                     print("String value -- \(strUrl)")
-
-                cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                cell.heightPostImageView.constant = 130.0
-
+                    
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+                    cell.heightPostImageView.constant = 130.0
+                    
                 }
                 
                 

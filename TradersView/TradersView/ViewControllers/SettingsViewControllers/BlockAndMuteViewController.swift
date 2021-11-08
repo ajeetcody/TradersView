@@ -29,7 +29,7 @@ class BlockAndMuteViewController: MasterViewController {
     var currentUserId:String?
     
     var isBlockUserList:Bool = false // true - blockUseList, false - MuteUserList
-
+    
     var arrayBlockUsers:[GetBlockAndMuteResponseDatum]?
     
     
@@ -37,26 +37,26 @@ class BlockAndMuteViewController: MasterViewController {
     
     
     override func viewDidLoad() {
-       
+        
         super.viewDidLoad()
         
         if self.isBlockUserList{
             
-        
+            
             
             self.screenHeadingLabel.text = "Block User List"
             
         }
         else {
             
-        
+            
             
             
             self.screenHeadingLabel.text = "Mute User List"
             
         }
         
-
+        
         
         
     }
@@ -68,7 +68,7 @@ class BlockAndMuteViewController: MasterViewController {
             
             self.currentUserId = userData.id
             self.fetchUserId()
-
+            
         }
         else{
             
@@ -76,7 +76,7 @@ class BlockAndMuteViewController: MasterViewController {
         }
         
         
-     
+        
         
         
     }
@@ -87,7 +87,7 @@ class BlockAndMuteViewController: MasterViewController {
         if self.isBlockUserList{
             
             
-
+            
             self.fetchBlockAndMuteUserId(_apiType: .GET_BLOCK_USER)
         }
         else {
@@ -98,7 +98,7 @@ class BlockAndMuteViewController: MasterViewController {
         }
         
         
-      
+        
         
     }
     
@@ -130,12 +130,12 @@ class BlockAndMuteViewController: MasterViewController {
                 
                 self.showErrorMessage(error: error)
             }
-
+            
             
         }
         
         
-       
+        
         
         
     }
@@ -166,12 +166,12 @@ class BlockAndMuteViewController: MasterViewController {
                 
                 self.showErrorMessage(error: error)
             }
-
+            
             
         }
         
         
-       
+        
         
         
     }
@@ -190,9 +190,9 @@ class BlockAndMuteViewController: MasterViewController {
                     
                     self.arrayBlockUsers?.removeAll()
                     DispatchQueue.main.async {
-                    
-                    self.tableViewBlockUsers.reloadData()
-                    
+                        
+                        self.tableViewBlockUsers.reloadData()
+                        
                     }
                     self.showAlertPopupWithMessage(msg: results.messages)
                     
@@ -203,9 +203,9 @@ class BlockAndMuteViewController: MasterViewController {
                     self.arrayBlockUsers = results.data
                     
                     DispatchQueue.main.async {
-                    
-                    self.tableViewBlockUsers.reloadData()
-                    
+                        
+                        self.tableViewBlockUsers.reloadData()
+                        
                     }
                     
                 }
@@ -219,9 +219,9 @@ class BlockAndMuteViewController: MasterViewController {
                 
                 self.arrayBlockUsers?.removeAll()
                 DispatchQueue.main.async {
-                
-                self.tableViewBlockUsers.reloadData()
-                
+                    
+                    self.tableViewBlockUsers.reloadData()
+                    
                 }
             }
             
@@ -229,8 +229,8 @@ class BlockAndMuteViewController: MasterViewController {
         }
         
         
-       
-
+        
+        
         
         
     }
@@ -264,20 +264,20 @@ class BlockAndMuteViewController: MasterViewController {
         
         print(sender.tag)
         
-       
+        
         
         let userObj = self.arrayBlockUsers![sender.tag]
-
+        
         if self.isBlockUserList{
             
-        
+            
             
             self.apiCallToUnblockUser(userID: userObj.userid)
-
+            
         }
         else {
             
-
+            
             self.apiCallToUnmute(userID: userObj.userid)
             
             
@@ -292,18 +292,18 @@ class BlockAndMuteViewController: MasterViewController {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 extension BlockAndMuteViewController:UITableViewDelegate, UITableViewDataSource{
-   
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
@@ -322,30 +322,30 @@ extension BlockAndMuteViewController:UITableViewDelegate, UITableViewDataSource{
         cell.profilePictureImageView.tag = indexPath.row
         
         cell.profilePictureImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-
+        
         cell.unblockButton.tag = indexPath.row
         
         cell.unblockButton.addTarget(self, action: #selector(self.unblockButtonAction(sender:)), for: .touchUpInside)
         
-     
+        
         
         if self.isBlockUserList{
             
-        
+            
             
             cell.unblockButton.setTitle("Unblock", for: .normal)
             
-
+            
         }
         else {
             
             cell.unblockButton.setTitle("Unmute", for: .normal)
-
+            
             
             
             
         }
-            
+        
         
         cell.nameLabel.text = userObj.name.capitalized
         return cell
@@ -363,7 +363,7 @@ extension BlockAndMuteViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let _arrayList = self.arrayBlockUsers{
-        
+            
             return  _arrayList.count
             
         }

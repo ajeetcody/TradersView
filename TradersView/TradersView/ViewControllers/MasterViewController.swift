@@ -13,6 +13,8 @@ class MasterViewController: UIViewController {
     
     var appVersion:String = ""
     
+    //MARK:- UIViewcontroller lifecycle methods ---
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

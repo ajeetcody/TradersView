@@ -148,9 +148,8 @@ class LoginViewController: MasterViewController {
             
             if let userDataLogin = loginResponse.userdata?[0] {
                 
-             //   UserDefaults.standard.setValue(userDataLogin, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
                 
-               
+                
                 let userDefaults = UserDefaults.standard
                 do {
                     try userDefaults.setObject(userDataLogin, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
@@ -162,7 +161,6 @@ class LoginViewController: MasterViewController {
                 DispatchQueue.main.async {
                     
                     
-                   // self.showTabbarController(animated: true)
                     self.dismiss(animated: true, completion: nil)
                     
                 }

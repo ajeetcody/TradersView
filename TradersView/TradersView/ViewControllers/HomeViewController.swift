@@ -117,7 +117,8 @@ class HomeViewController: MasterViewController {
     
     private var userID:String?
     
-    
+    //MARK:- UIViewcontroller lifecycle methods ---
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -149,7 +150,8 @@ class HomeViewController: MasterViewController {
         
     }
     
-    
+    //MARK:- API call methods ----
+
     
     func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
         
@@ -191,6 +193,8 @@ class HomeViewController: MasterViewController {
         
         
     }
+    
+
     
     func callAllApis(){
         
@@ -352,6 +356,9 @@ class HomeViewController: MasterViewController {
         
     }
     
+    //MARK:- UITapgesture action methods ----
+
+    
     @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
         
         
@@ -465,6 +472,9 @@ class HomeViewController: MasterViewController {
         
     }
     
+    //MARK:- UIButton action methods ----
+
+    
     @objc func moreInfoButtonAction(_sender:UIButton){
         
         
@@ -474,6 +484,8 @@ class HomeViewController: MasterViewController {
         self.showAlertCommingSoon()
         
     }
+    
+
     
     @IBAction func searchButtonAction(_ sender: Any) {
         

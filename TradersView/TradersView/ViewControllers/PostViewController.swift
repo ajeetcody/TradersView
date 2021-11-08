@@ -8,7 +8,7 @@
 import UIKit
 
 class PostViewController: MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-
+    
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextview: UITextView!
     @IBOutlet weak var postButton: UIButton!
@@ -18,11 +18,13 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
     @IBOutlet weak var cancelButton: UIButton!
     
     private var userID:String?
-
+    
+    //MARK:- UIViewcontroller lifecycle methods ---
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        
         self.postButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
         
         self.postTextview.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 15.0)
@@ -35,122 +37,108 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
             
             
             self.userID = userData.id
-
+            
         }
         else{
             
             self.showAlertPopupWithMessage(msg: "User Data is not available")
         }
         
-
+        
     }
     
+    //MARK:- UIButton action methods ----
     
     @IBAction func postButtonAction(_ sender: Any) {
         
         print("\(#function)")
-      
         
-      
+        
+        
         
         let requestPost = AddPostRequest(_id: "", _user_id:self.userID! , _message: self.postTextview.text, _location: "Indore", _latitude: "22.2332", _longitude: "75.2323")
         
         
         if let postImage = self.postImageView.image{
             
-            
-            ApiCallManager.shared.UploadImage(request: requestPost, apiType: .ADD_POST, uiimagePic: postImage, responseType: AddPostResponse.self) { (response) in
-                
-                let result:AddPostResponse = response
-                print("Result - \(result.messages) -- ")
-                
-                if result.status == 1 {
-                    
-                    self.showAlertPopupWithMessageWithHandler(msg: result.messages) {
-                        
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                    
-                }
-                else{
-                    
-                    self.showAlertPopupWithMessage(msg: result.messages)
-                    
-                }
-                
-            } failureHandler: { (error) in
-                
-                self.showErrorMessage(error: error)
-                
-            }
-
-
+            self.apiCallPostWithImage(postImage: postImage, requestPost: requestPost)
             
             
             
         }
         else{
             
-            print("Request object post without image - \(#function)")
-
-            print(requestPost.toObjectString())
+            self.apiCallPostWithoutImage(requestPost:requestPost)
             
-            ApiCallManager.shared.apiCall(request: requestPost, apiType: .ADD_POST, responseType: AddPostResponse.self, requestMethod: .POST) { (results) in
+        }
+        
+        
+    }
+    
+    //MARK:- API call methods ----
+    
+    
+    func apiCallPostWithoutImage(requestPost:AddPostRequest){
+        
+        
+        
+        ApiCallManager.shared.apiCall(request: requestPost, apiType: .ADD_POST, responseType: AddPostResponse.self, requestMethod: .POST) { (results) in
+            
+            let result:AddPostResponse = results
+            print("Result - \(result.messages) -- ")
+            
+            if result.status == 1 {
                 
-                let result:AddPostResponse = results
-                print("Result - \(result.messages) -- ")
-                
-                if result.status == 1 {
+                self.showAlertPopupWithMessageWithHandler(msg: result.messages) {
                     
-                    self.showAlertPopupWithMessageWithHandler(msg: result.messages) {
-                        
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                    
+                    self.dismiss(animated: true, completion: nil)
                 }
-                else{
-                    
-                    self.showAlertPopupWithMessage(msg: result.messages)
-                    
-                }
-                
-                
-            } failureHandler: { (error) in
-                
-                self.showErrorMessage(error: error)
                 
             }
-
+            else{
+                
+                self.showAlertPopupWithMessage(msg: result.messages)
+                
+            }
             
-//            ApiCallManager.shared.apiCall(request: requestPost, apiType: .ADD_POST) { (success, data) in
-//                
-//                
-//                UserDefaults.standard.setValue(data, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
-//
-//                let parseManager:ParseManager = ParseManager()
-//                parseManager.delegate = self
-//                parseManager.parse(data: data, apiType: .ADD_POST)
-//                
-//                
-//                
-//            } failureHandler: { (error) in
-//                
-//                self.showErrorMessage(error: error)
-//                
-//            } somethingWentWrong: {
-//                
-//                self.showAlertSomethingWentWrong()
-//                
-//            }
-
             
+        } failureHandler: { (error) in
+            
+            self.showErrorMessage(error: error)
             
         }
         
         
         
         
+    }
+    
+    func apiCallPostWithImage(postImage:UIImage, requestPost:AddPostRequest){
         
+        ApiCallManager.shared.UploadImage(request: requestPost, apiType: .ADD_POST, uiimagePic: postImage, responseType: AddPostResponse.self) { (response) in
+            
+            let result:AddPostResponse = response
+            print("Result - \(result.messages) -- ")
+            
+            if result.status == 1 {
+                
+                self.showAlertPopupWithMessageWithHandler(msg: result.messages) {
+                    
+                    self.dismiss(animated: true, completion: nil)
+                }
+                
+            }
+            else{
+                
+                self.showAlertPopupWithMessage(msg: result.messages)
+                
+            }
+            
+        } failureHandler: { (error) in
+            
+            self.showErrorMessage(error: error)
+            
+        }
         
     }
     
@@ -159,14 +147,14 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         print("\(#function)")
         
         self.showAlertCommingSoon()
-
+        
     }
     
     @IBAction func locationButtonAction(_ sender: Any) {
         print("\(#function)")
         
         self.showAlertCommingSoon()
-
+        
     }
     
     @IBAction func imgButtonAction(_ sender: Any) {
@@ -212,13 +200,16 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
     }
     
+    //MARK:- Image fetch actions ---
+    
+    
     
     func fetchImages(sourceType:UIImagePickerController.SourceType){
         
         let imgPickerController = UIImagePickerController()
         
         if UIImagePickerController.isSourceTypeAvailable(sourceType){
-        
+            
             imgPickerController.sourceType = sourceType
             imgPickerController.allowsEditing = true
             imgPickerController.delegate = self
@@ -240,52 +231,33 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         print("\(#function)")
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
-                self.postImageView.image = image
-            }
-    
-            print("Testtttt")
-            picker.dismiss(animated: true, completion: nil);
+            self.postImageView.image = image
+        }
+        
+        print("Testtttt")
+        picker.dismiss(animated: true, completion: nil);
         
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil);
-
+        
         
         print("\(#function)")
     }
-   
+    
     /*
      
      
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
-
-//extension PostViewController:UIImagePickerControllerDelegate & UINavigationControllerDelegate{
-//
-//
-//
-//   public  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        if let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage {
-//            self.postImageView.image = image
-//        }
-//
-//        print("Testtttt")
-//        picker.dismiss(animated: true, completion: nil);
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//            self.dismiss(animated: true, completion: nil)
-//        }
-//
-//}
