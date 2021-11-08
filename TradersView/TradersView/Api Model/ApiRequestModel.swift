@@ -11,6 +11,10 @@
 
 //345 ruchika
 
+
+//352 - indoremp@gmail.com - qwerty
+
+
 /*
  
  {
@@ -43,6 +47,33 @@ class ApiRequestModel{
     
     
 }
+
+
+class NotificationRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var page:Int?
+    
+    
+    init(_id:String, _page:Int) {
+        
+        self.user_id = _id
+        self.page = _page
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "page":self.page ?? 0]
+        
+    }
+    
+}
+
+
 class ContactRequest:ApiRequestModel{
     
     var user_id:String?

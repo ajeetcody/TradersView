@@ -27,7 +27,29 @@ import Foundation
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
 
+// MARK: - NotificationResponse
+struct NotificationResponse: Codable {
+    let data: [NotificationResponseDatum]?
+    let status: Int
+    let messages: String
+}
 
+// MARK: - Datum
+struct NotificationResponseDatum: Codable {
+    let title: Int
+    let id, name, username, message: String
+    let postid: String?
+    let postImg: String
+    let profileImg: String
+    let date: String
+
+    enum CodingKeys: String, CodingKey {
+        case title, id, name, username, message, postid
+        case postImg = "post_img"
+        case profileImg = "profile_img"
+        case date
+    }
+}
 
 // MARK: - GetBlockResponse
 struct GetBlockAndMuteResponse: Codable {

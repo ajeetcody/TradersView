@@ -11,6 +11,7 @@
 		7712E42727389D4500036561 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E42627389D4500036561 /* ChangePasswordViewController.swift */; };
 		7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4392739156600036561 /* BlockAndMuteViewController.swift */; };
 		7712E43D27392A9600036561 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E43C27392A9600036561 /* ContactUsViewController.swift */; };
+		7712E4402739336900036561 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E43F2739336900036561 /* NotificationViewController.swift */; };
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
@@ -47,6 +48,7 @@
 		7712E42627389D4500036561 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		7712E4392739156600036561 /* BlockAndMuteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAndMuteViewController.swift; sourceTree = "<group>"; };
 		7712E43C27392A9600036561 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
+		7712E43F2739336900036561 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				773C520B2735646D0016BF3E /* CommentListViewController.swift */,
 				773C520E2735BFB90016BF3E /* UserProfileViewController.swift */,
 				7712E4112738098E00036561 /* FollowersFollowingViewController.swift */,
+				7712E43F2739336900036561 /* NotificationViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */,
 				7747D86627240BF900A81FAA /* Constants.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
+				7712E4402739336900036561 /* NotificationViewController.swift in Sources */,
 				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
 				77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */,
 				7712E42727389D4500036561 /* ChangePasswordViewController.swift in Sources */,

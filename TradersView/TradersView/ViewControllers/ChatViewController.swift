@@ -52,7 +52,7 @@ class ChatViewController: MasterViewController {
     
     @IBAction func notificationButtonAction(_ sender: Any) {
         
-        self.showAlertCommingSoon()
+        self.showNotificationScreen()
     }
     
     @IBAction func messageButtonAction(_ sender: Any) {

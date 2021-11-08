@@ -50,6 +50,22 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Present ----
     
+    func showNotificationScreen(){
+        
+        
+        //NotificationViewController
+        
+        DispatchQueue.main.async {
+        
+        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+            let vc = dashBoardStoryBoard.instantiateViewController(identifier: "NotificationViewController")
+            
+            
+        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+        
+        }
+        
+    }
     
     func showContactUsScreen(){
         

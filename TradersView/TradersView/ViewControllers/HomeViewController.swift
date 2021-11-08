@@ -481,7 +481,9 @@ class HomeViewController: MasterViewController {
     }
     @IBAction func notificationButtonAction(_ sender: Any) {
         
-        self.showAlertCommingSoon()
+        
+        self.showNotificationScreen()
+        
     }
     
     func updateHeight() {
