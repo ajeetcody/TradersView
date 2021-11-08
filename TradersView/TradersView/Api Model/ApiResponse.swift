@@ -462,7 +462,7 @@ struct FollowerFollowinglistDatum: Codable {
 
 /// Contactus
 // MARK: - Contactus
-struct Contactus: Codable {
+struct ContactusResponse: Codable {
     let status: Int
     let messages: String
 }

@@ -274,6 +274,12 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
     
     
     }
+    else if indexPath.section == 3{
+        
+        
+        self.showContactUsScreen()
+        
+    }
     
     }
     
@@ -285,7 +291,12 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        
+        if section == 3{
+            
+            
+            return 0.0
+            
+        }
         return 40.0
         
     }

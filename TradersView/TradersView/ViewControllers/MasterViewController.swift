@@ -50,6 +50,21 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Present ----
     
+    
+    func showContactUsScreen(){
+        
+        
+        DispatchQueue.main.async {
+        
+        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+            let vc = dashBoardStoryBoard.instantiateViewController(identifier: "ContactUsViewController")
+            
+            
+        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+        
+        }
+        
+    }
     func showBlockAndMuteScreen(isBLock:Bool){
        
         DispatchQueue.main.async {

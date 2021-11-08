@@ -10,6 +10,7 @@
 		7712E4122738098E00036561 /* FollowersFollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4112738098E00036561 /* FollowersFollowingViewController.swift */; };
 		7712E42727389D4500036561 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E42627389D4500036561 /* ChangePasswordViewController.swift */; };
 		7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E4392739156600036561 /* BlockAndMuteViewController.swift */; };
+		7712E43D27392A9600036561 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E43C27392A9600036561 /* ContactUsViewController.swift */; };
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
@@ -45,6 +46,7 @@
 		7712E4112738098E00036561 /* FollowersFollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersFollowingViewController.swift; sourceTree = "<group>"; };
 		7712E42627389D4500036561 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		7712E4392739156600036561 /* BlockAndMuteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAndMuteViewController.swift; sourceTree = "<group>"; };
+		7712E43C27392A9600036561 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				7712E42627389D4500036561 /* ChangePasswordViewController.swift */,
 				77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */,
 				7712E4392739156600036561 /* BlockAndMuteViewController.swift */,
+				7712E43C27392A9600036561 /* ContactUsViewController.swift */,
 			);
 			path = SettingsViewControllers;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			files = (
 				7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */,
 				7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */,
+				7712E43D27392A9600036561 /* ContactUsViewController.swift in Sources */,
 				7742A4FF273037350081F28E /* HomeViewController.swift in Sources */,
 				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
 				7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */,

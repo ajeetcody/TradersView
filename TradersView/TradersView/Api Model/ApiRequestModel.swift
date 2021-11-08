@@ -43,7 +43,38 @@ class ApiRequestModel{
     
     
 }
-
+class ContactRequest:ApiRequestModel{
+    
+    var user_id:String?
+    var name:String?
+    var phone:String?
+    var email:String?
+    var msg:String?
+    
+    
+    init(_user_id:String, _name:String, _phone:String, _email:String, _msg:String) {
+        
+        self.user_id = _user_id
+        self.name = _name
+        self.phone = _phone
+        self.email = _email
+        self.msg = _msg
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "name":self.name ?? "",
+                "phone":self.phone ?? "",
+                "email":  self.email ?? "",
+                "msg":  self.msg ?? ""]
+        
+        
+    }
+    
+}
 
 
 class ResetPasswordRequest:ApiRequestModel{
