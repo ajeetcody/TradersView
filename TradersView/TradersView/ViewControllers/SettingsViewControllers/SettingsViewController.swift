@@ -293,7 +293,7 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 3{
+        if section == 3 || section == 5{
             
             
             return 0.0

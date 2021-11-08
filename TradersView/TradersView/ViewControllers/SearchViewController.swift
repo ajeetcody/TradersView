@@ -31,8 +31,15 @@ class SearchViewController: MasterViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
         self.tableViewSearch.isHidden = true
+        
+        self.searchView.barTintColor = UIColor.clear
+        self.searchView.backgroundColor = UIColor.clear
+        self.searchView.isTranslucent = true
+        self.searchView.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        
+        self.searchView.searchTextField.textColor = UIColor.white
+        self.searchView.searchTextField.font = UIFont.systemFont(ofSize: 18.0)
 
     }
     

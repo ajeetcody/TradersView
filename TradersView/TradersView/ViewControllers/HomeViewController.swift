@@ -117,6 +117,10 @@ class HomeViewController: MasterViewController {
     
     private var userID:String?
     
+    private var myPostPageNumber:Int = 0
+    private var shouldStopMyPostLoadMore:Bool = false
+
+    
     //MARK:- UIViewcontroller lifecycle methods ---
 
     override func viewDidLoad() {
@@ -204,6 +208,7 @@ class HomeViewController: MasterViewController {
         
         self.apiCallCommunity()
         
+        self.myPostPageNumber = 0 
         self.apiCallMyFeed()
         
         
@@ -313,9 +318,9 @@ class HomeViewController: MasterViewController {
         
         
         
-        let request = GetPostListByUserIdRequest(_id: self.userID!, _page: 0)
+        let request = GetPostListByUserIdRequest(_id: self.userID!, _page: self.myPostPageNumber)
         
-        
+        print("self.myPostPageNumber - \(self.myPostPageNumber)")
         ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
             
             
@@ -324,12 +329,27 @@ class HomeViewController: MasterViewController {
                 
                 if let data = results.data{
                     
-                    self.arrayMyPost = data
+                    if self.myPostPageNumber == 0 {
+                        
+                        self.shouldStopMyPostLoadMore = false
+                        self.arrayMyPost = data
+                    }
+                    else{
+                        
+                        self.arrayMyPost.append(contentsOf: data)
+                        
+                    }
+                    
+                    
                     
                 }
                 else{
                     
-                    self.arrayMyPost.removeAll()
+                    if self.myPostPageNumber == 0 {
+                        
+                        self.arrayMyPost.removeAll()
+                        
+                    }
                     
                     
                 }
@@ -342,7 +362,27 @@ class HomeViewController: MasterViewController {
             else {
                 
                 
-                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                DispatchQueue.main.async {
+                    
+                    
+                    
+                    if self.myPostPageNumber == 0 {
+                        
+                        self.arrayMyPost.removeAll()
+                        self.tableViewHome.reloadData()
+                        self.showAlertPopupWithMessage(msg: results.messages)
+
+                    }
+                    else{
+                        
+                        self.shouldStopMyPostLoadMore = true
+                        
+                    }
+                    
+                    
+                }
+                
                 
                 
             }
@@ -874,7 +914,19 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
             }
             
-            
+            if self.arrayMyPost.count - 1 == indexPath.row{
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    
+                    if !self.shouldStopMyPostLoadMore{
+                        
+                        self.myPostPageNumber = self.myPostPageNumber + 1
+                        self.apiCallMyFeed()
+                        
+                    }
+                    
+                }
+            }
             
             
             return cell

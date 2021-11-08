@@ -554,7 +554,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if tableView.tag == 100 {
+        if tableView.tag == 100 && self.userProfileObj != nil{
             
             return 2
             

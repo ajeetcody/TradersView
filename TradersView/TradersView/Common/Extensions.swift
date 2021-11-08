@@ -86,6 +86,19 @@ extension UIView{
     
 }
 
+extension UISearchBar {
+
+    func change(textFont : UIFont?, textColor:UIColor) {
+
+    for view : UIView in (self.subviews[0]).subviews {
+
+        if let textField = view as? UITextField {
+            textField.font = textFont
+            textField.textColor = textColor
+        }
+    }
+} }
+
 
 
 extension UITextField {
