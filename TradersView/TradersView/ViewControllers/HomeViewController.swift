@@ -118,9 +118,13 @@ class HomeViewController: MasterViewController {
     private var userID:String?
     
     private var myPostPageNumber:Int = 0
-    private var shouldStopMyPostLoadMore:Bool = false
-
+    private var communityPageNumber:Int = 0
     
+    private var shouldStopMyPostLoadMore:Bool = false
+    private var shouldStopCommunityLoadMore:Bool = false
+
+    let refreshControl = UIRefreshControl()
+
     //MARK:- UIViewcontroller lifecycle methods ---
 
     override func viewDidLoad() {
@@ -129,15 +133,6 @@ class HomeViewController: MasterViewController {
         
         self.tableViewHome.estimatedRowHeight = 88.0
         self.tableViewHome.rowHeight = UITableView.automaticDimension
-        
-        
-        
-        
-        
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
         
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
@@ -151,6 +146,30 @@ class HomeViewController: MasterViewController {
             self.showAlertPopupWithMessage(msg: "User Data is not available")
         }
         
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        self.tableViewHome.addSubview(refreshControl) // not required when using UITableViewController
+
+
+        
+        
+    }
+    
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+     
+        
+        
+    }
+    
+    //MARK:- Refresh apiCall ----
+    
+    @objc func refresh(_ sender: AnyObject) {
+       
+        self.callAllApis()
         
     }
     
@@ -169,14 +188,23 @@ class HomeViewController: MasterViewController {
             if results.status == 1 {
                 
                 
+                print("like response - \(results.like)")
+                
                 DispatchQueue.main.async {
                     
-                    self.apiCallCommunity()
-                    self.apiCallMyFeed()
+                
+                if results.like != 0 {
+
+
+                    imgLike.image = UIImage(named: "like-filled")
+                }
+                else{
+
+                    imgLike.image = UIImage(named: "like-empty")
+
                 }
                 
-                
-                
+            }
             }
             else{
                 
@@ -202,13 +230,17 @@ class HomeViewController: MasterViewController {
     
     func callAllApis(){
         
+        self.myPostPageNumber = 0
+        self.communityPageNumber = 0
+        
+        
+        
+
         self.apiCallMostPopular()
-        
         self.apiCallTopProfile()
-        
         self.apiCallCommunity()
         
-        self.myPostPageNumber = 0 
+        
         self.apiCallMyFeed()
         
         
@@ -268,22 +300,45 @@ class HomeViewController: MasterViewController {
         
         
         
-        let request = CommunityRequest(_user_id: self.userID!, _page: 0)
+        let request = CommunityRequest(_user_id: self.userID!, _page: self.communityPageNumber)
         
+        
+        print("self.communityPageNumber - \(self.communityPageNumber)")
+
         ApiCallManager.shared.apiCall(request: request, apiType: .COMMUNITY, responseType: CommunityResponse.self, requestMethod: .POST) { (results) in
+            
+            
+            DispatchQueue.main.async {
+            
+                self.refreshControl.endRefreshing()
+            }
             
             if results.status == 1{
                 
-                print("\(#function) - \(results.data?.count)")
                 
                 if let data = results.data{
                     
-                    self.arrayCommunity = data
+                    if self.communityPageNumber == 0 {
+                        
+                        self.shouldStopCommunityLoadMore = false
+                        self.arrayCommunity = data
+                    }
+                    else{
+                        
+                        self.arrayCommunity.append(contentsOf: data)
+                        
+                    }
+                    
+                    
                     
                 }
                 else{
                     
-                    self.arrayCommunity.removeAll()
+                    if self.communityPageNumber == 0 {
+                        
+                        self.arrayCommunity.removeAll()
+                        
+                    }
                     
                     
                 }
@@ -296,7 +351,29 @@ class HomeViewController: MasterViewController {
             else {
                 
                 
-                self.showAlertPopupWithMessage(msg: results.messages)
+                
+                
+                    
+                    
+                    
+                if self.communityPageNumber == 0 {
+                    
+                    //   self.arrayMyPost.removeAll()
+                    DispatchQueue.main.async {
+                        self.tableViewHome.reloadData()
+                    }
+                    // self.showAlertPopupWithMessage(msg: results.messages)
+                    
+                }
+                else{
+                    
+                    self.shouldStopCommunityLoadMore = true
+                    
+                }
+                
+                
+                
+                
                 
                 
             }
@@ -304,6 +381,10 @@ class HomeViewController: MasterViewController {
             
         } failureHandler: { (error) in
             
+            DispatchQueue.main.async {
+            
+                self.refreshControl.endRefreshing()
+            }
             self.showErrorMessage(error: error)
             
             
@@ -321,6 +402,7 @@ class HomeViewController: MasterViewController {
         let request = GetPostListByUserIdRequest(_id: self.userID!, _page: self.myPostPageNumber)
         
         print("self.myPostPageNumber - \(self.myPostPageNumber)")
+        
         ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
             
             
@@ -343,16 +425,7 @@ class HomeViewController: MasterViewController {
                     
                     
                 }
-                else{
-                    
-                    if self.myPostPageNumber == 0 {
-                        
-                        self.arrayMyPost.removeAll()
-                        
-                    }
-                    
-                    
-                }
+             
                 
                 DispatchQueue.main.async {
                     
@@ -363,25 +436,26 @@ class HomeViewController: MasterViewController {
                 
                 
                 
-                DispatchQueue.main.async {
+                
                     
                     
                     
-                    if self.myPostPageNumber == 0 {
-                        
-                        self.arrayMyPost.removeAll()
+                if self.myPostPageNumber == 0 {
+                    
+                    DispatchQueue.main.async {
                         self.tableViewHome.reloadData()
-                        self.showAlertPopupWithMessage(msg: results.messages)
+                    }
 
-                    }
-                    else{
-                        
-                        self.shouldStopMyPostLoadMore = true
-                        
-                    }
-                    
                     
                 }
+                else{
+                    
+                    self.shouldStopMyPostLoadMore = true
+                    
+                }
+                
+                
+                
                 
                 
                 
@@ -734,6 +808,12 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostCommunity") as! CellPost
             
+            
+            if indexPath.row >= self.arrayCommunity.count{
+                
+                return UITableViewCell()
+                
+            }
             let obj = self.arrayCommunity[indexPath.row]
             
             cell.nameLabel.text = obj.username
@@ -817,6 +897,23 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
             }
             
+            if self.arrayCommunity.count - 1 == indexPath.row{
+                
+               
+                    
+                    if !self.shouldStopCommunityLoadMore{
+                        
+                        self.communityPageNumber = self.communityPageNumber + 1
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+
+                        self.apiCallCommunity()
+                        }
+                        
+                    }
+                    
+                
+            }
             
             return cell
             
@@ -826,7 +923,11 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellPostMyFeed") as! CellPost
             
-            
+            if indexPath.row >= self.arrayMyPost.count{
+                
+                return UITableViewCell()
+                
+            }
             
             let obj = self.arrayMyPost[indexPath.row]
             
@@ -916,18 +1017,25 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             if self.arrayMyPost.count - 1 == indexPath.row{
                 
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
+               
                     
                     if !self.shouldStopMyPostLoadMore{
                         
                         self.myPostPageNumber = self.myPostPageNumber + 1
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+
+                            
+                            
                         self.apiCallMyFeed()
+                            
+                        }
                         
                     }
                     
-                }
+                
             }
-            
+
             
             return cell
             

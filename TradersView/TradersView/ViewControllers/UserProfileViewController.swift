@@ -30,7 +30,7 @@ class CellUserProfileDetails:UITableViewCell{
     @IBOutlet weak var followingView: UIView!
     
     @IBOutlet weak var followersView: UIView!
-
+    
     
     @IBOutlet weak var postLabel: UILabel!
     
@@ -48,13 +48,15 @@ class UserProfileViewController: MasterViewController {
     
     var arrayMyPost:[GetPostListByUserIdResponseDatum] = []
     var arrayMyTreds:[GetPostListByUserIdResponseDatum] = []
+    
 
-
+    
     var userProfileObj:GetProfileByIDDatum?
     
     private var myPostPageNumber:Int = 0
     
     private var shouldStopMyPostLoadMore:Bool = false
+    let refreshControl = UIRefreshControl()
     
     @IBOutlet weak var tableViewUserProfile: UITableView!
     
@@ -66,11 +68,15 @@ class UserProfileViewController: MasterViewController {
         
         self.tableViewUserProfile.estimatedRowHeight = 88.0
         self.tableViewUserProfile.rowHeight = UITableView.automaticDimension
-
-
+        
+        
         if self.navigationController?.viewControllers.count == 1{
             
             self.cancelButton.isHidden = true
+            
+            
+            self.apiCall()
+            
         }
         else{
             
@@ -78,37 +84,45 @@ class UserProfileViewController: MasterViewController {
             
         }
         
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        self.tableViewUserProfile.addSubview(refreshControl) 
         
         
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         
-        if self.currentUserId.count == 0{
+        
+    }
+    
+    //MARK:- Refresh apiCall ----
+    
+    @objc func refresh(_ sender: AnyObject) {
+        
+        self.myPostPageNumber = 0
+        
+        self.apiCall()
+        
+        
+    }
+    
+    func apiCall(){
+        
+        
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData {
             
-            
-            if  let userData:LoginUserData = self.appDelegate.loginResponseData {
-                
-                self.currentUserId = userData.id
-                self.userIDOfProfile = userData.id
-                self.callApiToFetchUserProfile()
-
-            }
-            else{
-                
-                self.showAlertPopupWithMessage(msg: "User Data is not available")
-            }
-            
-            
+            self.currentUserId = userData.id
+            self.userIDOfProfile = userData.id
+            self.callApiToFetchUserProfile()
+            self.apiCallMyPost()
         }
         else{
             
-            self.callApiToFetchUserProfile()
-            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
         }
-        
         
     }
     
@@ -124,7 +138,7 @@ class UserProfileViewController: MasterViewController {
     //MARK:- API call methods -----
     
     
-    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
+    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView, tableViewIndex:Int, rowNumber:Int){
         
         
         let requestObj = LikePostRequest(_user_id: self.currentUserId, _notify_user_id: self.userIDOfProfile, _post_id: _postId)
@@ -134,14 +148,70 @@ class UserProfileViewController: MasterViewController {
         ApiCallManager.shared.apiCall(request: requestObj, apiType: .LIKE_POST, responseType: LikePostResponse.self, requestMethod: .POST) { (results) in
             
             if results.status == 1 {
+                print("like response - \(results.like)")
+
+                
+                var shouldAdd:Bool = false
+                
+                    
+                    
+                    if results.like != 0 {
+                        
+                        shouldAdd = true
+                        
+                        DispatchQueue.main.async {
+                        imgLike.image = UIImage(named: "like-filled")
+                        }
+                        
+                    }
+                    else{
+                        
+                        DispatchQueue.main.async {
+                        imgLike.image = UIImage(named: "like-empty")
+                        }
+                        
+                    }
+                    
                 
                 
-                DispatchQueue.main.async {
-                
-                    self.apiCallMyPost()
+                if tableViewIndex == 101{
+                    
+                    var postObj = self.arrayMyPost[rowNumber]
+                    
+                    if shouldAdd{
+                    
+                        postObj.isLike = 1
+                        
+                        let nLike = Int(postObj.like)! + 1
+                        
+                        postObj.like = "\(nLike)"
+                    }
+                    else{
+                        
+                        postObj.isLike = 0
+                        
+                        let nLike = Int(postObj.like)! - 1
+                        
+                        postObj.like = "\(nLike)"
+                        
+                        
+                    }
+                    
+                    DispatchQueue.main.async {
+
+                    self.tableViewUserProfile.reloadData()
+                        
+                    }
+                    
+                }
+                else if tableViewIndex == 102{
+                    
+                    
+                    let postObj = self.arrayMyTreds[rowNumber]
+
+
                 }
                 
-
                 
             }
             else{
@@ -154,12 +224,12 @@ class UserProfileViewController: MasterViewController {
             
             
         } failureHandler: { (error) in
-
+            
             
             self.showErrorMessage(error: error)
             
         }
-
+        
         
         
     }
@@ -171,6 +241,12 @@ class UserProfileViewController: MasterViewController {
         
         ApiCallManager.shared.apiCall(request: request, apiType: .GET_PROFILE_BY_ID, responseType: GetProfileByIDResponse.self, requestMethod: .POST) { (results) in
             
+            DispatchQueue.main.async {
+                
+                self.refreshControl.endRefreshing()
+            }
+            
+            
             if results.status == 1 {
                 
                 
@@ -179,8 +255,8 @@ class UserProfileViewController: MasterViewController {
                     self.userProfileObj = userData
                     
                     
-                    self.apiCallMyPost()
-
+                    
+                    
                     DispatchQueue.main.async {
                         
                         self.tableViewUserProfile.reloadData()
@@ -219,6 +295,11 @@ class UserProfileViewController: MasterViewController {
             
         } failureHandler: { (error) in
             
+            
+            DispatchQueue.main.async {
+                
+                self.refreshControl.endRefreshing()
+            }
             self.showErrorMessage(error: error)
             
         }
@@ -230,104 +311,97 @@ class UserProfileViewController: MasterViewController {
     func apiCallMyPost(){
         
         
-       
-        let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: self.myPostPageNumber)
         
-        print("self.myPostPageNumber - \(self.myPostPageNumber)")
         
-        ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
+      
+          
             
-            
-            if results.status == 1{
+                let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: self.myPostPageNumber)
                 
+                print("self.myPostPageNumber - \(self.myPostPageNumber)")
                 
-                if let data = results.data{
+                ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
                     
-                    if self.myPostPageNumber == 0 {
+                    
+                    
+                    
+                    if results.status == 1{
                         
-                        self.shouldStopMyPostLoadMore = false
-                        self.arrayMyPost = data
+                        
+                        if let data = results.data{
+                            
+                            if self.myPostPageNumber == 0 {
+                                
+                                self.shouldStopMyPostLoadMore = false
+                                self.arrayMyPost = data
+                            }
+                            else{
+                                
+                                self.arrayMyPost.append(contentsOf: data)
+                                
+                            }
+                            
+                            
+                            
+                        }
+                        
+                        
+                        DispatchQueue.main.async {
+                            
+                            print("post count - 1 - \(self.arrayMyPost.count)")
+                            self.tableViewUserProfile.reloadData()
+                            
+                        }
+                        
+                        
+                        
+                        
                     }
-                    else{
+                    else {
                         
-                        self.arrayMyPost.append(contentsOf: data)
-                        
-                    }
-                    
-                    
-                    
-                }
-                else{
-                    
-                    if self.myPostPageNumber == 0 {
-                        
-                        
-                        self.arrayMyPost.removeAll()
-                        
-                    }
-                    
-                    
-                }
-                
-                DispatchQueue.main.async {
-                    
-                    print("post count - 1 - \(self.arrayMyPost.count)")
-                    self.tableViewUserProfile.reloadData()
-                }
-            }
-            else {
-                
-                
-                
-                DispatchQueue.main.async {
-                    
-                    
-                    
-                    if self.myPostPageNumber == 0 {
-                        
-                        self.arrayMyPost.removeAll()
-                        print("post count - 2 - \(self.arrayMyPost.count)")
-
-                        self.tableViewUserProfile.reloadData()
-                        self.showAlertPopupWithMessage(msg: results.messages)
-
-                    }
-                    else{
+                        //                if self.myPostPageNumber == 0 {
+                        //
+                        //
+                        //
+                        //                    DispatchQueue.main.async {
+                        //                        self.tableViewUserProfile.reloadData()
+                        //                    }
+                        //                    self.showAlertPopupWithMessage(msg: results.messages)
+                        //
+                        //                }
+                        //                else{
                         
                         self.shouldStopMyPostLoadMore = true
+                        //}
                         
                     }
                     
                     
+                } failureHandler: { (error) in
+                    
+                    
+                    self.showErrorMessage(error: error)
+                    
                 }
                 
-                
-                
-            }
-            
-            
-        } failureHandler: { (error) in
-            
-            self.showErrorMessage(error: error)
-            
-        }
+         
         
     }
     
     //MARK:- UITapgesture ----
     
     @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
-
+        
         
         var postID:String = ""
         var notifyUserId:String = ""
-
-        if gesture.view!.superview!.tag == 101{
         
+        if gesture.view!.superview!.tag == 101{
+            
             let postObj = self.arrayMyPost[gesture.view!.tag]
             postID = postObj.postid
             notifyUserId = postObj.userID
-
+            
             print("post id - \(postObj.postid)")
             
         }
@@ -337,25 +411,25 @@ class UserProfileViewController: MasterViewController {
             let postObj = self.arrayMyTreds[gesture.view!.tag]
             postID = postObj.postid
             notifyUserId = postObj.userID
-
+            
             print("post id - \(postObj.postid)")
         }
         
         
-        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!)
+        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!, tableViewIndex:gesture.view!.superview!.tag, rowNumber:gesture.view!.tag)
         
-       
+        
         
     }
     @objc func commentImageViewTapGesture(gesture: UITapGestureRecognizer) {
-
+        
         
         var postID:String = ""
         var notifyUserId:String = ""
         
         
         if gesture.view!.superview!.tag == 101{
-        
+            
             let postObj = self.arrayMyPost[gesture.view!.tag]
             
             postID = postObj.postid
@@ -380,10 +454,10 @@ class UserProfileViewController: MasterViewController {
         
     }
     @objc func shareImageViewTapGesture(gesture: UITapGestureRecognizer) {
-
+        
         
         if gesture.view!.superview!.tag == 101{
-        
+            
             let postObj = self.arrayMyPost[gesture.view!.tag]
             print("post id - \(postObj.postid)")
             
@@ -405,7 +479,7 @@ class UserProfileViewController: MasterViewController {
         
         
         if gesture.view!.superview!.tag == 101{
-        
+            
             let postObj = self.arrayMyPost[gesture.view!.tag]
             
             profileUserId = postObj.userID
@@ -443,7 +517,7 @@ class UserProfileViewController: MasterViewController {
         print("\(#function)")
         
         self.pushFollowerFollowingList(userId: self.currentUserId, currentUserId: self.userIDOfProfile, flag: "1")
-
+        
         
         
     }
@@ -454,51 +528,51 @@ class UserProfileViewController: MasterViewController {
         print("\(_sender.tag)")
         print("\(_sender.superview?.tag ?? 0)")
         self.showAlertCommingSoon()
-
+        
         
     }
     
     @objc func followButtonAction(_sender:UIButton){
         
         
-                    
+        
         let request = FollowRequest(_user_id: self.currentUserId, _follow_id: self.userIDOfProfile)
+        
+        ApiCallManager.shared.apiCall(request: request, apiType: .FOLLOW, responseType: FollowResponse.self, requestMethod: .POST) { (results) in
             
-            ApiCallManager.shared.apiCall(request: request, apiType: .FOLLOW, responseType: FollowResponse.self, requestMethod: .POST) { (results) in
+            if results.status == 1{
                 
-                if results.status == 1{
+                if results.messages == "Follow"{
                     
-                    if results.messages == "Follow"{
+                    DispatchQueue.main.async {
                         
-                        DispatchQueue.main.async {
-                        
-                            _sender.setTitle("Following", for: .normal)
-                        }
-                        
-                        
-                        
+                        _sender.setTitle("Following", for: .normal)
                     }
-                    else if results.messages == "Unfollow"{
+                    
+                    
+                    
+                }
+                else if results.messages == "Unfollow"{
+                    
+                    DispatchQueue.main.async {
                         
-                        DispatchQueue.main.async {
-
                         _sender.setTitle("Follow", for: .normal)
-                        }
                     }
-                    self.callApiToFetchUserProfile()
-                    
                 }
-                else if results.status == 0 {
-                    
-                    
-                    self.showAlertPopupWithMessage(msg: results.messages)
-                }
+                self.callApiToFetchUserProfile()
                 
-            } failureHandler: { (error) in
-                
-                self.showErrorMessage(error: error)
             }
-       
+            else if results.status == 0 {
+                
+                
+                self.showAlertPopupWithMessage(msg: results.messages)
+            }
+            
+        } failureHandler: { (error) in
+            
+            self.showErrorMessage(error: error)
+        }
+        
         
         
     }
@@ -520,7 +594,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         
-
+        
         return UITableView.automaticDimension
         
     }
@@ -571,7 +645,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         
         if tableView.tag == 100 {
             
-
+            
             if section == 0 {
                 
                 
@@ -661,7 +735,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 cell.followersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.followersViewTapGesture(gesture:))))
                 cell.followingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.followingViewTapGesture(gesture:))))
-
+                
                 cell.followButton.addTarget(self, action: #selector(self.followButtonAction(_sender:)), for: .touchUpInside)
                 
                 
@@ -692,7 +766,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 if self.arrayMyPost.count == 0 {
-                   
+                    
                     cell.tableViewMyFeed.isHidden = true
                     
                 }
@@ -707,11 +781,11 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 cell.tableViewCommunity.estimatedRowHeight = 88.0
                 cell.tableViewCommunity.rowHeight = UITableView.automaticDimension
-
+                
                 
                 cell.tableViewMyFeed.estimatedRowHeight = 88.0
                 cell.tableViewMyFeed.rowHeight = UITableView.automaticDimension
-
+                
                 
                 
                 return cell
@@ -724,6 +798,14 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             
             let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellMyPost") as! CellPost
             
+            print("Row - \(indexPath.row)  array size - \(self.arrayMyPost.count)")
+            
+            
+            if indexPath.row >= self.arrayMyPost.count{
+                
+                return UITableViewCell()
+                
+            }
             let obj = self.arrayMyPost[indexPath.row]
             
             cell.nameLabel.text = obj.username.capitalized
@@ -743,130 +825,23 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.moreInfoButton.tag = indexPath.row
             
             
-
+            
             cell.likeImageView.superview!.tag = tableView.tag
             cell.commentImageView.superview!.tag = tableView.tag
             cell.shareImageView.superview!.tag = tableView.tag
             cell.moreInfoButton.superview!.tag = tableView.tag
-
+            
             cell.profilePicImageView.tag = indexPath.row
-
+            
             cell.profilePicImageView.superview!.tag = tableView.tag
             
             cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
             cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
-
-            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
-
-            
-            if obj.isLike != 0 {
-                
-                
-                cell.likeImageView.image = UIImage(named: "like-filled")
-            }
-            else{
-                
-                cell.likeImageView.image = UIImage(named: "like-empty")
-                
-            }
-            
-            
-            if let imgVideo = obj.imageVideo{
-                
-                let imgObj = imgVideo[0]
-                
-                let imgUrl = imgObj.image
-                
-                print("imgUrl - \(imgUrl)")
-                
-                switch imgUrl {
-                case .integer(let intValue):
-                    print("Integer value -- \(intValue)")
-                    cell.heightPostImageView.constant = 0.0
-
-                 
-                case .string(let strUrl):
-                    print("String value -- \(strUrl)")
-
-                cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                cell.heightPostImageView.constant = 130.0
-
-                }
-                
-                
-                
-            }
-            else{
-                
-                cell.heightPostImageView.constant = 0.0
-
-                
-                
-            }
-            
-            if self.arrayMyPost.count - 1 == indexPath.row{
-                
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    
-                    if !self.shouldStopMyPostLoadMore{
-                    
-                        self.myPostPageNumber = self.myPostPageNumber + 1
-                        self.apiCallMyPost()
-                        
-                    }
-                    
-                }
-            }
-            
-            return cell
-            
-            
-        }
-        else if tableView.tag == 102{
-            
-            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellMyTreds") as! CellPost
-
-            let obj = self.arrayMyTreds[indexPath.row]
-            
-            
-            cell.nameLabel.text = obj.username
-            
-            cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
-            cell.postCaptionLabel.text = obj.message
-            
-            cell.heightPostImageView.constant = 0.0
-            
-            cell.likeCountLabel.text = obj.like
-            cell.commentCountLabel.text = obj.comment
-            cell.shareCountLabel.text = obj.share
-            
-            cell.likeImageView.tag = indexPath.row
-            cell.commentImageView.tag = indexPath.row
-            cell.shareImageView.tag = indexPath.row
-            cell.moreInfoButton.tag = indexPath.row
-
-            
-            cell.moreInfoButton.superview!.tag = tableView.tag
-            cell.likeImageView.superview!.tag = tableView.tag
-            cell.commentImageView.superview!.tag = tableView.tag
-            cell.shareImageView.superview!.tag = tableView.tag
-
-            
-            cell.profilePicImageView.tag = indexPath.row
-
-            cell.profilePicImageView.superview!.tag = tableView.tag
-            
-            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
-            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
-            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
-
-            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-
+            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+            
             
             if obj.isLike != 0 {
                 
@@ -908,7 +883,120 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             else{
                 
                 cell.heightPostImageView.constant = 0.0
-
+                
+                
+                
+            }
+            
+            if self.arrayMyPost.count - 1 == indexPath.row{
+                
+                
+                
+                if !self.shouldStopMyPostLoadMore{
+                    
+                    self.myPostPageNumber = self.myPostPageNumber + 1
+                    
+                        
+                    
+                        self.apiCallMyPost()
+                        
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            return cell
+            
+            
+        }
+        else if tableView.tag == 102{
+            
+            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellMyTreds") as! CellPost
+            
+            let obj = self.arrayMyTreds[indexPath.row]
+            
+            
+            cell.nameLabel.text = obj.username
+            
+            cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.postCaptionLabel.text = obj.message
+            
+            cell.heightPostImageView.constant = 0.0
+            
+            cell.likeCountLabel.text = obj.like
+            cell.commentCountLabel.text = obj.comment
+            cell.shareCountLabel.text = obj.share
+            
+            cell.likeImageView.tag = indexPath.row
+            cell.commentImageView.tag = indexPath.row
+            cell.shareImageView.tag = indexPath.row
+            cell.moreInfoButton.tag = indexPath.row
+            
+            
+            cell.moreInfoButton.superview!.tag = tableView.tag
+            cell.likeImageView.superview!.tag = tableView.tag
+            cell.commentImageView.superview!.tag = tableView.tag
+            cell.shareImageView.superview!.tag = tableView.tag
+            
+            
+            cell.profilePicImageView.tag = indexPath.row
+            
+            cell.profilePicImageView.superview!.tag = tableView.tag
+            
+            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
+            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
+            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+            
+            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
+            
+            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
+            
+            
+            if obj.isLike != 0 {
+                
+                
+                cell.likeImageView.image = UIImage(named: "like-filled")
+            }
+            else{
+                
+                cell.likeImageView.image = UIImage(named: "like-empty")
+                
+            }
+            
+            
+            if let imgVideo = obj.imageVideo{
+                
+                let imgObj = imgVideo[0]
+                
+                let imgUrl = imgObj.image
+                
+                print("imgUrl - \(imgUrl)")
+                
+                switch imgUrl {
+                case .integer(let intValue):
+                    print("Integer value -- \(intValue)")
+                    cell.heightPostImageView.constant = 0.0
+                    
+                    
+                case .string(let strUrl):
+                    print("String value -- \(strUrl)")
+                    
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+                    cell.heightPostImageView.constant = 130.0
+                    
+                }
+                
+                
+                
+            }
+            else{
+                
+                cell.heightPostImageView.constant = 0.0
+                
                 
                 
             }

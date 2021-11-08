@@ -21,10 +21,10 @@ class SearchViewController: MasterViewController {
     
     @IBOutlet weak var tableViewSearch: UITableView!
     
+    private var workItemReference:DispatchWorkItem? = nil
     
     var searchResult:[SearchDatum]?
     
-    var searchTextStr:String = ""
     
     //MARK:- UIViewcontroller lifecycle methods ---
 
@@ -43,11 +43,11 @@ class SearchViewController: MasterViewController {
 
     }
     
-    func callSearchApi(){
+    private func callSearchApi(searchStr:String){
         
         
         
-        if self.searchTextStr.trimmingCharacters(in: .whitespaces).count == 0 {
+        if searchStr.trimmingCharacters(in: .whitespaces).count == 0 {
             
           //  self.showAlertPopupWithMessage(msg: "Please enter all the fields")
             
@@ -60,7 +60,7 @@ class SearchViewController: MasterViewController {
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
 
         
-            let request:SearchRequest = SearchRequest(_user_id: userData.id , _search: self.searchTextStr, _page: 0)
+            let request:SearchRequest = SearchRequest(_user_id: userData.id , _search: searchStr, _page: 0)
             
             
             ApiCallManager.shared.apiCall(request: request, apiType: .SEARCH, responseType: SearchResponse.self, requestMethod: .POST) { (results) in
@@ -212,10 +212,20 @@ extension SearchViewController:UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
+        workItemReference?.cancel()
+        
 
-        self.searchTextStr = searchText
+        let workItem = DispatchWorkItem{
+            
+            self.callSearchApi(searchStr: searchText)
 
-        self.callSearchApi()
+            
+        }
+         
+        workItemReference = workItem
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: workItem)
+        
         
       }
     
