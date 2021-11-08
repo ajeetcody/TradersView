@@ -873,7 +873,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                     print("String value -- \(strUrl)")
                     
                     cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = 130.0
+                    cell.heightPostImageView.constant = Constants.screenWidth - 10.0
                     
                 }
                 
@@ -986,7 +986,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                     print("String value -- \(strUrl)")
                     
                     cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = 130.0
+                    cell.heightPostImageView.constant = Constants.screenWidth - 10.0
                     
                 }
                 
