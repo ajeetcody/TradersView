@@ -190,21 +190,8 @@ class HomeViewController: MasterViewController {
                 
                 print("like response - \(results.like)")
                 
-                DispatchQueue.main.async {
-                    
-                
-                if results.like != 0 {
-
-
-                    imgLike.image = UIImage(named: "like-filled")
-                }
-                else{
-
-                    imgLike.image = UIImage(named: "like-empty")
-
-                }
-                
-            }
+                self.apiCallCommunity()
+                self.apiCallMyFeed()
             }
             else{
                 
@@ -238,6 +225,7 @@ class HomeViewController: MasterViewController {
 
         self.apiCallMostPopular()
         self.apiCallTopProfile()
+        
         self.apiCallCommunity()
         
         
@@ -818,7 +806,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             cell.nameLabel.text = obj.username
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.postCaptionLabel.text = obj.message
             
             cell.heightPostImageView.constant = 0.0
@@ -880,10 +868,23 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                     
                 case .string(let strUrl):
                     print("String value -- \(strUrl)")
-                    
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = Constants.screenWidth - 10.0
-                    
+
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
+                        
+                        if img != nil{
+                            
+                            let ratio = img!.size.width / img!.size.height
+                            let newHeight = Constants.screenWidth / ratio
+                            cell.heightPostImageView.constant = newHeight
+                            self.view.layoutIfNeeded()
+                            
+                        }
+                        else{
+                            
+                            cell.heightPostImageView.constant = 0.0
+
+                        }
+                    }
                 }
                 
                 
@@ -933,7 +934,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             cell.nameLabel.text = obj.username
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.postCaptionLabel.text = obj.message
             
             cell.likeCountLabel.text = obj.like
@@ -998,10 +999,24 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 case .string(let strUrl):
                     
                     print("String value -- \(strUrl)")
+
                     
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = Constants.screenHeight - 10.0
-                    
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
+                        
+                        if img != nil{
+                            
+                            let ratio = img!.size.width / img!.size.height
+                            let newHeight = Constants.screenWidth / ratio
+                            cell.heightPostImageView.constant = newHeight
+                            self.view.layoutIfNeeded()
+                            
+                        }
+                        else{
+                            
+                            cell.heightPostImageView.constant = 0.0
+
+                        }
+                    }
                 }
                 
                 
@@ -1132,7 +1147,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             let popular:MostPopularDatum = self.arrayPopular[indexPath.row]
             
             print(popular.image)
-            cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: "placeHolderImage.jpeg"))
             
             cell.popularImageView.contentMode = .scaleAspectFit
            
@@ -1157,7 +1172,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             
             
             
-            cell.topProfileImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/dummy.png"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.topProfileImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/dummy.png"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             
             cell.topProfileImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 45.0/2.0)
             

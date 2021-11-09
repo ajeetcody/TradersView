@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+import SDWebImage
 
 class CellUserProfileDetails:UITableViewCell{
     
@@ -159,16 +159,16 @@ class UserProfileViewController: MasterViewController {
                         
                         shouldAdd = true
                         
-                        DispatchQueue.main.async {
-                        imgLike.image = UIImage(named: "like-filled")
-                        }
+//                        DispatchQueue.main.async {
+//                        imgLike.image = UIImage(named: "like-filled")
+//                        }
                         
                     }
                     else{
                         
-                        DispatchQueue.main.async {
-                        imgLike.image = UIImage(named: "like-empty")
-                        }
+//                        DispatchQueue.main.async {
+//                        imgLike.image = UIImage(named: "like-empty")
+//                        }
                         
                     }
                     
@@ -724,11 +724,11 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.followersLabel.text = self.userProfileObj?.followers
                 cell.postLabel.text =  "\(self.userProfileObj?.post ?? 0)"
                 
-                cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: ""))
+                cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
                 
                 cell.profileImageView.changeBorder(width: 2.0, borderColor: .darkGray, cornerRadius: 45.0)
                 
-                cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: ""))
+                cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: "placeHolderImage.png"))
                 
                 cell.coverImageView.contentMode = .scaleToFill
                 
@@ -810,7 +810,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             
             cell.nameLabel.text = obj.username.capitalized
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.postCaptionLabel.text = obj.message
             
             cell.heightPostImageView.constant = 0.0
@@ -872,8 +872,24 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 case .string(let strUrl):
                     print("String value -- \(strUrl)")
                     
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = Constants.screenWidth - 10.0
+                   // cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
+                        
+                        if img != nil{
+                            
+                            let ratio = img!.size.width / img!.size.height
+                            let newHeight = Constants.screenWidth / ratio
+                            cell.heightPostImageView.constant = newHeight
+                            self.view.layoutIfNeeded()
+                            
+                        }
+                        else{
+                            
+                            cell.heightPostImageView.constant = 0.0
+
+                        }
+                    }
                     
                 }
                 
@@ -889,23 +905,23 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             }
             
             if self.arrayMyPost.count - 1 == indexPath.row{
-                
-                
-                
+
+
+
                 if !self.shouldStopMyPostLoadMore{
-                    
+
                     self.myPostPageNumber = self.myPostPageNumber + 1
-                    
-                        
-                    
+
+
+
                         self.apiCallMyPost()
-                        
-                    
-                    
-                    
+
+
+
+
                 }
-                
-                
+
+
             }
             
             return cell
@@ -922,7 +938,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.nameLabel.text = obj.username
             
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.postCaptionLabel.text = obj.message
             
             cell.heightPostImageView.constant = 0.0
@@ -984,10 +1000,23 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                     
                 case .string(let strUrl):
                     print("String value -- \(strUrl)")
-                    
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    cell.heightPostImageView.constant = Constants.screenWidth - 10.0
-                    
+
+                    cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
+                        
+                        if img != nil{
+                            
+                            let ratio = img!.size.width / img!.size.height
+                            let newHeight = Constants.screenWidth / ratio
+                            cell.heightPostImageView.constant = newHeight
+                            self.view.layoutIfNeeded()
+                            
+                        }
+                        else{
+                            
+                            cell.heightPostImageView.constant = 0.0
+
+                        }
+                    }
                 }
                 
                 
@@ -1009,5 +1038,9 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
+  
+    
     
 }
+
+
