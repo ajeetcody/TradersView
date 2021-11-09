@@ -74,8 +74,18 @@ class UserProfileViewController: MasterViewController {
             
             self.cancelButton.isHidden = true
             
+            if  let userData:LoginUserData = self.appDelegate.loginResponseData {
+                
+                self.currentUserId = userData.id
+                self.userIDOfProfile = userData.id
+                self.callApiToFetchUserProfile()
+                self.apiCallMyPost()
+            }
+            else{
+                
+                self.showAlertPopupWithMessage(msg: "User Data is not available")
+            }
             
-            self.apiCall()
             
         }
         else{
@@ -89,15 +99,15 @@ class UserProfileViewController: MasterViewController {
         self.tableViewUserProfile.addSubview(refreshControl) 
         
         
+        self.apiCall()
         
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         
-        
-        
+        self.tableViewUserProfile.reloadData()
     }
     
+  
     //MARK:- Refresh apiCall ----
     
     @objc func refresh(_ sender: AnyObject) {
@@ -111,18 +121,13 @@ class UserProfileViewController: MasterViewController {
     
     func apiCall(){
         
-        
-        if  let userData:LoginUserData = self.appDelegate.loginResponseData {
+   
             
-            self.currentUserId = userData.id
-            self.userIDOfProfile = userData.id
             self.callApiToFetchUserProfile()
             self.apiCallMyPost()
-        }
-        else{
-            
-            self.showAlertPopupWithMessage(msg: "User Data is not available")
-        }
+
+         
+        
         
     }
     
@@ -138,7 +143,7 @@ class UserProfileViewController: MasterViewController {
     //MARK:- API call methods -----
     
     
-    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView, tableViewIndex:Int, rowNumber:Int){
+    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView, countLabel:UILabel){
         
         
         let requestObj = LikePostRequest(_user_id: self.currentUserId, _notify_user_id: self.userIDOfProfile, _post_id: _postId)
@@ -150,68 +155,9 @@ class UserProfileViewController: MasterViewController {
             if results.status == 1 {
                 print("like response - \(results.like)")
 
-                
-                var shouldAdd:Bool = false
-                
-                    
-                    
-                    if results.like != 0 {
-                        
-                        shouldAdd = true
-                        
-//                        DispatchQueue.main.async {
-//                        imgLike.image = UIImage(named: "like-filled")
-//                        }
-                        
-                    }
-                    else{
-                        
-//                        DispatchQueue.main.async {
-//                        imgLike.image = UIImage(named: "like-empty")
-//                        }
-                        
-                    }
-                    
-                
-                
-                if tableViewIndex == 101{
-                    
-                    var postObj = self.arrayMyPost[rowNumber]
-                    
-                    if shouldAdd{
-                    
-                        postObj.isLike = 1
-                        
-                        let nLike = Int(postObj.like)! + 1
-                        
-                        postObj.like = "\(nLike)"
-                    }
-                    else{
-                        
-                        postObj.isLike = 0
-                        
-                        let nLike = Int(postObj.like)! - 1
-                        
-                        postObj.like = "\(nLike)"
-                        
-                        
-                    }
-                    
-                    DispatchQueue.main.async {
-
-                    self.tableViewUserProfile.reloadData()
-                        
-                    }
-                    
-                }
-                else if tableViewIndex == 102{
-                    
-                    
-                    let postObj = self.arrayMyTreds[rowNumber]
 
 
-                }
-                
+                self.changeLikeButtonIconAndCount(results: results, imgViewLike: imgLike, likeCountLabel: countLabel)
                 
             }
             else{
@@ -415,8 +361,13 @@ class UserProfileViewController: MasterViewController {
             print("post id - \(postObj.postid)")
         }
         
+        let label = gesture.view!.superview!.subviews.compactMap({$0 as? UILabel})
         
-        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!, tableViewIndex:gesture.view!.superview!.tag, rowNumber:gesture.view!.tag)
+       // print("label[0].text - \(label[0].text)")
+
+        
+        
+        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!,countLabel:label[0])
         
         
         
@@ -861,16 +812,16 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let imgUrl = imgObj.image
                 
-                print("imgUrl - \(imgUrl)")
+               // print("imgUrl - \(imgUrl)")
                 
                 switch imgUrl {
                 case .integer(let intValue):
-                    print("Integer value -- \(intValue)")
+                  //  print("Integer value -- \(intValue)")
                     cell.heightPostImageView.constant = 0.0
                     
                     
                 case .string(let strUrl):
-                    print("String value -- \(strUrl)")
+                   // print("String value -- \(strUrl)")
                     
                    // cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
 

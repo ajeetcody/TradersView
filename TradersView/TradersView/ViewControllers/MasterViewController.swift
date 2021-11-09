@@ -9,6 +9,8 @@ import UIKit
 
 class MasterViewController: UIViewController {
     
+    
+    let lock = NSLock()
     let appDelegate:AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     
     var appVersion:String = ""
@@ -367,13 +369,66 @@ class MasterViewController: UIViewController {
         
         
 
-        print("Date after - \(somedateString)")
+        //print("Date after - \(somedateString)")
         return somedateString
         
     }
    
     
-
+    func changeLikeButtonIconAndCount(results:LikePostResponse, imgViewLike:UIImageView, likeCountLabel:UILabel){
+        
+        
+        
+        lock.lock()
+        
+        var currentValue = 0
+        
+        DispatchQueue.main.async {
+            
+            currentValue =   Int(likeCountLabel.text!)!
+        
+        
+        if results.like == 1 {
+            
+            
+            
+            currentValue = currentValue + 1
+            
+            
+            
+            DispatchQueue.main.async {
+                
+                imgViewLike.image = UIImage(named: "like-filled")
+                likeCountLabel.text = "\(currentValue)"
+                print("currentValue --- \(currentValue)")
+            }
+            
+        }
+        else{
+            
+            
+            currentValue = currentValue - 1
+            
+            if currentValue < 0{
+                
+                currentValue = 0
+            }
+            
+            
+            DispatchQueue.main.async {
+                
+                likeCountLabel.text = "\(currentValue)"
+                imgViewLike.image = UIImage(named: "like-empty")
+            }
+            
+        }
+        
+    }
+        
+        lock.unlock()
+    }
+        
+    
     
     /*
      // MARK: - Navigation

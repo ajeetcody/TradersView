@@ -190,7 +190,13 @@ class ApiCallManager{
                     if(error == nil && data != nil && data?.count != 0){
                         do {
                             
-//                            print("response string \(String(data: data!, encoding: .utf8))")
+                            
+                            if apiType == .LIKE_POST{
+                                
+
+                                print("response string \(String(data: data!, encoding: .utf8))")
+                            }
+
                             let response = try JSONDecoder().decode(T.self, from: data!)
                             compilationHandler(response)
                         }

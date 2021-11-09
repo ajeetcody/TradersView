@@ -33,6 +33,8 @@ class CellPost:UITableViewCell{
     
     @IBOutlet weak var postImageView: UIImageView!
     
+    
+    
     @IBOutlet weak var likeImageView: UIImageView!
     @IBOutlet weak var commentImageView: UIImageView!
     @IBOutlet weak var shareImageView: UIImageView!
@@ -176,7 +178,7 @@ class HomeViewController: MasterViewController {
     //MARK:- API call methods ----
 
     
-    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView){
+    func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView, countLabel:UILabel){
         
         
         let requestObj = LikePostRequest(_user_id: self.userID!, _notify_user_id: _notifyUserId, _post_id: _postId)
@@ -190,8 +192,8 @@ class HomeViewController: MasterViewController {
                 
                 print("like response - \(results.like)")
                 
-                self.apiCallCommunity()
-                self.apiCallMyFeed()
+                self.changeLikeButtonIconAndCount(results: results, imgViewLike: imgLike, likeCountLabel: countLabel)
+
             }
             else{
                 
@@ -486,9 +488,12 @@ class HomeViewController: MasterViewController {
             print("post id - \(postObj.postid)")
         }
         
+    
         
-        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!)
+        let label = gesture.view!.superview!.subviews.compactMap({$0 as? UILabel})
+     
         
+        self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!,countLabel:label[0])
         
         
     }
@@ -858,16 +863,16 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let imgUrl = imgObj.image
                 
-                print("imgUrl - \(imgUrl)")
+               // print("imgUrl - \(imgUrl)")
                 
                 switch imgUrl {
                 case .integer(let intValue):
-                    print("Integer value -- \(intValue)")
+                 //   print("Integer value -- \(intValue)")
                     cell.heightPostImageView.constant = 0.0
                     
                     
                 case .string(let strUrl):
-                    print("String value -- \(strUrl)")
+                   // print("String value -- \(strUrl)")
 
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
