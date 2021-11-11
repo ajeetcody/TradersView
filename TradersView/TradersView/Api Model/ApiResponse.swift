@@ -26,6 +26,22 @@ import Foundation
 //   let blockuser = try? newJSONDecoder().decode(Blockuser.self, from: jsonData)
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
+// MARK: - GetSymbolResponse
+struct GetSymbolResponse: Codable {
+    let data: [GetSymbolResponseDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct GetSymbolResponseDatum: Codable {
+    let id, symbolName: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case symbolName = "symbol_name"
+    }
+}
 
 // MARK: - FavoriteUserResponse
 struct FavoriteUserResponse: Codable {

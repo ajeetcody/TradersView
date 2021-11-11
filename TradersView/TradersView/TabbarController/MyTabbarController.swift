@@ -185,13 +185,8 @@ class MyTabbarController: UITabBarController {
         
             if tag == 2 {
                 
-                let storyBoardDashboard = UIStoryboard(name: "DashboardFlow", bundle: nil)
-                
-                let vc:PostViewController = storyBoardDashboard.instantiateViewController(identifier: "PostViewController") as! PostViewController
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-                
-                
+               
+                self.showActionSheet()
                 
                 
             }
@@ -233,8 +228,50 @@ class MyTabbarController: UITabBarController {
         
     }
     
+    func showActionSheet(){
+        
+        
+        let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
+        
+        let actionPost = UIAlertAction(title: "Add Post", style: .default) { (action) in
+            self.addPostScreen()
+        }
+        
+        let actionTrade = UIAlertAction(title: "Add Trade", style: .default) { (action) in
+            self.addtradeScreen()
+        }
+        
+        actionSheet.addAction(actionPost)
+        actionSheet.addAction(actionTrade)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+        
+        
+        
+    }
     
     
+    func addPostScreen(){
+        
+        let storyBoardDashboard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+        
+        let vc:PostViewController = storyBoardDashboard.instantiateViewController(identifier: "PostViewController") as! PostViewController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+        
+        
+        
+    }
+    func addtradeScreen(){
+        
+        let storyBoardDashboard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+        let vc = storyBoardDashboard.instantiateViewController(identifier: "AddTradesViewController")
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+        
+        
+        
+    }
     
     /*
      // MARK: - Navigation

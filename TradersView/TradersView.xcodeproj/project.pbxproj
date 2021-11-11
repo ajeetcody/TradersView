@@ -16,6 +16,7 @@
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
 		772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */; };
+		7729152D273D710B00991F0A /* AddTradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729152C273D710B00991F0A /* AddTradesViewController.swift */; };
 		773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520B2735646D0016BF3E /* CommentListViewController.swift */; };
 		773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520E2735BFB90016BF3E /* UserProfileViewController.swift */; };
 		7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7742A4BC272FDEE70081F28E /* PostViewController.swift */; };
@@ -54,6 +55,7 @@
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserProfileViewController.swift; sourceTree = "<group>"; };
+		7729152C273D710B00991F0A /* AddTradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradesViewController.swift; sourceTree = "<group>"; };
 		773C520B2735646D0016BF3E /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
 		773C520E2735BFB90016BF3E /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7742A4BC272FDEE70081F28E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				773C520E2735BFB90016BF3E /* UserProfileViewController.swift */,
 				7712E4112738098E00036561 /* FollowersFollowingViewController.swift */,
 				7712E43F2739336900036561 /* NotificationViewController.swift */,
+				7729152C273D710B00991F0A /* AddTradesViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */,
 				7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */,
 				7712E43D27392A9600036561 /* ContactUsViewController.swift in Sources */,
+				7729152D273D710B00991F0A /* AddTradesViewController.swift in Sources */,
 				7742A4FF273037350081F28E /* HomeViewController.swift in Sources */,
 				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
 				7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */,
