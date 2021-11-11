@@ -43,12 +43,55 @@ class ApiRequestModel{
     }
     
     
+}
+
+class FavoriteUsersListRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var page:Int?
     
     
+    init(_id:String, _page:Int) {
+        
+        self.user_id = _id
+        self.page = _page
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "page":self.page ?? 0]
+        
+    }
     
 }
 
-
+class FavProfileActionRequest:ApiRequestModel{
+   
+    var user_id:String?
+    var fav_id:String?
+    
+    
+    init(_id:String, _fav_id:String) {
+        
+        self.user_id = _id
+        self.fav_id = _fav_id
+        
+        
+    }
+    
+    
+    override func toObject() -> [String:Any]{
+        
+        return ["user_id":self.user_id ?? "",
+                "fav_id":self.fav_id ?? 0]
+        
+    }
+    
+}
 class NotificationRequest:ApiRequestModel{
    
     var user_id:String?

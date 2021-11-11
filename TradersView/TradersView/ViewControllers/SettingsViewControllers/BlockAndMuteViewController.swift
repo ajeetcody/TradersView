@@ -26,7 +26,7 @@ class BlockAndMuteViewController: MasterViewController {
     
     @IBOutlet weak var screenHeadingLabel: UILabel!
     
-    var currentUserId:String?
+   private var currentUserId:String?
     
     var isBlockUserList:Bool = false // true - blockUseList, false - MuteUserList
     
@@ -56,13 +56,6 @@ class BlockAndMuteViewController: MasterViewController {
             
         }
         
-        
-        
-        
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        
-        
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
@@ -75,6 +68,14 @@ class BlockAndMuteViewController: MasterViewController {
             self.showAlertPopupWithMessage(msg: "User Data is not available")
         }
         
+        
+        
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+      
         
         
         

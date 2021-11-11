@@ -15,6 +15,7 @@
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
 		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
+		772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */; };
 		773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520B2735646D0016BF3E /* CommentListViewController.swift */; };
 		773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520E2735BFB90016BF3E /* UserProfileViewController.swift */; };
 		7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7742A4BC272FDEE70081F28E /* PostViewController.swift */; };
@@ -52,6 +53,7 @@
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
 		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserProfileViewController.swift; sourceTree = "<group>"; };
 		773C520B2735646D0016BF3E /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
 		773C520E2735BFB90016BF3E /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7742A4BC272FDEE70081F28E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */,
 				7712E4392739156600036561 /* BlockAndMuteViewController.swift */,
 				7712E43C27392A9600036561 /* ContactUsViewController.swift */,
+				772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */,
 			);
 			path = SettingsViewControllers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
+				772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7712E4122738098E00036561 /* FollowersFollowingViewController.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
@@ -506,7 +510,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -531,7 +535,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

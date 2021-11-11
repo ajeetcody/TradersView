@@ -26,7 +26,7 @@ class FollowersFollowingViewController: MasterViewController {
     @IBOutlet weak var screenHeadingLabel: UILabel!
     
     var userId:String?
-    var currentUserId:String?
+    private var currentUserId:String?
     
     var fetchFlag:String? = "0" // 0 = followers,  1 = following
 
@@ -69,12 +69,24 @@ class FollowersFollowingViewController: MasterViewController {
             
         }
         
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
+            
+            
+            self.currentUserId = userData.id
+            
+            self.fetchList()
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
+        }
+        
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
         
-        self.fetchList()
+        
     }
     
     

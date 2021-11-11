@@ -27,6 +27,8 @@ class ChatViewController: MasterViewController {
     
     @IBOutlet weak var channelButton: UIButton!
     
+   private var currentUserId:String?
+    
     
     //MARK:- UIViewcontroller lifecycle -----
     
@@ -34,6 +36,17 @@ class ChatViewController: MasterViewController {
     override func viewDidLoad() {
        
         super.viewDidLoad()
+        
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
+            
+            
+            self.currentUserId = userData.id
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
+        }
 
         self.view.layoutIfNeeded()
         self.showAlertCommingSoon()
@@ -47,12 +60,31 @@ class ChatViewController: MasterViewController {
     
     @IBAction func searchButtonAction(_ sender: Any) {
         
-        self.showSearchViewController()
+        if let userID = self.currentUserId{
+        
+            self.pushScreenWithScreenName(screenName: "SearchViewController", currentUserId: userID)
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User id is not available")
+            
+        }
+        
     }
     
     @IBAction func notificationButtonAction(_ sender: Any) {
         
-        self.showNotificationScreen()
+        if let userID = self.currentUserId{
+        
+            self.pushScreenWithScreenName(screenName: "NotificationViewController", currentUserId: userID)
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User id is not available")
+            
+        }
     }
     
     @IBAction func messageButtonAction(_ sender: Any) {

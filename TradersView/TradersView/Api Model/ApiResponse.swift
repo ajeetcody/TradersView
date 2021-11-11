@@ -27,6 +27,31 @@ import Foundation
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
 
+// MARK: - FavoriteUserResponse
+struct FavoriteUserResponse: Codable {
+    let data: [FavoriteUserResponseDatum]?
+    let status: Int
+    let messages: String
+}
+
+// MARK: - Datum
+struct FavoriteUserResponseDatum: Codable {
+    let id, userid, name, username: String
+    let profileImg: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, userid, name, username
+        case profileImg = "profile_img"
+    }
+}
+
+// MARK: - FavProfileActionResponse
+struct FavProfileActionResponse: Codable {
+    let status:Int
+    let messages: String
+}
+
+
 // MARK: - NotificationResponse
 struct NotificationResponse: Codable {
     let data: [NotificationResponseDatum]?

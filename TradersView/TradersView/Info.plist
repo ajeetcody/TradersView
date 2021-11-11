@@ -42,11 +42,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We need camera access because we are giving the option where user can post photo in the post</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>&quot;We need your location before the posting we are using latitude and longitude to save information that from where the post has been subitted&quot;</string>
+	<string>"We need your location before the posting we are using latitude and longitude to save information that from where the post has been subitted"</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>&quot;We need your location before the posting we are using latitude and longitude to save information that from where the post has been subitted</string>
+	<string>"We need your location before the posting we are using latitude and longitude to save information that from where the post has been subitted</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>&quot;We need your location before the posting we are using latitude and longitude to save information that from where the post has been subitted</string>
+	<string>"We need your location before the posting we are using latitude and longitude to save information that from where the post has been subitted</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need photo library access because we are giving the option where user can post photo in the post</string>
 	<key>NSPhotoLibraryUsageDescription</key>

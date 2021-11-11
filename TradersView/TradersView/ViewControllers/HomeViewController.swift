@@ -117,7 +117,6 @@ class HomeViewController: MasterViewController {
     var arrayCommunity: [CommunityResponseDatum] = []
     var arrayMyPost:[GetPostListByUserIdResponseDatum] = []
     
-    private var userID:String?
     
     private var myPostPageNumber:Int = 0
     private var communityPageNumber:Int = 0
@@ -126,12 +125,15 @@ class HomeViewController: MasterViewController {
     private var shouldStopCommunityLoadMore:Bool = false
 
     let refreshControl = UIRefreshControl()
-
+    private var currentUserId:String?
     //MARK:- UIViewcontroller lifecycle methods ---
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        
+        
         
         self.tableViewHome.estimatedRowHeight = 88.0
         self.tableViewHome.rowHeight = UITableView.automaticDimension
@@ -139,7 +141,7 @@ class HomeViewController: MasterViewController {
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
-            self.userID = userData.id
+            self.currentUserId = userData.id
             self.callAllApis()
             
         }
@@ -181,7 +183,7 @@ class HomeViewController: MasterViewController {
     func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView, countLabel:UILabel){
         
         
-        let requestObj = LikePostRequest(_user_id: self.userID!, _notify_user_id: _notifyUserId, _post_id: _postId)
+        let requestObj = LikePostRequest(_user_id: self.currentUserId!, _notify_user_id: _notifyUserId, _post_id: _postId)
         
         
         
@@ -290,7 +292,7 @@ class HomeViewController: MasterViewController {
         
         
         
-        let request = CommunityRequest(_user_id: self.userID!, _page: self.communityPageNumber)
+        let request = CommunityRequest(_user_id: self.currentUserId!, _page: self.communityPageNumber)
         
         
         print("self.communityPageNumber - \(self.communityPageNumber)")
@@ -389,7 +391,7 @@ class HomeViewController: MasterViewController {
         
         
         
-        let request = GetPostListByUserIdRequest(_id: self.userID!, _page: self.myPostPageNumber)
+        let request = GetPostListByUserIdRequest(_id: self.currentUserId!, _page: self.myPostPageNumber)
         
         print("self.myPostPageNumber - \(self.myPostPageNumber)")
         
@@ -573,7 +575,7 @@ class HomeViewController: MasterViewController {
             print("post id - \(postObj.postid)")
         }
         
-        self.pushUserProfileScreen(userId: profileUserId, currentUserId:self.userID!)
+        self.pushUserProfileScreen(userId: profileUserId, currentUserId:self.currentUserId!)
         
         
         
@@ -596,12 +598,32 @@ class HomeViewController: MasterViewController {
     
     @IBAction func searchButtonAction(_ sender: Any) {
         
-        self.showSearchViewController()
+        if let userID = self.currentUserId{
+        
+            self.pushScreenWithScreenName(screenName: "SearchViewController", currentUserId: userID)
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User id is not available")
+            
+        }
+        
+        
     }
     @IBAction func notificationButtonAction(_ sender: Any) {
         
         
-        self.showNotificationScreen()
+        if let userID = self.currentUserId{
+        
+            self.pushScreenWithScreenName(screenName: "NotificationViewController", currentUserId: userID)
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User id is not available")
+            
+        }
         
     }
     

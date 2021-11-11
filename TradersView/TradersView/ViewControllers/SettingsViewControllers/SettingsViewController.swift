@@ -12,13 +12,14 @@ class SettingsViewController: MasterViewController {
     
     @IBOutlet weak var tableViewSettings: UITableView!
     
+    var currentUserId:String?
     
     
     let sectionArray = ["General", "Account", "Privacy", "", "Terms and Conditions", ""]
     
-    let rowHeadings:[[String]] =  [["Profile", "Push Notification", "Dark mode"], ["Username","Password","Security"],["Private Account","Blocked Account", "Mute User", "Post ban by You (Police)", "User ban by you (Police)", "Comment", "Tag", "Mention"],["Contact Us"],["SP Softech", "Privacy Policy"],["Subscription", "App version", "Rate our app", "Privacy Policy", "Ads", "Verify ME",""]]
+    let rowHeadings:[[String]] =  [["Profile", "Push Notification", "Dark mode"], ["Username","Password","Security"],["Private Account","Blocked Account", "Mute User", "Post ban by You (Police)", "User ban by you (Police)", "Favorite Users" ,"Comment", "Tag", "Mention"],["Contact Us"],["SP Softech", "Privacy Policy"],["Subscription", "App version", "Rate our app", "Privacy Policy", "Ads", "Verify ME",""]]
     
-    let rowValueTitle:[[String]] =  [["Edit", "", ""], ["","",""],["","View All", "View All", "View All", "View All", "", "", ""],[""],["", ""],["View Plan", "" , "Rate", "Read", "Available Soon", "",""]]
+    let rowValueTitle:[[String]] =  [["Edit", "", ""], ["","",""],["","View All", "View All", "View All", "View All", "View All","", "", ""],[""],["", ""],["View Plan", "" , "Rate", "Read", "Available Soon", "",""]]
     
     
     //MARK:- UIViewcontroller lifecycle methods ----
@@ -28,7 +29,19 @@ class SettingsViewController: MasterViewController {
         
         self.tableViewSettings.estimatedRowHeight = 88.0
         self.tableViewSettings.rowHeight = UITableView.automaticDimension
-        // Do any additional setup after loading the view.
+        
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
+            
+            
+            self.currentUserId = userData.id
+            
+            
+        }
+        else{
+            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
+        }
+        
     }
     
     
@@ -85,6 +98,13 @@ class SettingsViewController: MasterViewController {
                 
                 print("User ban by You")
                 self.userBanByYou()
+                
+            }
+            else  if sender.tag == 5{
+                
+                
+                print("User ban by You")
+                self.favoriteUsers()
                 
             }
             
@@ -151,6 +171,24 @@ class SettingsViewController: MasterViewController {
     
     func userBanByYou(){
         print("\(#function)")
+        
+    }
+    
+    func favoriteUsers(){
+        print("\(#function)")
+        
+        
+        if let userID = self.currentUserId{
+
+            self.pushScreenWithScreenName(screenName: "FavoriteUserProfileViewController", currentUserId: userID)
+
+        }
+        else{
+
+            self.showAlertPopupWithMessage(msg: "User id is not available")
+
+        }
+
         
     }
     
@@ -268,8 +306,16 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
             
             if indexPath.row == 1{
                 
+                if let userID = self.currentUserId{
                 
-                self.showResetPasswordScreen()
+                    self.pushScreenWithScreenName(screenName: "ChangePasswordViewController", currentUserId: userID)
+                    
+                }
+                else{
+                    
+                    self.showAlertPopupWithMessage(msg: "User id is not available")
+                    
+                }
                 
                 
             }
@@ -278,8 +324,16 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
         }
         else if indexPath.section == 3{
             
+            if let userID = self.currentUserId{
             
-            self.showContactUsScreen()
+                self.pushScreenWithScreenName(screenName: "ContactUsViewController", currentUserId: userID)
+                
+            }
+            else{
+                
+                self.showAlertPopupWithMessage(msg: "User id is not available")
+                
+            }
             
         }
         
@@ -423,7 +477,7 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 return cell
                 
             }
-            else if indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 {
+            else if indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5{
                 
                 
                 

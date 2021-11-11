@@ -54,37 +54,52 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Present ----
     
-    func showNotificationScreen(){
-        
-        
-        //NotificationViewController
+    
+    func pushScreenWithScreenName(screenName:String, currentUserId:String){
         
         DispatchQueue.main.async {
-        
-        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
-            let vc = dashBoardStoryBoard.instantiateViewController(identifier: "NotificationViewController")
             
+            let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+            let vc = dashBoardStoryBoard.instantiateViewController(identifier: screenName)
             
-        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
-        
+            self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+            
         }
         
     }
     
-    func showContactUsScreen(){
-        
-        
-        DispatchQueue.main.async {
-        
-        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
-            let vc = dashBoardStoryBoard.instantiateViewController(identifier: "ContactUsViewController")
-            
-            
-        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
-        
-        }
-        
-    }
+
+//    func showNotificationScreen(){
+//
+//
+//        //NotificationViewController
+//
+//        DispatchQueue.main.async {
+//
+//        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+//            let vc = dashBoardStoryBoard.instantiateViewController(identifier: "NotificationViewController")
+//
+//
+//        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+//
+//        }
+//
+//    }
+//
+//    func showContactUsScreen(){
+//
+//
+//        DispatchQueue.main.async {
+//
+//        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+//            let vc = dashBoardStoryBoard.instantiateViewController(identifier: "ContactUsViewController")
+//
+//
+//        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+//
+//        }
+//
+//    }
     func showBlockAndMuteScreen(isBLock:Bool){
        
         DispatchQueue.main.async {
@@ -100,33 +115,34 @@ class MasterViewController: UIViewController {
         
     }
     
-    func showResetPasswordScreen(){
-       
-        DispatchQueue.main.async {
-        
-        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
-        let vc = dashBoardStoryBoard.instantiateViewController(identifier: "ChangePasswordViewController")
-            
-        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
-        
-        }
-        
-    }
+//
+//    func showResetPasswordScreen(){
+//
+//        DispatchQueue.main.async {
+//
+//        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+//        let vc = dashBoardStoryBoard.instantiateViewController(identifier: "ChangePasswordViewController")
+//
+//        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+//
+//        }
+//
+//    }
     
-    
-    func showSearchViewController(){
-       
-        DispatchQueue.main.async {
-        
-        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
-        let vc = dashBoardStoryBoard.instantiateViewController(identifier: "SearchViewController")
-            
-            print("Show tabbar controller")
-        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
-        
-        }
-        
-    }
+//
+//    func showSearchViewController(){
+//
+//        DispatchQueue.main.async {
+//
+//        let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
+//        let vc = dashBoardStoryBoard.instantiateViewController(identifier: "SearchViewController")
+//
+//            print("Show tabbar controller")
+//        self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+//
+//        }
+//
+//    }
     
     //MARK:- Viewcontroller Navigation ----
     
@@ -158,7 +174,6 @@ class MasterViewController: UIViewController {
             let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
             let vc:FollowersFollowingViewController = dashBoardStoryBoard.instantiateViewController(identifier: "FollowersFollowingViewController")
             
-            vc.currentUserId = currentUserId
             vc.userId = userId
             vc.fetchFlag = flag
             
@@ -176,7 +191,6 @@ class MasterViewController: UIViewController {
             let dashBoardStoryBoard = UIStoryboard(name: "DashboardFlow", bundle: nil)
             let vc:UserProfileViewController = dashBoardStoryBoard.instantiateViewController(identifier: "UserProfileViewController")
             
-            vc.currentUserId = currentUserId
             vc.userIDOfProfile = userId
             
             self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)

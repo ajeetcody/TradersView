@@ -154,6 +154,7 @@ class LoginViewController: MasterViewController {
                 do {
                     try userDefaults.setObject(userDataLogin, forKey: Constants.USER_DEFAULT_KEY_USER_DATA)
                     self.appDelegate.loginResponseData = userDataLogin
+                    
                 } catch {
                     print(error.localizedDescription)
                 }

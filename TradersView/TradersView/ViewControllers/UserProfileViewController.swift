@@ -38,18 +38,19 @@ class CellUserProfileDetails:UITableViewCell{
 class UserProfileViewController: MasterViewController {
     
     
+    @IBOutlet weak var favImageView: UIImageView!
     
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var userNameHeaderLabel: UILabel!
     
     var userIDOfProfile:String = ""
-    var currentUserId:String = ""
+    private var currentUserId:String = ""
     
     
     var arrayMyPost:[GetPostListByUserIdResponseDatum] = []
     var arrayMyTreds:[GetPostListByUserIdResponseDatum] = []
     
-
+    
     
     var userProfileObj:GetProfileByIDDatum?
     
@@ -69,30 +70,38 @@ class UserProfileViewController: MasterViewController {
         self.tableViewUserProfile.estimatedRowHeight = 88.0
         self.tableViewUserProfile.rowHeight = UITableView.automaticDimension
         
+        print("Current user id - \(self.currentUserId)")
+        print("Profile id - \(self.userIDOfProfile)")
         
-        if self.navigationController?.viewControllers.count == 1{
+        
+        if  let userData:LoginUserData = self.appDelegate.loginResponseData {
             
-            self.cancelButton.isHidden = true
-            
-            if  let userData:LoginUserData = self.appDelegate.loginResponseData {
+            if self.navigationController?.viewControllers.count == 1{
                 
+                self.cancelButton.isHidden = true
                 self.currentUserId = userData.id
                 self.userIDOfProfile = userData.id
-                self.callApiToFetchUserProfile()
-                self.apiCallMyPost()
+                
+                
             }
             else{
                 
-                self.showAlertPopupWithMessage(msg: "User Data is not available")
+                self.cancelButton.isHidden = false
+                self.currentUserId = userData.id
+                
+                
             }
             
-            
+            self.callApiToFetchUserProfile()
+            self.apiCallMyPost()
         }
         else{
             
-            self.cancelButton.isHidden = false
-            
+            self.showAlertPopupWithMessage(msg: "User Data is not available")
         }
+        
+        
+        
         
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -107,7 +116,7 @@ class UserProfileViewController: MasterViewController {
         self.tableViewUserProfile.reloadData()
     }
     
-  
+    
     //MARK:- Refresh apiCall ----
     
     @objc func refresh(_ sender: AnyObject) {
@@ -121,12 +130,12 @@ class UserProfileViewController: MasterViewController {
     
     func apiCall(){
         
-   
-            
-            self.callApiToFetchUserProfile()
-            self.apiCallMyPost()
-
-         
+        
+        
+        self.callApiToFetchUserProfile()
+        self.apiCallMyPost()
+        
+        
         
         
     }
@@ -154,9 +163,9 @@ class UserProfileViewController: MasterViewController {
             
             if results.status == 1 {
                 print("like response - \(results.like)")
-
-
-
+                
+                
+                
                 self.changeLikeButtonIconAndCount(results: results, imgViewLike: imgLike, likeCountLabel: countLabel)
                 
             }
@@ -200,8 +209,40 @@ class UserProfileViewController: MasterViewController {
                     
                     self.userProfileObj = userData
                     
+                    if (self.userIDOfProfile != self.currentUserId) {
+                        
+                        DispatchQueue.main.async {
+                            self.favImageView.isHidden = false
+                            
+                        }
+                        if (self.userProfileObj?.favouriteProfile == 1)
+                        {
+                            
+                            DispatchQueue.main.async {
+                                
+                                self.favImageView.image = UIImage(named: "fav-profile-filled")
+                            }
+                            
+                            
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                self.favImageView.image = UIImage(named: "fav-profile-empty")
+                            }
+                        }
+                        
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.favImageView.isHidden = true
+                        }
+                        
+                    }
                     
-                    
+                    DispatchQueue.main.async {
+                        self.favImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.favProfileTapGestureAction(gesture:))))
+                        
+                    }
                     
                     DispatchQueue.main.async {
                         
@@ -259,78 +300,78 @@ class UserProfileViewController: MasterViewController {
         
         
         
-      
-          
+        
+        
+        
+        let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: self.myPostPageNumber)
+        
+        print("self.myPostPageNumber - \(self.myPostPageNumber)")
+        
+        ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
             
-                let request = GetPostListByUserIdRequest(_id: self.userIDOfProfile, _page: self.myPostPageNumber)
+            
+            
+            
+            if results.status == 1{
                 
-                print("self.myPostPageNumber - \(self.myPostPageNumber)")
                 
-                ApiCallManager.shared.apiCall(request: request, apiType: .GET_POST_BY_USER_ID, responseType: GetPostListByUserIdResponse.self, requestMethod: .POST) { (results) in
+                if let data = results.data{
                     
-                    
-                    
-                    
-                    if results.status == 1{
+                    if self.myPostPageNumber == 0 {
                         
-                        
-                        if let data = results.data{
-                            
-                            if self.myPostPageNumber == 0 {
-                                
-                                self.shouldStopMyPostLoadMore = false
-                                self.arrayMyPost = data
-                            }
-                            else{
-                                
-                                self.arrayMyPost.append(contentsOf: data)
-                                
-                            }
-                            
-                            
-                            
-                        }
-                        
-                        
-                        DispatchQueue.main.async {
-                            
-                            print("post count - 1 - \(self.arrayMyPost.count)")
-                            self.tableViewUserProfile.reloadData()
-                            
-                        }
-                        
-                        
-                        
-                        
+                        self.shouldStopMyPostLoadMore = false
+                        self.arrayMyPost = data
                     }
-                    else {
+                    else{
                         
-                        //                if self.myPostPageNumber == 0 {
-                        //
-                        //
-                        //
-                        //                    DispatchQueue.main.async {
-                        //                        self.tableViewUserProfile.reloadData()
-                        //                    }
-                        //                    self.showAlertPopupWithMessage(msg: results.messages)
-                        //
-                        //                }
-                        //                else{
-                        
-                        self.shouldStopMyPostLoadMore = true
-                        //}
+                        self.arrayMyPost.append(contentsOf: data)
                         
                     }
                     
                     
-                } failureHandler: { (error) in
-                    
-                    
-                    self.showErrorMessage(error: error)
                     
                 }
                 
-         
+                
+                DispatchQueue.main.async {
+                    
+                    print("post count - 1 - \(self.arrayMyPost.count)")
+                    self.tableViewUserProfile.reloadData()
+                    
+                }
+                
+                
+                
+                
+            }
+            else {
+                
+                //                if self.myPostPageNumber == 0 {
+                //
+                //
+                //
+                //                    DispatchQueue.main.async {
+                //                        self.tableViewUserProfile.reloadData()
+                //                    }
+                //                    self.showAlertPopupWithMessage(msg: results.messages)
+                //
+                //                }
+                //                else{
+                
+                self.shouldStopMyPostLoadMore = true
+                //}
+                
+            }
+            
+            
+        } failureHandler: { (error) in
+            
+            
+            self.showErrorMessage(error: error)
+            
+        }
+        
+        
         
     }
     
@@ -363,8 +404,8 @@ class UserProfileViewController: MasterViewController {
         
         let label = gesture.view!.superview!.subviews.compactMap({$0 as? UILabel})
         
-       // print("label[0].text - \(label[0].text)")
-
+        // print("label[0].text - \(label[0].text)")
+        
         
         
         self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!,countLabel:label[0])
@@ -400,6 +441,30 @@ class UserProfileViewController: MasterViewController {
         
         
         self.pushCommentScreen(postId: postID, notifyUserId: notifyUserId)
+        
+        
+        
+    }
+    @objc func favProfileTapGestureAction(gesture: UITapGestureRecognizer){
+        
+        let request = FavProfileActionRequest(_id: self.currentUserId, _fav_id: self.userIDOfProfile)
+        
+        ApiCallManager.shared.apiCall(request: request, apiType: .FAV_PROFILE, responseType: FavProfileActionResponse.self, requestMethod: .POST) { (results) in
+            
+            
+            if results.status == 0{
+                
+                self.showAlertPopupWithMessage(msg: results.messages)
+            }
+            else{
+                
+                self.callApiToFetchUserProfile()
+            }
+            
+        } failureHandler: { (error) in
+            
+            self.showErrorMessage(error: error)
+        }
         
         
         
@@ -448,8 +513,12 @@ class UserProfileViewController: MasterViewController {
             print("post id - \(postObj.postid)")
         }
         
-        self.pushUserProfileScreen(userId: profileUserId, currentUserId:self.currentUserId)
-        
+        if profileUserId != self.userIDOfProfile{
+            
+            self.pushUserProfileScreen(userId: profileUserId, currentUserId:self.currentUserId)
+            
+            
+        }
         
         
     }
@@ -675,6 +744,10 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.followersLabel.text = self.userProfileObj?.followers
                 cell.postLabel.text =  "\(self.userProfileObj?.post ?? 0)"
                 
+                
+                
+                
+                
                 cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
                 
                 cell.profileImageView.changeBorder(width: 2.0, borderColor: .darkGray, cornerRadius: 45.0)
@@ -794,7 +867,8 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
             
-            if obj.isLike != 0 {
+            print("Obj.like - \(obj.isLike)")
+            if obj.isLike == 1 {
                 
                 
                 cell.likeImageView.image = UIImage(named: "like-filled")
@@ -812,19 +886,19 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let imgUrl = imgObj.image
                 
-               // print("imgUrl - \(imgUrl)")
+                // print("imgUrl - \(imgUrl)")
                 
                 switch imgUrl {
                 case .integer(let intValue):
-                  //  print("Integer value -- \(intValue)")
+                    //  print("Integer value -- \(intValue)")
                     cell.heightPostImageView.constant = 0.0
                     
                     
                 case .string(let strUrl):
-                   // print("String value -- \(strUrl)")
+                    // print("String value -- \(strUrl)")
                     
-                   // cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-
+                    // cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
+                    
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
                         if img != nil{
@@ -838,7 +912,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                         else{
                             
                             cell.heightPostImageView.constant = 0.0
-
+                            
                         }
                     }
                     
@@ -856,23 +930,23 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             }
             
             if self.arrayMyPost.count - 1 == indexPath.row{
-
-
-
+                
+                
+                
                 if !self.shouldStopMyPostLoadMore{
-
+                    
                     self.myPostPageNumber = self.myPostPageNumber + 1
-
-
-
-                        self.apiCallMyPost()
-
-
-
-
+                    
+                    
+                    
+                    self.apiCallMyPost()
+                    
+                    
+                    
+                    
                 }
-
-
+                
+                
             }
             
             return cell
@@ -951,7 +1025,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                     
                 case .string(let strUrl):
                     print("String value -- \(strUrl)")
-
+                    
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
                         if img != nil{
@@ -965,7 +1039,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                         else{
                             
                             cell.heightPostImageView.constant = 0.0
-
+                            
                         }
                     }
                 }
@@ -989,7 +1063,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
-  
+    
     
     
 }
