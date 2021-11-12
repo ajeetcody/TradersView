@@ -40,6 +40,7 @@
 		77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */; };
 		77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */; };
 		77CC35D62724905500D65EDC /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC35D52724905500D65EDC /* credentials.plist */; };
+		77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */; };
 		D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		77CC35D52724905500D65EDC /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
+		77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSymbolViewController.swift; sourceTree = "<group>"; };
 		AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.release.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,6 +188,7 @@
 				7712E4112738098E00036561 /* FollowersFollowingViewController.swift */,
 				7712E43F2739336900036561 /* NotificationViewController.swift */,
 				7729152C273D710B00991F0A /* AddTradesViewController.swift */,
+				77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
+				77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */,
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
