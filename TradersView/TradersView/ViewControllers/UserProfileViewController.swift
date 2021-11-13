@@ -862,6 +862,9 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
             cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+           
+            cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+
             
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
@@ -904,7 +907,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = Constants.screenWidth / ratio
+                            let newHeight = (Constants.screenWidth - 60) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             
@@ -991,11 +994,16 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
             cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+
+            
+            cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+
             
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             
+
             
             if obj.isLike != 0 {
                 
@@ -1031,7 +1039,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = Constants.screenWidth / ratio
+                            let newHeight = (Constants.screenWidth - 60) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             

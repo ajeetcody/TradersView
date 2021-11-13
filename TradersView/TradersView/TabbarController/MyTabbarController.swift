@@ -241,9 +241,12 @@ class MyTabbarController: UITabBarController {
             self.addtradeScreen()
         }
         
+        let actionCancel = UIAlertAction(title: "Close", style: .destructive, handler: nil)
+        
+        
         actionSheet.addAction(actionPost)
         actionSheet.addAction(actionTrade)
-        
+        actionSheet.addAction(actionCancel)
         self.present(actionSheet, animated: true, completion: nil)
         
         

@@ -12,6 +12,7 @@ class SplashViewController: MasterViewController {
     
     @IBOutlet weak var continueButton: UIButton!
     
+    @IBOutlet weak var shadowEffectView: UIView!
     
     //MARK:- UIViewcontroller lifecycle ---
     
@@ -20,12 +21,28 @@ class SplashViewController: MasterViewController {
         super.viewDidLoad()
         
         self.appDelegate.mainNavigation = self.navigationController
-        self.continueButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 10.0)
+        self.continueButton.changeBorder(width: 1.0, borderColor: .white, cornerRadius: 25.0)
+        
+        
+       // self.createFadOutEffect()
         
         
         
         
     }
+    
+//    func createFadOutEffect(){
+//
+//        let gradient = CAGradientLayer()
+//        gradient.frame = view.bounds
+//        gradient.colors = [UIColor.white.cgColor, UIColor.clear.withAlphaComponent(0.4)]
+//        gradient.locations = [0.0 , 0.50]
+//
+//
+//        self.shadowEffectView.layer.addSublayer(gradient)
+//
+//
+//    }
     override func viewWillAppear(_ animated: Bool) {
         
         

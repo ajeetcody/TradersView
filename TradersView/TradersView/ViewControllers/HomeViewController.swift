@@ -770,7 +770,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let cell:CellMostPopular = tableView.dequeueReusableCell(withIdentifier: "CellMostPopular") as! CellMostPopular
                 
-                cell.collectionViewMostPopular.tag = 101
+                cell.collectionViewMostPopular.tag = 100
                 cell.collectionViewMostPopular.delegate = self
                 cell.collectionViewMostPopular.dataSource = self
                 
@@ -787,7 +787,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 
                 let cell:CellTopProfile = tableView.dequeueReusableCell(withIdentifier: "CellTopProfile") as! CellTopProfile
-                cell.collectionViewTopProfile.tag = 102
+                cell.collectionViewTopProfile.tag = 101
                 cell.collectionViewTopProfile.delegate = self
                 cell.collectionViewTopProfile.dataSource = self
                 cell.collectionViewTopProfile.reloadData()
@@ -863,6 +863,8 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
             
+            cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
@@ -889,19 +891,20 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 switch imgUrl {
                 case .integer(let intValue):
-                 //   print("Integer value -- \(intValue)")
+                   print("Integer value -- \(intValue)")
                     cell.heightPostImageView.constant = 0.0
                     
                     
                 case .string(let strUrl):
-                   // print("String value -- \(strUrl)")
+                   
+                    // print("String value -- \(strUrl)")
 
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = Constants.screenWidth / ratio
+                            let newHeight = (Constants.screenWidth - 60) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             
@@ -994,6 +997,9 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             
+
+            cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
             
@@ -1033,7 +1039,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = Constants.screenWidth / ratio
+                            let newHeight = (Constants.screenWidth - 60) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             
@@ -1099,15 +1105,19 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if collectionView.tag == 101{
-            
-            return CGSize(width: Constants.screenWidth / 2.8, height: Constants.screenHeight/2.5)
-        }
-        
-        return CGSize(width: Constants.screenWidth / 4.8, height: Constants.screenHeight/4.0)
-        
-        
+          
+        print("\(#function) - \(collectionView.tag)")
+          let edge    : CGFloat = 1.0
+          let spacing : CGFloat = 1.0
+
+        let noOfColumn = 2.5
+          let collectionviewWidth = collectionView.frame.width
+          let bothEdge =  CGFloat(edge + edge) // left + right
+          let excludingEdge = collectionviewWidth - bothEdge
+          let cellWidthExcludingSpaces = excludingEdge - (CGFloat((noOfColumn - 1)) * spacing)
+          let finalCellWidth = Double(cellWidthExcludingSpaces) / noOfColumn
+          let height = finalCellWidth
+          return CGSize(width: finalCellWidth, height: height)
         
         
     }
@@ -1130,6 +1140,14 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         
+        if collectionView.tag == 100{
+            
+            return 5
+        }
+        else if collectionView.tag == 101{
+        
+            return 5
+        }
         return 20
         
     }
@@ -1146,18 +1164,18 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if collectionView.tag == 101{
+        if collectionView.tag == 100{
             
             return self.arrayPopular.count
             
         }
-        else if collectionView.tag == 102{
+        else if collectionView.tag == 101{
             
             return self.topProfile.count
             
         }
         
-        return 10
+        return 0
     }
     
     
@@ -1165,7 +1183,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        if collectionView.tag == 101{
+        if collectionView.tag == 100{
             
             
             let cell:CollectionViewCellMostPopular = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellMostPopular", for: indexPath as IndexPath) as! CollectionViewCellMostPopular
@@ -1187,7 +1205,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             return cell
             
         }
-        else if collectionView.tag == 102{
+        else if collectionView.tag == 101{
             
             let cell:CollectionViewCellTopProfile = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellTopProfile", for: indexPath as IndexPath) as! CollectionViewCellTopProfile
             
@@ -1221,7 +1239,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
         print("You selected cell #\(indexPath.item)!")
         
         
-        if collectionView.tag == 101{
+        if collectionView.tag == 100{
             
             let obj = self.arrayPopular[indexPath.row]
             
@@ -1233,7 +1251,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
 
             
         }
-        else if collectionView.tag == 102{
+        else if collectionView.tag == 101{
             
             
             self.showAlertCommingSoon()

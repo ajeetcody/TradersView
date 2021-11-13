@@ -31,15 +31,15 @@ class LoginViewController: MasterViewController {
         super.viewDidLoad()
         
         
-        self.loginButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.loginButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 25.0)
         
-        self.facebookButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.facebookButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 25.0)
         
-        self.googleButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.googleButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 25.0)
         
-        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 15.0)
         
-        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 15.0)
         
         
        // self.emailIDTextfield.text = "ra168@gmail.com"

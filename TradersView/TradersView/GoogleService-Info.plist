@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>477146900600-j15835agol5sg82r8j2arur69r2gmd24.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.477146900600-j15835agol5sg82r8j2arur69r2gmd24</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>477146900600-0rjsh4hojvn8esqgp6a9t19ddl693ci7.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA6WfkKt8jWxI7ZY1H_MprWvaG1i1-C9E0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>477146900600</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.thetrradersv1ew2</string>
+	<key>PROJECT_ID</key>
+	<string>tradersview-c8fe8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tradersview-c8fe8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:477146900600:ios:86d8c32c74d8cc160b258d</string>
+	<key>DATABASE_URL</key>
+	<string>https://tradersview-c8fe8-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
