@@ -15,6 +15,7 @@ pod 'FacebookLogin'
 pod 'FacebookShare'
 
 pod 'Alamofire', '~> 5.4'
+pod 'SkyFloatingLabelTextField', '~> 3.0'
 
 
 end

@@ -40,6 +40,7 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
+  - SkyFloatingLabelTextField (3.8.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4)
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - FacebookShare
   - GoogleSignIn
   - SDWebImage (~> 5.0)
+  - SkyFloatingLabelTextField (~> 3.0)
 
 SPEC REPOS:
   trunk:
@@ -63,6 +65,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - SDWebImage
+    - SkyFloatingLabelTextField
 
 SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
@@ -77,7 +80,8 @@ SPEC CHECKSUMS:
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
 
-PODFILE CHECKSUM: 9d4af387f6a02db4c25813da39561ac702238212
+PODFILE CHECKSUM: 33643eeb8f52d860158ca4e503e7c3d3654d757e
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.2

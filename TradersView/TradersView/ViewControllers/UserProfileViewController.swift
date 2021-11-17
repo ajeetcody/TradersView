@@ -69,7 +69,8 @@ class UserProfileViewController: MasterViewController {
         
         self.tableViewUserProfile.estimatedRowHeight = 88.0
         self.tableViewUserProfile.rowHeight = UITableView.automaticDimension
-        
+       
+        self.tableViewUserProfile.contentInset = .zero
         print("Current user id - \(self.currentUserId)")
         print("Profile id - \(self.userIDOfProfile)")
         
@@ -907,7 +908,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = (Constants.screenWidth - 60) / ratio
+                            let newHeight = (Constants.screenWidth - 80) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             
@@ -1039,7 +1040,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = (Constants.screenWidth - 60) / ratio
+                            let newHeight = (Constants.screenWidth - 30) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             

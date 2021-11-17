@@ -241,12 +241,25 @@ class MyTabbarController: UITabBarController {
             self.addtradeScreen()
         }
         
+        let actionCreateGroup = UIAlertAction(title: "Create Group", style: .default) { (action) in
+            self.createGroupScreen()
+            
+        }
+        
+        let actionCreateChannel = UIAlertAction(title: "Create Channel", style: .default) { (action) in
+            self.createChannelScreen()
+            
+        }
+        
         let actionCancel = UIAlertAction(title: "Close", style: .destructive, handler: nil)
         
         
         actionSheet.addAction(actionPost)
         actionSheet.addAction(actionTrade)
+        actionSheet.addAction(actionCreateGroup)
+        actionSheet.addAction(actionCreateChannel)
         actionSheet.addAction(actionCancel)
+        
         self.present(actionSheet, animated: true, completion: nil)
         
         
@@ -272,6 +285,29 @@ class MyTabbarController: UITabBarController {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
         
+        
+        
+    }
+    
+    func createGroupScreen(){
+        
+        let storyBoardDashboard = UIStoryboard(name: "Chat", bundle: nil)
+        
+        let vc:CreateGroupViewController = storyBoardDashboard.instantiateViewController(identifier: "CreateGroupViewController") as! CreateGroupViewController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+        
+        
+        
+    }
+    func createChannelScreen(){
+        
+        let storyBoardDashboard = UIStoryboard(name: "Chat", bundle: nil)
+        
+        let vc:CreateChannelViewController = storyBoardDashboard.instantiateViewController(identifier: "CreateChannelViewController") as! CreateChannelViewController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+
         
         
     }

@@ -194,21 +194,24 @@ class ApiCallManager{
                             if apiType == .LIKE_POST{
                                 
 
-                                print("response string \(String(data: data!, encoding: .utf8))")
+                                print("response string \(String(data: data!, encoding: .utf8) ?? "")")
                             }
 
                             let response = try JSONDecoder().decode(T.self, from: data!)
+                            
+                            print("response - \(response)")
+                            
                             compilationHandler(response)
                         }
                         
                         catch let decodingError {
                             debugPrint(decodingError)
                             
-                            failureHandler(decodingError as! Error)
+                            failureHandler(decodingError )
                         }
                     }else{
                         
-                        failureHandler(error as! Error)
+                        failureHandler(error!)
                         
                     }
                 }

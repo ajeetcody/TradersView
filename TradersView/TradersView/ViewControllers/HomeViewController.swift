@@ -695,7 +695,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
         
         if tableView.tag == 100 {
             
-            return 40.0
+            return 30.0
             
         }
         
@@ -709,15 +709,15 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         
-        let sectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: 40))
+        let sectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: 30))
         
-        sectionHeaderView.backgroundColor = self.hexStringToUIColor(hex: "#264653")
-        let headingLabel = UILabel(frame: CGRect(x: 15, y: 0, width: Constants.screenWidth, height: 40))
+        sectionHeaderView.backgroundColor = .white
+        let headingLabel = UILabel(frame: CGRect(x: 15, y: 0, width: Constants.screenWidth, height: 30))
         
         headingLabel.text = self.sectionTitle[section]
-        headingLabel.textColor = .white
+        headingLabel.textColor = .black
         
-        headingLabel.font = headingLabel.font.withSize(22)
+        headingLabel.font = headingLabel.font.withSize(18)
         sectionHeaderView.addSubview(headingLabel)
         
         return sectionHeaderView
@@ -904,7 +904,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = (Constants.screenWidth - 60) / ratio
+                            let newHeight = (Constants.screenWidth - 55) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             
@@ -1039,7 +1039,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                         if img != nil{
                             
                             let ratio = img!.size.width / img!.size.height
-                            let newHeight = (Constants.screenWidth - 60) / ratio
+                            let newHeight = (Constants.screenWidth - 55) / ratio
                             cell.heightPostImageView.constant = newHeight
                             self.view.layoutIfNeeded()
                             

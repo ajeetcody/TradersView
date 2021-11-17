@@ -266,7 +266,7 @@ struct SearchResponse: Codable {
 }
 
 // MARK: - Datum
-struct SearchDatum: Codable {
+class SearchDatum: Codable {
     let userid, name, username: String
     let profileImg: String
 

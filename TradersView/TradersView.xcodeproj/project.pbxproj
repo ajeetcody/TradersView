@@ -25,6 +25,10 @@
 		7747D86627240BF900A81FAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86527240BF900A81FAA /* Constants.swift */; };
 		7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86927240E8A00A81FAA /* ApiRequestModel.swift */; };
 		7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D87C2724295F00A81FAA /* ApiResponse.swift */; };
+		776407092744CF9900A9A7DE /* CreateChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776407082744CF9900A9A7DE /* CreateChannelViewController.swift */; };
+		7764070C2744CFAB00A9A7DE /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */; };
+		776407112744D04B00A9A7DE /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 776407102744D04B00A9A7DE /* Chat.storyboard */; };
+		776407182744D50500A9A7DE /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776407172744D50500A9A7DE /* SearchViewModel.swift */; };
 		777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA939271B657C00C1256D /* AppDelegate.swift */; };
 		777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93B271B657C00C1256D /* SceneDelegate.swift */; };
 		777DA93E271B657C00C1256D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA93D271B657C00C1256D /* ViewController.swift */; };
@@ -66,6 +70,10 @@
 		7747D86527240BF900A81FAA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7747D86927240E8A00A81FAA /* ApiRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequestModel.swift; sourceTree = "<group>"; };
 		7747D87C2724295F00A81FAA /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
+		776407082744CF9900A9A7DE /* CreateChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelViewController.swift; sourceTree = "<group>"; };
+		7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
+		776407102744D04B00A9A7DE /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		776407172744D50500A9A7DE /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		777DA936271B657C00C1256D /* TradersView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradersView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		777DA939271B657C00C1256D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		777DA93B271B657C00C1256D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +143,26 @@
 			path = "TradersView/Api Model";
 			sourceTree = SOURCE_ROOT;
 		};
+		7764070F2744D00D00A9A7DE /* MessageViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				771D4B40271E81D200AD2131 /* ChatViewController.swift */,
+				776407082744CF9900A9A7DE /* CreateChannelViewController.swift */,
+				7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */,
+				776407102744D04B00A9A7DE /* Chat.storyboard */,
+			);
+			path = MessageViewControllers;
+			sourceTree = "<group>";
+		};
+		776407132744D47200A9A7DE /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				77AAD6142731CAF2001CE95A /* SearchViewController.swift */,
+				776407172744D50500A9A7DE /* SearchViewModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		777DA92D271B657C00C1256D = {
 			isa = PBXGroup;
 			children = (
@@ -177,15 +205,15 @@
 		777DA951271B672200C1256D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				776407132744D47200A9A7DE /* Search */,
+				7764070F2744D00D00A9A7DE /* MessageViewControllers */,
 				77AB7ED8272694B300E16F9A /* SettingsViewControllers */,
 				777DA952271B672E00C1256D /* SplashViewController.swift */,
 				777DA955271B673900C1256D /* LoginViewController.swift */,
 				777DA958271B674300C1256D /* SignupViewController.swift */,
 				778A1B44271C1D0A008A4665 /* MasterViewController.swift */,
-				771D4B40271E81D200AD2131 /* ChatViewController.swift */,
 				7742A4BC272FDEE70081F28E /* PostViewController.swift */,
 				7742A4FE273037350081F28E /* HomeViewController.swift */,
-				77AAD6142731CAF2001CE95A /* SearchViewController.swift */,
 				773C520B2735646D0016BF3E /* CommentListViewController.swift */,
 				773C520E2735BFB90016BF3E /* UserProfileViewController.swift */,
 				7712E4112738098E00036561 /* FollowersFollowingViewController.swift */,
@@ -286,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				776407112744D04B00A9A7DE /* Chat.storyboard in Resources */,
 				777DA946271B657D00C1256D /* LaunchScreen.storyboard in Resources */,
 				77CC35D62724905500D65EDC /* credentials.plist in Resources */,
 				777DA943271B657D00C1256D /* Assets.xcassets in Resources */,
@@ -344,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				776407182744D50500A9A7DE /* SearchViewModel.swift in Sources */,
 				7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */,
 				7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */,
 				7712E43D27392A9600036561 /* ContactUsViewController.swift in Sources */,
@@ -352,6 +382,7 @@
 				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
 				7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */,
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
+				7764070C2744CFAB00A9A7DE /* CreateGroupViewController.swift in Sources */,
 				7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */,
 				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
@@ -360,6 +391,7 @@
 				77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */,
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */,
+				776407092744CF9900A9A7DE /* CreateChannelViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7712E4122738098E00036561 /* FollowersFollowingViewController.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
@@ -522,7 +554,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -547,7 +579,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 9Q5DPJ8FN2;
 				INFOPLIST_FILE = TradersView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

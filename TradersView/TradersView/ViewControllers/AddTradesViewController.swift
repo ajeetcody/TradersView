@@ -6,10 +6,11 @@
 //
 
 import UIKit
-
+import SkyFloatingLabelTextField
 class AddTradesViewController: MasterViewController {
     
     
+    @IBOutlet weak var scrollViewAddTrade: UIScrollView!
     @IBOutlet weak var heightResonView: NSLayoutConstraint!
     @IBOutlet weak var reasonView: UIView!
     
@@ -29,12 +30,12 @@ class AddTradesViewController: MasterViewController {
     @IBOutlet weak var statusView: UIView!
     
     @IBOutlet weak var postTradeButton: UIButton!
-    @IBOutlet weak var symbolTextfield: UITextField!
+    @IBOutlet weak var symbolTextfield: SkyFloatingLabelTextField!
     
-    @IBOutlet weak var stopLossTextfield: UITextField!
+    @IBOutlet weak var stopLossTextfield: SkyFloatingLabelTextField!
     
-    @IBOutlet weak var profileTextfield: UITextField!
-    @IBOutlet weak var tradePriceTextfield: UITextField!
+    @IBOutlet weak var profileTextfield: SkyFloatingLabelTextField!
+    @IBOutlet weak var tradePriceTextfield: SkyFloatingLabelTextField!
     
     private var symbolList:[GetSymbolResponseDatum]?
     private var currentUserId:String?
@@ -55,7 +56,6 @@ class AddTradesViewController: MasterViewController {
         super.viewDidLoad()
         
         self.heightResonView.constant = 0.0
-        
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
@@ -86,7 +86,7 @@ class AddTradesViewController: MasterViewController {
         self.statusCloseView.backgroundColor = .lightGray
         self.statusCloseLabel.textColor = .white
         
-        self.postTradeButton.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 5.0)
+        self.postTradeButton.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 25.0)
         
         self.statusOpenView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 5.0)
         
@@ -351,6 +351,12 @@ extension AddTradesViewController:UITextViewDelegate{
             return false
         }
         return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        self.scrollViewAddTrade.setContentOffset(CGPoint(x: 0, y: 140), animated: true)
+        
     }
     
     

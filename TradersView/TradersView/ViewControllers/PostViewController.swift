@@ -161,6 +161,7 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
         print("\(#function)")
         
+        
         let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
         
         let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { (action) in
@@ -199,6 +200,7 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         self.dismiss(animated: true, completion: nil)
         
     }
+    
     
     //MARK:- Image fetch actions ---
     
