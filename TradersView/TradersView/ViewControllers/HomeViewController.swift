@@ -22,7 +22,8 @@ class MyOwnTableView: UITableView {
     
     override func reloadData() {
         super.reloadData()
-        self.invalidateIntrinsicContentSize()
+      //  self.invalidateIntrinsicContentSize()
+        
     }
 }
 
@@ -105,6 +106,7 @@ class CellFeedAndCommunity:UITableViewCell{
 
 class HomeViewController: MasterViewController {
     
+   // @IBOutlet weak var heightContentSizeScrollView: NSLayoutConstraint!
     @IBOutlet weak var tableViewHome: UITableView!
     @IBOutlet weak var notificationButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
@@ -176,6 +178,10 @@ class HomeViewController: MasterViewController {
         self.callAllApis()
         
     }
+    
+    //MARK:- Reload methods ---
+    
+    
     
     //MARK:- API call methods ----
 

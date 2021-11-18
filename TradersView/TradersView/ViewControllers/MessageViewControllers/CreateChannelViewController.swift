@@ -9,7 +9,9 @@ import UIKit
 
 class CreateChannelViewController: MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    
+    @IBOutlet weak var cancelButton: UIButton!
+
+    @IBOutlet weak var createChannelButton: UIButton!
     @IBOutlet weak var channelImageView: UIImageView!
     
     @IBOutlet weak var channelNameTextfield: UITextField!
@@ -47,6 +49,10 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
         
         self.channelImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 45.0)
         
+        self.cancelButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
+        self.createChannelButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
+
+
     }
     
     

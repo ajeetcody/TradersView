@@ -30,6 +30,8 @@ class NotificationViewController: MasterViewController {
     
     private var pageNumber = 0
     
+    var currentUserID:String?
+    
     //MARK:- UIViewcontroller lifecycle methods ----
     
     
@@ -43,7 +45,7 @@ class NotificationViewController: MasterViewController {
         
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
-            
+            self.currentUserID = userData.id
             self.apiCall(userID: userData.id, pageNumber: self.pageNumber)
             
         }
@@ -125,12 +127,51 @@ class NotificationViewController: MasterViewController {
         
         
         
-    //We can not show user profile from here because we are not getting user id in response ---
+        // FIXME: - We can not show user profile from here because we are not getting user id in response ---
         
             
         
     
             
+        
+        
+    }
+    
+    //MARK:- User name tag gesture ----
+    
+    
+    
+    
+    @objc func userTagLabelGesture(gesture: UITapGestureRecognizer) {
+        
+        let tag = gesture.view?.tag
+
+        print(tag!)
+        
+      //  let obj:NotificationResponseDatum = arrayNotificaiton![tag!]
+        
+      //  self.pushUserProfileScreen(userId: obj.id, currentUserId: self.currentUserID!)
+        
+        
+        // FIXME: - We can not show user profile from here because we are not getting user id in response ---
+
+        
+        
+//        let termsRange = (text as NSString).range(of: "Terms & Conditions")
+//        // comment for now
+//        //let privacyRange = (text as NSString).range(of: "Privacy Policy")
+//
+//        if gesture.didTapAttributedTextInLabel(label: lblTerms, inRange: termsRange) {
+//            print("Tapped terms")
+//
+//        } else if gesture.didTapAttributedTextInLabel(label: lblTerms, inRange: privacyRange) {
+//            print("Tapped privacy")
+//
+//        } else {
+//            print("Tapped none")
+//
+//
+//        }
         
         
     }
@@ -179,8 +220,13 @@ extension NotificationViewController:UITableViewDelegate, UITableViewDataSource{
         cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
         
         
-        cell.messageLabel.text = "\(obj.name.capitalized) \(obj.message)"
+      //  cell.messageLabel.text = "\(obj.name.capitalized) \(obj.message)"
             
+        cell.messageLabel.createLink(text: "@\(obj.name.lowercased()) \(obj.message)", linkText: "@\(obj.name.lowercased())", _tag: indexPath.row)
+        
+        
+        cell.messageLabel.addGestureRecognizer(UITapGestureRecognizer(target:self, action: #selector(userTagLabelGesture(gesture:))))
+
             
             if obj.postImg.count != 0 {
                 

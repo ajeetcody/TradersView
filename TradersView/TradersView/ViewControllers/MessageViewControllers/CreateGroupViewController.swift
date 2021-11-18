@@ -9,7 +9,9 @@ import UIKit
 
 class CreateGroupViewController: MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    
+    @IBOutlet weak var cancelButton: UIButton!
+
+    @IBOutlet weak var createGroupButton: UIButton!
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var publicSwitch: UISwitch!
     @IBOutlet weak var groupNameTextfield: UITextField!
@@ -47,6 +49,9 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
         
         self.groupImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 45.0)
         
+        self.createGroupButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
+        self.cancelButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
+
     }
     
     

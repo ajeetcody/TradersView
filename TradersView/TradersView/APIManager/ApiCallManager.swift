@@ -124,6 +124,135 @@ class ApiCallManager{
         
     }
     
+    
+    
+    func apiCallUsingEncodableRequest<T:Codable>(request:AddTradeRequest, apiType:APIType,responseType:T.Type, requestMethod:RequestMethod , compilationHandler:@escaping(_ results:T)->Void, failureHandler:@escaping(Error)->Void){
+        
+        
+        let urlStr = "\(Constants.BASE_URL)/\(apiType.rawValue)"
+        
+        print(urlStr)
+        
+        let url = URL(string: urlStr)
+        
+        let session = URLSession.shared
+        
+        guard url != nil else{
+            
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url!)
+        
+        do {
+            
+            print("--- Request json ---")
+            
+            
+            
+            
+            let username = "admin"
+            let password = "123"
+            let loginString = String(format: "%@:%@", username, password)
+            let loginData = loginString.data(using: String.Encoding.utf8)!
+            let base64LoginString = loginData.base64EncodedString()
+            
+            
+            
+            
+            urlRequest.httpMethod = requestMethod.rawValue
+            
+            
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+            urlRequest.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+            
+
+            if requestMethod == .POST{
+                
+                do{
+                
+                    let httpBody = try  JSONEncoder().encode(request)
+                    
+                    urlRequest.httpBody = httpBody
+                    
+                    print("request string - \(String(data: httpBody, encoding: .utf8))")
+                    
+                }
+                catch let error{
+                    
+                    debugPrint("Error in encoding - \(error)")
+                    
+                    return
+                }
+                
+            }
+
+            
+            let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
+                
+                guard  error == nil else{
+                    
+                    
+                    failureHandler(error!)
+                    return
+                    
+                }
+                
+                if data != nil {
+                    
+                    if(error == nil && data != nil && data?.count != 0){
+                        do {
+                            
+                            
+                            if apiType == .LIKE_POST{
+                                
+
+                                print("response string \(String(data: data!, encoding: .utf8) ?? "")")
+                            }
+
+                            let response = try JSONDecoder().decode(T.self, from: data!)
+                            
+                            print("response - \(response)")
+                            
+                            compilationHandler(response)
+                        }
+                        
+                        catch let decodingError {
+                            debugPrint(decodingError)
+                            
+                            failureHandler(decodingError )
+                        }
+                    }else{
+                        
+                        failureHandler(error!)
+                        
+                    }
+                }
+                else{
+                    
+                }
+                
+            }
+            
+            dataTask.resume()
+            
+            
+        }
+        catch{
+            
+            
+            print(error)
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
     func apiCall<T:Codable>(request:ApiRequestModel, apiType:APIType,responseType:T.Type, requestMethod:RequestMethod , compilationHandler:@escaping(_ results:T)->Void, failureHandler:@escaping(Error)->Void){
         
         

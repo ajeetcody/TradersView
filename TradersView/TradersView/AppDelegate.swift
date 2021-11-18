@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleSignIn
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            }
          }
          
-        
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
         return true
     }
 

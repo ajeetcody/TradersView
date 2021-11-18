@@ -26,6 +26,14 @@ import Foundation
 //   let blockuser = try? newJSONDecoder().decode(Blockuser.self, from: jsonData)
 //   let getPostbyuserid = try? newJSONDecoder().decode(GetPostbyuserid.self, from: jsonData)
 
+// MARK: - AddTradeResponse
+struct AddTradeResponse: Codable {
+    let status: Int
+    let messages: String
+}
+
+
+
 // MARK: - GetSymbolResponse
 struct GetSymbolResponse: Codable {
     let data: [GetSymbolResponseDatum]?

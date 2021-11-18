@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Firebase
 class SignupViewController: MasterViewController {
 
     
@@ -20,21 +21,27 @@ class SignupViewController: MasterViewController {
     @IBOutlet weak var confirmPasswordTextfield: UITextField!
     @IBOutlet weak var signupButton: UIButton!
     
+    var ref: DatabaseReference!
+
+
     
     //MARK:- UIViewcontroller lifecycle methods ---
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        ref = Database.database().reference()
+
 
         self.uiChanges()
         
-//        self.nameTextfield.text = "ajeet sharma"
-//        self.userNameTextfield.text = "a168"
-//        self.emailIDTextfield.text = "a168@gmail.com"
-//        self.phoneTextfield.text = "+919009241741"
-//        self.passwordTextfield.text = "qwerty123"
-//        self.confirmPasswordTextfield.text = "qwerty123"
+        self.nameTextfield.text = "ajeet sharma"
+        self.userNameTextfield.text = "a168"
+        self.emailIDTextfield.text = "a168@gmail.com"
+        self.phoneTextfield.text = "+919009241741"
+        self.passwordTextfield.text = "qwerty123"
+        self.confirmPasswordTextfield.text = "qwerty123"
 
     }
     
@@ -120,6 +127,43 @@ class SignupViewController: MasterViewController {
 
     }
     
+    //MARK:- Add user entry in firebaes for chatting ---
+    
+    func addUserForChat(userData:RegisterUserData, successHandler:@escaping()->Void, errorHandler:@escaping(Error)->Void){
+        
+        
+        //create user dictionary to first entery in "user" node firebase --
+        
+        let channelGroup = [["groupid":"Null"]]
+        let privateGroup = [["groupid":"Null"]]
+        let publicGroup = [["groupid":"Null"]]
+        
+
+
+        
+        let dict:[String:Any] = ["channel_group":channelGroup, "private_group":privateGroup, "public_group":publicGroup,"date":Date.getCurrentDate(), "email":userData.email, "psd":userData.username, "recent_message":"","status":"online", "userId":userData.id,"username":userData.name]
+        
+        
+        
+        self.ref.child("user").child(userData.id).setValue(dict) { (error, reference) in
+            
+            
+            if let err = error {
+                
+                errorHandler(err)
+                
+                
+            }
+            else{
+                
+                successHandler()
+                
+                
+            }
+        }
+        
+        
+    }
     
     //MARK:- Api call for registration ----
     
@@ -142,12 +186,32 @@ class SignupViewController: MasterViewController {
             }
             else{
                 
-                self.showAlertPopupWithMessageWithHandler(msg: registerResponse.messages) {
+                if let userData = registerResponse.userdata?[0]{
                     
-                    self.dismiss(animated: true, completion: nil)
-                    
+                    self.addUserForChat(userData: userData) {
+                        
+                        
+                        self.showAlertPopupWithMessageWithHandler(msg: "Register Successfully") {
+                            
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                        
+                    } errorHandler: { (error) in
+                        
+                        self.showAlertPopupWithMessageWithHandler(msg: "Error - \(error.localizedDescription)") {
+                        
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                        
+                    }
+
+
                 }
                 
+                
+               
                 
             }
             

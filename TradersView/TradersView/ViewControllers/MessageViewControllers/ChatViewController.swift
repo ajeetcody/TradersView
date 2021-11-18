@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Firebase
 class ChatViewController: MasterViewController {
 
     //MARK:- Autolayout declaration -----
@@ -30,14 +30,19 @@ class ChatViewController: MasterViewController {
    private var currentUserId:String?
     
      
+    var ref: DatabaseReference!
     
+    private var totalUserKeysInchat:[String] = []
+    
+
     //MARK:- UIViewcontroller lifecycle -----
     
     
     override func viewDidLoad() {
        
         super.viewDidLoad()
-        
+        self.ref = Database.database().reference()
+
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
             
             
@@ -52,6 +57,26 @@ class ChatViewController: MasterViewController {
         self.view.layoutIfNeeded()
         self.showAlertCommingSoon()
 
+        
+        self.fetchUserList()
+        
+        
+        
+        
+    }
+    
+    //MARK:- Firebase operations ---
+    
+    func fetchUserList(){
+        
+        self.ref.child("user").observe(.value) { (snapshot) in
+            
+            
+            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
+            
+            
+            print(dictResponse)
+        }
         
         
     }

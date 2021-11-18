@@ -34,7 +34,7 @@ class AddTradesViewController: MasterViewController {
     
     @IBOutlet weak var stopLossTextfield: SkyFloatingLabelTextField!
     
-    @IBOutlet weak var profileTextfield: SkyFloatingLabelTextField!
+    @IBOutlet weak var totalProfiteTextfield: SkyFloatingLabelTextField!
     @IBOutlet weak var tradePriceTextfield: SkyFloatingLabelTextField!
     
     private var symbolList:[GetSymbolResponseDatum]?
@@ -136,14 +136,14 @@ class AddTradesViewController: MasterViewController {
         doneToolbar.sizeToFit()
         
         self.tradePriceTextfield.inputAccessoryView = doneToolbar
-        self.profileTextfield.inputAccessoryView = doneToolbar
+        self.totalProfiteTextfield.inputAccessoryView = doneToolbar
         self.stopLossTextfield.inputAccessoryView = doneToolbar
     }
     
     @objc func doneButtonAction(){
         
         self.tradePriceTextfield.resignFirstResponder()
-        self.profileTextfield.resignFirstResponder()
+        self.totalProfiteTextfield.resignFirstResponder()
         self.stopLossTextfield.resignFirstResponder()
         
 
@@ -177,6 +177,8 @@ class AddTradesViewController: MasterViewController {
         
         self.status = 0
         self.reasonView.isHidden = false
+        self.textViewReasonToClose.text = ""
+        
         self.heightResonView.constant = 160.0
     }
     
@@ -277,6 +279,65 @@ class AddTradesViewController: MasterViewController {
     
     
     @IBAction func postTradeAction(_ sender: Any) {
+        
+        
+        if !self.isTextfieldEmpty(textFields: [self.symbolTextfield, self.totalProfiteTextfield, self.stopLossTextfield, self.tradePriceTextfield]){
+            
+            if self.status == 0 && self.textViewReasonToClose.text.trimmingCharacters(in: .whitespaces).count == 0 {
+                
+                self.showAlertPopupWithMessage(msg: "Please enter reason of closing trade")
+                
+            }
+            if self.status == -1 {
+                
+                self.showAlertPopupWithMessage(msg: "Please select status")
+
+                
+                
+            }
+            else if self.position == -1{
+                
+                
+                self.showAlertPopupWithMessage(msg: "Please select position")
+
+            }
+            else{
+                
+                let request =   AddTradeRequest(userId: self.currentUserId!, symbolId: self.selectedSymbolID ?? "0", status: "\(self.status)", position: "\(self.position)", tradePrice: self.tradePriceTextfield.text!, takeProfit: self.totalProfiteTextfield.text!, stopLoss: self.stopLossTextfield.text!, reasonLost: self.textViewReasonToClose.text)
+                
+                ApiCallManager.shared.apiCallUsingEncodableRequest(request: request, apiType: .ADD_TRADE, responseType: AddTradeResponse.self, requestMethod: .POST) { (results) in
+                    
+                    if results.status == 1{
+                        
+                        self.showAlertPopupWithMessageWithHandler(msg: "Trade added successfully") {
+                            
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                    }
+                    else{
+                        
+                        
+                        self.showAlertPopupWithMessage(msg: "Error - \(results.messages)")
+                        
+                    }
+                    
+                    
+                } failureHandler: { (error) in
+                    
+                    
+                    self.showErrorMessage(error: error)
+                    
+                    
+                }
+
+                
+                
+            }
+            
+            
+        }
+        
         
         
     }

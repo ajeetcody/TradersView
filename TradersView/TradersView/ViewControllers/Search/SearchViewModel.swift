@@ -23,7 +23,7 @@ class SearchViewModel: NSObject {
     
     
     
-    //FIXME: - How to use High order function on custom objects ---
+    // FIXME: - How to use High order function on custom objects ---
     
     
     func checkUserIsSelected(userData:SearchDatum)->Bool{

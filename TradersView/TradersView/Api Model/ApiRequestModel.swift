@@ -45,6 +45,24 @@ class ApiRequestModel{
     
 }
 
+struct AddTradeRequest:Encodable{
+   
+    let userId, symbolId, status, position, tradePrice, takeProfit, stopLoss, reasonLost : String
+    
+    enum Codingkeys: String, CodingKey {
+        case userId = "user_id"
+        case symbolId = "symbol_id"
+        case status = "status"
+        case position = "position"
+        case tradePrice = "trade_price"
+        case takeProfit = "take_profit"
+        case stopLoss = "stop_loss"
+        case reasonLost = "reason"
+    }
+
+    
+}
+
 class FavoriteUsersListRequest:ApiRequestModel{
    
     var user_id:String?

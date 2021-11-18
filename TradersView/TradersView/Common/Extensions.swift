@@ -51,8 +51,43 @@ extension UIScrollView {
     }
 }
 
+extension UILabel{
+    
+    
+    func createLink(text:String, linkText:String, _tag:Int){
+        
+        
+         self.text = text
+         self.textColor =  UIColor.black
+        let underlineAttriString = NSMutableAttributedString(string: text)
+        let range1 = (linkText as NSString).range(of: "linkText")
+        underlineAttriString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range1)
+        
+        underlineAttriString.addAttribute(NSAttributedString.Key.font, value: UIFont.init(name: "Arial", size: 15.0)!, range: range1)
+        
+        underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red, range: range1)
+        
+        self.attributedText = underlineAttriString
+        self.isUserInteractionEnabled = true
+        self.tag = _tag
+        
+    }
+    
+    
+}
 
+extension Date {
 
+ static func getCurrentDate() -> String {
+
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateFormat = "YYYY/mm/dd"
+
+        return dateFormatter.string(from: Date())
+
+    }
+}
 extension UIColor{
     
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
