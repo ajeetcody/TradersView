@@ -141,7 +141,7 @@ class SignupViewController: MasterViewController {
 
 
         
-        let dict:[String:Any] = ["channel_group":channelGroup, "private_group":privateGroup, "public_group":publicGroup,"date":Date.getCurrentDate(), "email":userData.email, "psd":userData.username, "recent_message":"","status":"online", "userId":userData.id,"username":userData.name]
+        let dict:[String:Any] = ["channel_group":channelGroup, "private_group":privateGroup, "public_group":publicGroup,"date":Date.getCurrentDate(), "email":userData.email, "psd":userData.username, "recent_message":"","status":"online", "userId":userData.id,"username":userData.name, "imageURL":"https://spsofttech.com/projects/treader/images/dummy.png"]
         
         
         

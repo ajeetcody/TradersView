@@ -106,6 +106,23 @@ extension UIColor{
     
 }
 
+extension String {
+
+    func toDate(withFormat format: String = "dd MMM yyyy HH:MM:SS")-> Date?{
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tehran")
+        dateFormatter.locale = Locale(identifier: "fa-IR")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.dateFormat = format
+        let date = dateFormatter.date(from: self)
+
+        return date
+
+    }
+}
+
+
 
 extension UIView{
     func dropShadow() {

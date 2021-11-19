@@ -14,13 +14,17 @@
 		7712E4402739336900036561 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E43F2739336900036561 /* NotificationViewController.swift */; };
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
-		771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* ChatViewController.swift */; };
+		771D4B41271E81D200AD2131 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* MessageViewController.swift */; };
 		772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */; };
 		7729152D273D710B00991F0A /* AddTradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729152C273D710B00991F0A /* AddTradesViewController.swift */; };
 		773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520B2735646D0016BF3E /* CommentListViewController.swift */; };
 		773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520E2735BFB90016BF3E /* UserProfileViewController.swift */; };
 		7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7742A4BC272FDEE70081F28E /* PostViewController.swift */; };
 		7742A4FF273037350081F28E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7742A4FE273037350081F28E /* HomeViewController.swift */; };
+		7746013B274798030070C934 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77460137274798030070C934 /* ChatViewController.swift */; };
+		7746013C274798030070C934 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77460138274798030070C934 /* Chat.swift */; };
+		7746013D274798030070C934 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77460139274798030070C934 /* Message.swift */; };
+		7746013E274798030070C934 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7746013A274798030070C934 /* ChatUser.swift */; };
 		7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86227240B8300A81FAA /* ApiCallManager.swift */; };
 		7747D86627240BF900A81FAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86527240BF900A81FAA /* Constants.swift */; };
 		7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86927240E8A00A81FAA /* ApiRequestModel.swift */; };
@@ -59,13 +63,17 @@
 		7712E43F2739336900036561 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
-		771D4B40271E81D200AD2131 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		771D4B40271E81D200AD2131 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserProfileViewController.swift; sourceTree = "<group>"; };
 		7729152C273D710B00991F0A /* AddTradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradesViewController.swift; sourceTree = "<group>"; };
 		773C520B2735646D0016BF3E /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
 		773C520E2735BFB90016BF3E /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7742A4BC272FDEE70081F28E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		7742A4FE273037350081F28E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		77460137274798030070C934 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		77460138274798030070C934 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		77460139274798030070C934 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		7746013A274798030070C934 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 		7747D86227240B8300A81FAA /* ApiCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCallManager.swift; sourceTree = "<group>"; };
 		7747D86527240BF900A81FAA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7747D86927240E8A00A81FAA /* ApiRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequestModel.swift; sourceTree = "<group>"; };
@@ -124,6 +132,17 @@
 			path = TabbarController;
 			sourceTree = "<group>";
 		};
+		77460136274798030070C934 /* Chat-Swift5 */ = {
+			isa = PBXGroup;
+			children = (
+				77460137274798030070C934 /* ChatViewController.swift */,
+				77460138274798030070C934 /* Chat.swift */,
+				77460139274798030070C934 /* Message.swift */,
+				7746013A274798030070C934 /* ChatUser.swift */,
+			);
+			path = "Chat-Swift5";
+			sourceTree = "<group>";
+		};
 		7747D86027240B4B00A81FAA /* APIManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,7 +165,8 @@
 		7764070F2744D00D00A9A7DE /* MessageViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				771D4B40271E81D200AD2131 /* ChatViewController.swift */,
+				77460136274798030070C934 /* Chat-Swift5 */,
+				771D4B40271E81D200AD2131 /* MessageViewController.swift */,
 				776407082744CF9900A9A7DE /* CreateChannelViewController.swift */,
 				7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */,
 				776407102744D04B00A9A7DE /* Chat.storyboard */,
@@ -384,13 +404,16 @@
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
 				7764070C2744CFAB00A9A7DE /* CreateGroupViewController.swift in Sources */,
 				7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */,
-				771D4B41271E81D200AD2131 /* ChatViewController.swift in Sources */,
+				771D4B41271E81D200AD2131 /* MessageViewController.swift in Sources */,
+				7746013E274798030070C934 /* ChatUser.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
+				7746013B274798030070C934 /* ChatViewController.swift in Sources */,
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */,
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */,
+				7746013C274798030070C934 /* Chat.swift in Sources */,
 				776407092744CF9900A9A7DE /* CreateChannelViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7712E4122738098E00036561 /* FollowersFollowingViewController.swift in Sources */,
@@ -398,6 +421,7 @@
 				773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,
+				7746013D274798030070C934 /* Message.swift in Sources */,
 				77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */,
 				7747D86627240BF900A81FAA /* Constants.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,

@@ -12,7 +12,7 @@ import SDWebImage
 
 class MessageTableViewCell:UITableViewCell{
     
-    @IBOutlet var profilePicture:UIImage!
+    @IBOutlet var profilePicture:UIImageView!
     @IBOutlet var userNameLabel:UILabel!
     @IBOutlet var onlineStatusLabel:UILabel!
     
