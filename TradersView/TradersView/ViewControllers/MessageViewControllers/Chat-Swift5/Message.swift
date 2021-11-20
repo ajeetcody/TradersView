@@ -51,7 +51,7 @@ extension Message {
               let _profile_image = dictionary["profile_image"] as? String,
               let _sender_id = dictionary["sender_id"] as? String,
               let _sender_user_name = dictionary["sender_user_name"] as? String,
-              let _timpstamp = dictionary["timpstamp"] as? String
+              let _timpstamp = dictionary["timestamp"] as? String
         else {return nil}
 
         self.init(groupId: _groupId, message: _message, message_type: _message_type, profile_image: _profile_image, sender_id: _sender_id, sender_user_name: _sender_user_name, timpstamp: _timpstamp)
@@ -59,22 +59,22 @@ extension Message {
     }
 }
 
-extension Message: MessageType {
-    
-    var sender: SenderType {
-        return ChatUser(senderId: sender_id, displayName: sender_user_name)
-    }
-    
-    var messageId: String {
-        return "1"
-    }
-    var sentDate: Date {
-        
-        return Date()
-        //return timpstamp.toDate()!
-    }
-    var kind: MessageKind {
-        debugPrint("Chat kind")
-        return .text(message)
-    }
-}
+//extension Message: MessageType {
+//    
+//    var sender: SenderType {
+//        return ChatUser(senderId: sender_id, displayName: sender_user_name)
+//    }
+//    
+//    var messageId: String {
+//        return "1"
+//    }
+//    var sentDate: Date {
+//        
+//        return Date()
+//        //return timpstamp.toDate()!
+//    }
+//    var kind: MessageKind {
+//        
+//        return .text(message)
+//    }
+//}

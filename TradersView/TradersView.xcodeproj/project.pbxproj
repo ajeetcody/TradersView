@@ -25,6 +25,8 @@
 		7746013C274798030070C934 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77460138274798030070C934 /* Chat.swift */; };
 		7746013D274798030070C934 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77460139274798030070C934 /* Message.swift */; };
 		7746013E274798030070C934 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7746013A274798030070C934 /* ChatUser.swift */; };
+		7746017F27497F030070C934 /* MyChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7746017E27497F020070C934 /* MyChatViewController.swift */; };
+		774601822749913F0070C934 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774601812749913F0070C934 /* PaddingLabel.swift */; };
 		7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86227240B8300A81FAA /* ApiCallManager.swift */; };
 		7747D86627240BF900A81FAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86527240BF900A81FAA /* Constants.swift */; };
 		7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86927240E8A00A81FAA /* ApiRequestModel.swift */; };
@@ -74,6 +76,8 @@
 		77460138274798030070C934 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		77460139274798030070C934 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		7746013A274798030070C934 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
+		7746017E27497F020070C934 /* MyChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatViewController.swift; sourceTree = "<group>"; };
+		774601812749913F0070C934 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		7747D86227240B8300A81FAA /* ApiCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCallManager.swift; sourceTree = "<group>"; };
 		7747D86527240BF900A81FAA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7747D86927240E8A00A81FAA /* ApiRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequestModel.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 				776407082744CF9900A9A7DE /* CreateChannelViewController.swift */,
 				7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */,
 				776407102744D04B00A9A7DE /* Chat.storyboard */,
+				7746017E27497F020070C934 /* MyChatViewController.swift */,
 			);
 			path = MessageViewControllers;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				7747D86527240BF900A81FAA /* Constants.swift */,
 				779D307D271B6B8B0021EEFC /* Extensions.swift */,
 				77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */,
+				774601812749913F0070C934 /* PaddingLabel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
 				7764070C2744CFAB00A9A7DE /* CreateGroupViewController.swift in Sources */,
 				7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */,
+				7746017F27497F030070C934 /* MyChatViewController.swift in Sources */,
 				771D4B41271E81D200AD2131 /* MessageViewController.swift in Sources */,
 				7746013E274798030070C934 /* ChatUser.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
@@ -418,6 +425,7 @@
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7712E4122738098E00036561 /* FollowersFollowingViewController.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
+				774601822749913F0070C934 /* PaddingLabel.swift in Sources */,
 				773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,

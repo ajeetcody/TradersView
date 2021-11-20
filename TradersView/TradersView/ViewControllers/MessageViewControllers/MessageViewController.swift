@@ -75,8 +75,7 @@ class MessageTabViewController: MasterViewController {
     
     func fetchUserList(){
         
-        self.ref.child("user").observe(.value) { (snapshot) in
-            
+        self.ref.child("user").queryOrderedByKey().observe(.value) { (snapshot) in
             
             let dictResponse:[String:Any] = snapshot.value as! [String : Any]
             
@@ -85,7 +84,21 @@ class MessageTabViewController: MasterViewController {
             self.messageUsers = dictResponse
             print(dictResponse)
             self.tableViewMessage.reloadData()
+            
         }
+        
+        
+//        self.ref.child("user").observe(.value) { (snapshot) in
+//            
+//            
+//            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
+//            
+//            self.totalUserKeysInchat = Array(dictResponse.keys)
+//            
+//            self.messageUsers = dictResponse
+//            print(dictResponse)
+//            self.tableViewMessage.reloadData()
+//        }
         
         
     }
@@ -298,17 +311,17 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
         
             let storyBoard:UIStoryboard = UIStoryboard(name: "Chat", bundle: nil)
             
-            let vc:ChatViewController = storyBoard.instantiateViewController(identifier: "ChatViewController") as! ChatViewController
-            let key:String = self.totalUserKeysInchat[indexPath.row]
-            let dict:[String:Any] = messageUsers[key] as! [String:Any]
-
-            vc.otherUserId = dict["userId"] as! String
-            vc.otherUserName = dict["username"] as! String
-            vc.currentUser = self.currentUserData!
-            vc.otherUserProfilePicUrl = dict["imageURL"] as! String
-           
-            print("Current userid - \(self.currentUserData?.id ?? "")")
-            print("Other user id - \(dict["userId"] as! String)")
+            let vc:MyChatViewController = storyBoard.instantiateViewController(identifier: "MyChatViewController") as! MyChatViewController
+//            let key:String = self.totalUserKeysInchat[indexPath.row]
+//            let dict:[String:Any] = messageUsers[key] as! [String:Any]
+//
+//            vc.otherUserId = dict["userId"] as! String
+//            vc.otherUserName = dict["username"] as! String
+//            vc.currentUser = self.currentUserData!
+//            vc.otherUserProfilePicUrl = dict["imageURL"] as! String
+//           
+//            print("Current userid - \(self.currentUserData?.id ?? "")")
+//            print("Other user id - \(dict["userId"] as! String)")
             
             
             self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
