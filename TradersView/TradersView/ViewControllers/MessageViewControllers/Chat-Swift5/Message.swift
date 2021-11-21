@@ -45,6 +45,7 @@ struct Message {
 
 extension Message {
     init?(dictionary: [String: Any]) {
+        
         guard let _groupId = dictionary["groupId"] as? String,
               let _message = dictionary["message"] as? String,
               let _message_type = dictionary["message_type"] as? String,

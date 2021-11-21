@@ -9,7 +9,7 @@ import UIKit
 import AVKit
 import Firebase
 import FirebaseFirestore
-
+import FirebaseStorage
 
 class PlayerView: UIView {
     override static var layerClass: AnyClass {
@@ -85,10 +85,11 @@ class ChatVideoRightCell: UITableViewCell{
 }
 class MyChatViewController:  MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    var currentUserImageUrl:String = "318"
-
-    var currentUserName:String = "318"
+    var currentUserImageUrl:String = "https://spsofttech.com/projects/treader/images/dummy.png"
+ 
+    var currentUserName:String = "Ajeet Sharma"
     var currentUserId:String = "318"
+   
     var otherUserId:String = "319"
     var otherUserName:String = "NA"
     
@@ -153,7 +154,34 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
             
-            self.uploadImageToStorageFirebase(img: image)
+            var imgFormate = "JPG"
+            
+            
+            let assetPath = info[UIImagePickerController.InfoKey.referenceURL] as! NSURL
+               if (assetPath.absoluteString?.hasSuffix("JPG"))! {
+                   print("JPG")
+                imgFormate = "JPG"
+               }
+               else if (assetPath.absoluteString?.hasSuffix("PNG"))! {
+                   print("PNG")
+                
+                imgFormate = "PNG"
+               }
+               else if (assetPath.absoluteString?.hasSuffix("GIF"))! {
+                   print("GIF")
+                
+                imgFormate = "GIF"
+               }
+               else {
+                   print("Unknown")
+                
+                imgFormate = "Unknown"
+               }
+            
+            
+              self.uploadImageToStorageFirebase(img: image, formate: imgFormate)
+            
+
             
             //self.channelImageView.image = image
         }
@@ -211,48 +239,77 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
     
         if self.textViewChat.text.trimmingCharacters(in: .whitespaces).count != 0 {
             
-            self.sendTextMessaage(msg: self.textViewChat.text)
+            self.sendMessaage(msg: self.textViewChat.text, messageType: "text")
             
         }
     }
     
     //MARK:- Firebase call ---
     
-    func uploadImageToStorageFirebase(img:UIImage){
-        
+    func uploadImageToStorageFirebase(img:UIImage, formate:String){
+
       //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
 
         do {
             // Create file name
-            let fileExtension = fileUrl.pathExtension
-            let fileName = "testing123.\(fileExtension)"
+          //  let fileExtension = fileUrl.pathExtension
+            let fileName = "testing123.\(formate)"
 
-            let storageReference = Storage.storage().reference().child("uploads2").child(fileName)
-            let currentUploadTask = storageReference.putFile(from: fileUrl, metadata: metaData) { (storageMetaData, error) in
-              if let error = error {
-                print("Upload error: \(error.localizedDescription)")
-                return
-              }
-                                                                                        
-              // Show UIAlertController here
-              print("Image file: \(fileName) is uploaded! View it at Firebase console!")
-                                                                                        
-              storageReference.downloadURL { (url, error) in
-                if let error = error  {
-                  printLog("Error on getting download url: \(error.localizedDescription)")
+            let storageReference = Storage.storage().reference().child("uploads").child(fileName)
+            
+            //let task = storageReference.putData(img.pngData(), metadata: StorageMetadata(dictionary: [:]))
+            
+            _ = storageReference.putData(img.jpegData(compressionQuality: 1.0)!, metadata: nil) { (storageMetaData, error) in
+                if let error = error {
+                  print("Upload error: \(error.localizedDescription)")
                   return
                 }
-                print("Download url of \(fileName) is \(url!.absoluteString)")
+
+                // Show UIAlertController here
+                print("Image file: \(fileName) is uploaded! View it at Firebase console!")
+
+                storageReference.downloadURL { (url, error) in
+                  if let error = error  {
+                    print("Error on getting download url: \(error.localizedDescription)")
+                    return
+                  }
+                  print("Download url of \(fileName) is \(url!.absoluteString)")
+                    print("path url of \(fileName) is \(url!.path)")
+                    print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
+                    self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Image")
+                
+                
+                  
+                }
               }
-            }
+            
+//            let currentUploadTask = storageReference.putFile(from: fileUrl, metadata: metaData) { (storageMetaData, error) in
+//              if let error = error {
+//                print("Upload error: \(error.localizedDescription)")
+//                return
+//              }
+//
+//              // Show UIAlertController here
+//              print("Image file: \(fileName) is uploaded! View it at Firebase console!")
+//
+//              storageReference.downloadURL { (url, error) in
+//                if let error = error  {
+//                  printLog("Error on getting download url: \(error.localizedDescription)")
+//                  return
+//                }
+//                print("Download url of \(fileName) is \(url!.absoluteString)")
+//              }
+//            }
+            
+            
           } catch {
             print("Error on extracting data from url: \(error.localizedDescription)")
           }
-        
-        
+
+
     }
     
-    func sendTextMessaage(msg:String){
+    func sendMessaage(msg:String, messageType:String){
         
         
         let date = Timestamp().dateValue()
@@ -264,10 +321,11 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         dateFormatter.dateFormat = "dd MMM yyyy HH:MM:SS"
         
         
-        let textMsg = ["groupId":"This is not group", "message":msg, "message_type":"text", "profile_image":self.currentUserImageUrl, "sender_id":self.currentUserId, "sender_user_name":self.currentUserName, "timpstamp":dateFormatter.string(from: date)]
         
-        self.ref.child("UserMessage").child(self.currentUserId).child(self.otherUserId).setValue(textMsg)
-        self.ref.child("UserMessage").child(self.otherUserId).child(self.currentUserId).setValue(textMsg)
+        let textMsg = ["groupId":"This is not group", "message":msg, "message_type":messageType, "profile_image":self.currentUserImageUrl, "sender_id":self.currentUserId, "sender_user_name":self.currentUserName, "timestamp":dateFormatter.string(from: date)]
+        
+        self.ref.child("UserMessage").child(self.currentUserId).child(self.otherUserId).childByAutoId().setValue(textMsg)
+        self.ref.child("UserMessage").child(self.otherUserId).child(self.currentUserId).childByAutoId().setValue(textMsg)
         
         
     }
@@ -280,15 +338,18 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
             if  let dictResponse:[String:Any] = snapshot.value as? [String : Any]{
                 
                 let totalUserKeysInchat = Array(dictResponse.keys)
-                
+                self.messageList.removeAll()
+                print("Response -\(dictResponse)")
                 for key in totalUserKeysInchat{
                     
                      print(key)
                       print(dictResponse[key])
-                    
-                    let msg = Message(dictionary: dictResponse[key] as! [String : Any])
+                    print("Crash point -1")
+
+                   let msg = Message(dictionary: dictResponse[key] as! [String : Any])
                     
                   //  print(msg?.message)
+                    print(dictResponse[key])
                     
                     self.messageList.append(msg!)
                     

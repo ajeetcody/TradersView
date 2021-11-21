@@ -16,6 +16,8 @@ pod 'FacebookShare'
 pod 'Firebase/Firestore'
 pod 'Alamofire', '~> 5.4'
 pod 'SkyFloatingLabelTextField', '~> 3.0'
+pod 'Firebase/Storage'
+
 
 pod 'Firebase/Database'
 # Swift 5.0

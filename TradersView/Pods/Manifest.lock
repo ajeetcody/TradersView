@@ -382,6 +382,9 @@ PODS:
   - Firebase/Firestore (8.9.1):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.9.1)
+  - Firebase/Storage (8.9.1):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.9.0)
   - FirebaseCore (8.9.1):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.6)
@@ -407,6 +410,9 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
+  - FirebaseStorage (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -471,6 +477,7 @@ DEPENDENCIES:
   - FacebookShare
   - Firebase/Database
   - Firebase/Firestore
+  - Firebase/Storage
   - GoogleSignIn
   - MessageKit (~> 3.3.0)
   - SDWebImage (~> 5.0)
@@ -493,6 +500,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
     - FirebaseFirestore
+    - FirebaseStorage
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
@@ -524,6 +532,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
   FirebaseDatabase: 2236b804cf0cac165b4620669bedf7ee643a2bcc
   FirebaseFirestore: 15ae9648476436efed698a909e44c4737498f9b4
+  FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
@@ -539,6 +548,6 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
 
-PODFILE CHECKSUM: 89721b9cd8915878806b17964db044cdc8486efb
+PODFILE CHECKSUM: 7a14678fb4e5ae71ed5adaa91fdfc27f34917335
 
 COCOAPODS: 1.11.2
