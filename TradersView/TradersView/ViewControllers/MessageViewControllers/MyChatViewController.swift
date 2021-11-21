@@ -133,7 +133,8 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         if UIImagePickerController.isSourceTypeAvailable(sourceType){
             
             imgPickerController.sourceType = sourceType
-            imgPickerController.allowsEditing = true
+            imgPickerController.mediaTypes = ["public.image", "public.movie"]
+            //imgPickerController.allowsEditing = true
             imgPickerController.delegate = self
             imgPickerController.modalPresentationStyle = .fullScreen
             self.present(imgPickerController, animated: true, completion: nil)
@@ -152,39 +153,26 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         print("\(#function)")
         
-        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
             
             var imgFormate = "JPG"
             
             
-            let assetPath = info[UIImagePickerController.InfoKey.referenceURL] as! NSURL
-               if (assetPath.absoluteString?.hasSuffix("JPG"))! {
-                   print("JPG")
-                imgFormate = "JPG"
-               }
-               else if (assetPath.absoluteString?.hasSuffix("PNG"))! {
-                   print("PNG")
+            let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! String
+            
+            if mediaType  == "public.image" {
+                print("Image Selected")
                 
-                imgFormate = "PNG"
-               }
-               else if (assetPath.absoluteString?.hasSuffix("GIF"))! {
-                   print("GIF")
+                self.selectImageForSending(info: info)
                 
-                imgFormate = "GIF"
-               }
-               else {
-                   print("Unknown")
                 
-                imgFormate = "Unknown"
-               }
+            }
+           else if mediaType == "public.movie" {
+                print("Video Selected")
+                
+                self.selectVideoForSending(info: info)
+            }
             
             
-              self.uploadImageToStorageFirebase(img: image, formate: imgFormate)
-            
-
-            
-            //self.channelImageView.image = image
-        }
         
         //print("Testtttt")
         picker.dismiss(animated: true, completion: nil);
@@ -198,6 +186,61 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         print("\(#function)")
     }
     
+    //MARK:- Select Image ---
+    
+    
+    func selectImageForSending(info:[UIImagePickerController.InfoKey : Any]){
+        
+        
+        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
+            
+            var imgFormate = "JPG"
+            
+            
+            let assetPath = info[UIImagePickerController.InfoKey.referenceURL] as! NSURL
+            if (assetPath.absoluteString?.hasSuffix("JPG"))! {
+                print("JPG")
+                imgFormate = "JPG"
+            }
+            else if (assetPath.absoluteString?.hasSuffix("PNG"))! {
+                print("PNG")
+                
+                imgFormate = "PNG"
+            }
+            else if (assetPath.absoluteString?.hasSuffix("GIF"))! {
+                print("GIF")
+                
+                imgFormate = "GIF"
+            }
+            else {
+                print("Unknown")
+                
+                imgFormate = "Unknown"
+            }
+            
+            
+            self.uploadImageToStorageFirebase(img: image, formate: imgFormate)
+            
+            
+            
+        }
+        
+    }
+    
+    //MARK:- Select Video ---
+    func selectVideoForSending(info:[UIImagePickerController.InfoKey : Any]){
+        
+        
+        let  videoURL = info[UIImagePickerController.InfoKey.mediaURL]as? NSURL
+        
+        print(videoURL!)
+        
+        self.uploadVideoToStorageFirebase(videoUrl: videoURL! as URL, formate: "mov")
+        
+
+        
+    }
+    
     //MARK:- UIButton action methods ------
     
     @IBAction func takePhotoVideoAction(_ sender: Any) {
@@ -207,7 +250,7 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { (action) in
             
-            self.fetchImages(sourceType: .photoLibrary)
+            self.fetchImages(sourceType: .savedPhotosAlbum)
             
         }
         let actionCamera = UIAlertAction(title: "Camera", style: .default) { (action) in
@@ -240,11 +283,67 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         if self.textViewChat.text.trimmingCharacters(in: .whitespaces).count != 0 {
             
             self.sendMessaage(msg: self.textViewChat.text, messageType: "text")
+            self.textViewChat.text = ""
             
         }
     }
     
     //MARK:- Firebase call ---
+    func uploadVideoToStorageFirebase(videoUrl:URL, formate:String){
+
+      //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
+
+        
+//        let name = "\(Int(Date().timeIntervalSince1970)).mp4"
+
+        do {
+            
+            let videoData = try Data(contentsOf: videoUrl)
+
+            // Create file name
+          //  let fileExtension = fileUrl.pathExtension
+            let fileName = "\(Int(Date().timeIntervalSince1970)).\(formate)"
+
+            let storageReference = Storage.storage().reference().child("video").child(fileName)
+            
+            //let task = storageReference.putData(img.pngData(), metadata: StorageMetadata(dictionary: [:]))
+            
+            
+            
+            _ = storageReference.putData(img.jpegData(compressionQuality: 1.0)!, metadata: nil) { (storageMetaData, error) in
+                if let error = error {
+                  print("Upload error: \(error.localizedDescription)")
+                  return
+                }
+
+                // Show UIAlertController here
+                print("Image file: \(fileName) is uploaded! View it at Firebase console!")
+
+                storageReference.downloadURL { (url, error) in
+                  if let error = error  {
+                    print("Error on getting download url: \(error.localizedDescription)")
+                    return
+                  }
+                  print("Download url of \(fileName) is \(url!.absoluteString)")
+                    print("path url of \(fileName) is \(url!.path)")
+                    print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
+                  //  self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Image")
+                
+                
+                  
+                }
+              }
+            
+
+            
+            
+          } catch {
+            print("Error on extracting data from url: \(error.localizedDescription)")
+          }
+
+
+    }
+    
     
     func uploadImageToStorageFirebase(img:UIImage, formate:String){
 
@@ -253,7 +352,7 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         do {
             // Create file name
           //  let fileExtension = fileUrl.pathExtension
-            let fileName = "testing123.\(formate)"
+            let fileName = "\(Int(Date().timeIntervalSince1970)).\(formate)"
 
             let storageReference = Storage.storage().reference().child("uploads").child(fileName)
             
@@ -283,23 +382,7 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
                 }
               }
             
-//            let currentUploadTask = storageReference.putFile(from: fileUrl, metadata: metaData) { (storageMetaData, error) in
-//              if let error = error {
-//                print("Upload error: \(error.localizedDescription)")
-//                return
-//              }
-//
-//              // Show UIAlertController here
-//              print("Image file: \(fileName) is uploaded! View it at Firebase console!")
-//
-//              storageReference.downloadURL { (url, error) in
-//                if let error = error  {
-//                  printLog("Error on getting download url: \(error.localizedDescription)")
-//                  return
-//                }
-//                print("Download url of \(fileName) is \(url!.absoluteString)")
-//              }
-//            }
+
             
             
           } catch {
@@ -439,7 +522,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
 
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemGreen, cornerRadius: 12.5)
-            cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 20.0)
+            cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 8.0)
 
 
             return cell
@@ -453,7 +536,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
-            cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 20.0)
+            cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 8.0)
             
             return cell
         }
