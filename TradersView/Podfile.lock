@@ -464,6 +464,9 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - PromisesObjC (2.0.0)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -480,6 +483,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - GoogleSignIn
   - MessageKit (~> 3.3.0)
+  - NVActivityIndicatorView
   - SDWebImage (~> 5.0)
   - SkyFloatingLabelTextField (~> 3.0)
 
@@ -512,6 +516,7 @@ SPEC REPOS:
     - leveldb-library
     - MessageKit
     - nanopb
+    - NVActivityIndicatorView
     - PromisesObjC
     - SDWebImage
     - SkyFloatingLabelTextField
@@ -544,10 +549,11 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   MessageKit: 1f07618183be6d92b648ba7a384aafa097362a00
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
 
-PODFILE CHECKSUM: 7a14678fb4e5ae71ed5adaa91fdfc27f34917335
+PODFILE CHECKSUM: b9deb76a3e492d7a5ebcebf70c1f1e3a505eeabd
 
 COCOAPODS: 1.11.2

@@ -39,8 +39,9 @@ class MessageTabViewController: MasterViewController {
     
     var currentUserData:LoginUserData?
     
-    private var totalUserKeysInchat:[String] = []
-    private var messageUsers:[String:Any] = [:]
+    fileprivate var chatUserList_VM = ChatUserListViewModel()
+
+
     //MARK:- UIViewcontroller lifecycle -----
     
     
@@ -75,30 +76,17 @@ class MessageTabViewController: MasterViewController {
     
     func fetchUserList(){
         
-        self.ref.child("user").queryOrderedByKey().observe(.value) { (snapshot) in
+        self.chatUserList_VM.fetchChatUserList {
             
-            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
             
-            self.totalUserKeysInchat = Array(dictResponse.keys)
+            print("--- Fetch chat user list ---")
             
-            self.messageUsers = dictResponse
-            print(dictResponse)
+            self.tableViewMessage.isHidden = self.chatUserList_VM.chatUserList.count > 0 ?  false :  true
+            
             self.tableViewMessage.reloadData()
             
+            
         }
-        
-        
-//        self.ref.child("user").observe(.value) { (snapshot) in
-//            
-//            
-//            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
-//            
-//            self.totalUserKeysInchat = Array(dictResponse.keys)
-//            
-//            self.messageUsers = dictResponse
-//            print(dictResponse)
-//            self.tableViewMessage.reloadData()
-//        }
         
         
     }
@@ -213,123 +201,73 @@ extension MessageTabViewController:UIScrollViewDelegate{
 }
 extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        
+        let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+        
+
+            let searchUser = self.chatUserList_VM.chatUserList[indexPath.row]
+
+            cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
+
+            cell.profilePicture.tag = indexPath.row
+
+
+            cell.userNameLabel.text = searchUser.username.capitalized
+           // cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
+
+
+            if self.chatUserList_VM.checkUserIsSelected(userData: searchUser){
+
+                cell.accessoryType = .checkmark
+
+            }
+            else{
+
+                cell.accessoryType = .none
+
+            }
+
+
+
+
+        
+        
+        return cell
+        
+        
+    }
+    
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        return self.chatUserList_VM.chatUserList.count
         
-        if tableView.tag == 100 {
-            
-            
-            return self.totalUserKeysInchat.count
-            
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView.tag == 100 {
-            
-            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
-            
-            let key:String = self.totalUserKeysInchat[indexPath.row]
-            let dict:[String:Any] = messageUsers[key] as! [String:Any]
-            
-            /*
-             
-             {
-                 "channel_group" =     (
-                             {
-                         groupid = Null;
-                     }
-                 );
-                 date = "2021/30/18";
-                 email = "a1688887@gmail.com";
-                 imageURL = "https://spsofttech.com/projects/treader/images/dummy.png";
-                 "private_group" =     (
-                             {
-                         groupid = Null;
-                     }
-                 );
-                 psd = a1688887;
-                 "public_group" =     (
-                             {
-                         groupid = Null;
-                     }
-                 );
-                 "recent_message" = "";
-                 status = online;
-                 userId = 356;
-                 username = a1688887;
-             }
-             
-             */
-            
-            cell.userNameLabel.text = (dict["username"] as! String).capitalized
-            
-            cell.profilePicture.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 30.0)
-            
-            if let urlString:String = dict["imageURL"] as? String{
-            
-                cell.profilePicture.sd_setImage(with: URL(string: urlString), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-                
-            }
-            else{
-                
-                
-                print("Image is not available")
-            }
-            
-            
-            
-            
-            return cell
-        }
-        
-        return UITableViewCell()
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
-        if tableView.tag == 100 {
-            
-            return 87.0
-            
-        }
-        
-        
-        return 0.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        if tableView.tag == 100 {
+        let selectedUser = self.chatUserList_VM.chatUserList[indexPath.row]
+       
+       // let obj = MyChatScreenModel()
         
-            let storyBoard:UIStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-            
-            let vc:MyChatViewController = storyBoard.instantiateViewController(identifier: "MyChatViewController") as! MyChatViewController
-//            let key:String = self.totalUserKeysInchat[indexPath.row]
-//            let dict:[String:Any] = messageUsers[key] as! [String:Any]
-//
-//            vc.otherUserId = dict["userId"] as! String
-//            vc.otherUserName = dict["username"] as! String
-//            vc.currentUser = self.currentUserData!
-//            vc.otherUserProfilePicUrl = dict["imageURL"] as! String
-//           
-//            print("Current userid - \(self.currentUserData?.id ?? "")")
-//            print("Other user id - \(dict["userId"] as! String)")
-            
-            
-            self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
-            
-            
-            
-            
-        }
+        
+        let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId: (selectedUser.userID), otherUserName: (selectedUser.username), isGroupChat: false)
+        
+        self.pushChatScreen(dataObj: chatScreenObj)
+        
+        
+       
         
     }
+    
 }

@@ -21,8 +21,9 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
     
     private var workItemReference:DispatchWorkItem? = nil
     
-    fileprivate var searchVM = SearchViewModel()
+   // fileprivate var searchVM = SearchViewModel()
     
+    fileprivate var chatUserList_VM = ChatUserListViewModel()
     
     
     //MARK:- UIViewcontroller lifecycle methods ---
@@ -39,11 +40,7 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
         
         self.searchView.searchTextField.font = UIFont.systemFont(ofSize: 18.0)
         
-        if  let userData:LoginUserData = self.appDelegate.loginResponseData{
-            
-            self.searchVM.userData = userData
-            
-        }
+       
         
         self.groupImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.groupImageSelected(gesture:))))
         
@@ -52,6 +49,9 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
         self.createGroupButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
         self.cancelButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
 
+        
+        self.fetchChatUserList()
+        
     }
     
     
@@ -77,37 +77,29 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
         
     }
     
-    //MRK:- Call search API --
+    //MARK:- Fetch Chat user list ---
     
     
-    func callSearchApi(){
+    func fetchChatUserList(){
         
-        
-        
-        
-        self.searchVM.callSearchApiModelView {
+        self.chatUserList_VM.fetchChatUserList {
             
             
-            DispatchQueue.main.async {
-                
-                self.tableViewSearch.isHidden = false
-                self.tableViewSearch.reloadData()
-                
-            }
+            print("--- Fetch chat user list ---")
             
+            self.tableViewSearch.isHidden = self.chatUserList_VM.chatUserList.count > 0 ?  false :  true
             
-            
-        } errorHandler: { (errorMessage) in
-            
-            
-            self.showAlertPopupWithMessage(msg: errorMessage)
+          
+            self.tableViewSearch.reloadData()
             
             
         }
         
         
-        
     }
+    
+    //MRK:- Call search API --
+
     
     
     //MARK:- UITapgesture action methods ----
@@ -215,49 +207,34 @@ extension CreateGroupViewController:UITableViewDelegate, UITableViewDataSource{
         
         let cell:SearchCell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as! SearchCell
         
-        if let searchResult = self.searchVM.searchResult{
-            
-            let searchUser = searchResult[indexPath.row]
-            
-            cell.profileImageView.sd_setImage(with: URL(string: "\(searchUser.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+
+            let searchUser = self.chatUserList_VM.filterUserList[indexPath.row]
+
+            cell.profileImageView.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.profileImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
-            
+
             cell.profileImageView.tag = indexPath.row
-            
-            
-            cell.nameLabel.text = searchUser.name.capitalized
-            cell.userNameLabel.text = "@\(searchUser.username.capitalized)"
-            
-            
-            if self.searchVM.checkUserIsSelected(userData: searchUser){
-                
+
+
+            cell.nameLabel.text = searchUser.username.capitalized
+            cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
+
+
+            if self.chatUserList_VM.checkUserIsSelected(userData: searchUser){
+
                 cell.accessoryType = .checkmark
-                
+
             }
             else{
-                
+
                 cell.accessoryType = .none
-                
+
             }
-            
-            
-            
-            if self.searchVM.shouldLoadMoreData &&  !self.searchVM.isFetching{
-                
-                
-                self.callSearchApi()
-                
-                
-            }
-            else{
-                
-                debugPrint("Load more stopped -- \(#function)")
-                
-            }
-            
-            
-            
-        }
+
+
+
+
+        
         
         return cell
         
@@ -272,12 +249,7 @@ extension CreateGroupViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let _searchResult = self.searchVM.searchResult{
-            
-            return  _searchResult.count
-            
-        }
-        return 0
+        return self.chatUserList_VM.filterUserList.count
         
     }
     
@@ -285,27 +257,24 @@ extension CreateGroupViewController:UITableViewDelegate, UITableViewDataSource{
         
         
         
-        if let searchResult = self.searchVM.searchResult{
-            
-            let obj = searchResult[indexPath.row]
-            
-            if self.searchVM.checkUserIsSelected(userData: obj){
-                
-                self.searchVM.removeUserFromSelectedList(userData: obj)
+
+            let obj = self.chatUserList_VM.chatUserList[indexPath.row]
+
+            if self.chatUserList_VM.checkUserIsSelected(userData: obj){
+
+                self.chatUserList_VM.removeUserFromSelectedList(userData: obj)
             }
             else{
-            
-                self.searchVM.selectedUserData.append(obj)
-                
+
+                self.chatUserList_VM.selectedUserData.append(obj)
+
             }
+
+
+          //  print(obj.name)
             
-            
-            print(obj.name)
             self.tableViewSearch.reloadData()
-        }
-        
-        
-        
+       
         
     }
     
@@ -315,23 +284,26 @@ extension CreateGroupViewController:UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        workItemReference?.cancel()
         
-        
-        let workItem = DispatchWorkItem{
+        if searchText.trimmingCharacters(in: .whitespaces).count == 0{
             
             
-            self.searchVM.searchString = searchText
-            self.searchVM.page = 0
-            self.searchVM.shouldLoadMoreData = true
-            self.callSearchApi()
-            
-            
+            self.chatUserList_VM.filterUserList = self.chatUserList_VM.chatUserList
+            self.tableViewSearch.reloadData()
+            return
         }
         
-        workItemReference = workItem
+        print("\(#function) - 1 \(searchText)")
+        self.chatUserList_VM.filterUserList =   self.chatUserList_VM.chatUserList.filter { (userModel) -> Bool in
+            
+            print("\(userModel.username) == \(searchText)")
+            
+            return userModel.username.containsIgnoringCase(find: searchText)
+        }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: workItem)
+        print("\(#function) - 2")
+        self.tableViewSearch.reloadData()
+        
         
         
     }

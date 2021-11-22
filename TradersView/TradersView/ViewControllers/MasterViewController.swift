@@ -7,9 +7,13 @@
 
 import UIKit
 
+import NVActivityIndicatorView
+
+
 class MasterViewController: UIViewController {
     
-    
+    var loadingView:NVActivityIndicatorView!
+
     let lock = NSLock()
     let appDelegate:AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     
@@ -26,6 +30,11 @@ class MasterViewController: UIViewController {
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
+        loadingView = NVActivityIndicatorView(frame: CGRect(x: Constants.screenWidth - 80, y: Constants.screenHeight - 80, width: 80, height: 80), type: .circleStrokeSpin, color: .black, padding: 20)
+        
+        
+        self.view.addSubview(loadingView)
+        self.loadingView.center = self.view.center
         // Do any additional setup after loading the view.
     }
     
@@ -54,7 +63,20 @@ class MasterViewController: UIViewController {
     
     //MARK:- Viewcontroller Present ----
     
-    
+    func pushChatScreen(dataObj:MyChatScreenModel){
+        
+        DispatchQueue.main.async {
+            
+            let dashBoardStoryBoard = UIStoryboard(name: "Chat", bundle: nil)
+            let vc:MyChatViewController = dashBoardStoryBoard.instantiateViewController(identifier: "MyChatViewController")
+            
+            vc.myChatScreenModelObj = dataObj
+            
+            self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+            
+        }
+        
+    }
     func pushScreenWithScreenName(screenName:String, currentUserId:String){
         
         DispatchQueue.main.async {

@@ -83,44 +83,83 @@ class ChatVideoRightCell: UITableViewCell{
     @IBOutlet weak var videoView: PlayerView!
     
 }
-class MyChatViewController:  MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+
+struct MyChatScreenModel{
     
     var currentUserImageUrl:String = "https://spsofttech.com/projects/treader/images/dummy.png"
- 
+
     var currentUserName:String = "Ajeet Sharma"
     var currentUserId:String = "318"
    
     var otherUserId:String = "319"
     var otherUserName:String = "NA"
-    
     var isGroupChat:Bool = false
-    
-    var messageList:[Message] = []
+
+}
+
+class MyChatViewController:  MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+
+
     
     @IBOutlet weak var headingLabel: UILabel!
-    
     @IBOutlet weak var tableViewMessages: UITableView!
-    var ref: DatabaseReference!
-    
     @IBOutlet weak var textViewChat: UITextView!
     
+    var chat_VM =  MyChatViewModel()
+    
+    var myChatScreenModelObj:MyChatScreenModel?
     
     //MARK:- UIViewcontroller delegate ----
     
     override func viewDidLoad() {
-       
+        
         
         super.viewDidLoad()
-        ref = Database.database().reference()
         self.fetchMessages()
-        
-        self.headingLabel.text = "Chat with \(otherUserName)"
+        self.fetchNewAddedMessage()
+        self.headingLabel.text = "Chat with \(myChatScreenModelObj!.otherUserName)"
         self.tableViewMessages.estimatedRowHeight = 80.0
         self.tableViewMessages.rowHeight = UITableView.automaticDimension
-
+        self.textViewChat.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 5.0)
     }
     
     
+    
+    //MARK:- View model request for messages --
+    
+    func fetchMessages(){
+        
+        self.chat_VM.currentUserId = self.myChatScreenModelObj!.currentUserId
+        self.chat_VM.otherUserId = self.myChatScreenModelObj!.otherUserId
+        
+        self.chat_VM.fetchAllMessages {
+            
+            
+            self.tableViewMessages.reloadData()
+            
+            
+            self.tableViewMessages.scrollToRow(at: IndexPath(row: self.chat_VM.messageList.count - 1, section: 0), at: .bottom, animated: true)
+            debugPrint("Crash point ----")
+            
+        }
+    }
+    
+    func fetchNewAddedMessage(){
+        
+        
+//        self.chat_VM.currentUserId = self.myChatScreenModelObj!.currentUserId
+//        self.chat_VM.otherUserId = self.myChatScreenModelObj!.otherUserId
+//
+//        self.chat_VM.fetchNewAddedMessage {
+//
+//
+//            self.tableViewMessages.reloadData()
+//
+//
+//        }
+        
+        
+    }
     
     //MARK:- Image fetch actions ---
     
@@ -153,26 +192,26 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         print("\(#function)")
         
+        
+        var imgFormate = "JPG"
+        
+        
+        let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! String
+        
+        if mediaType  == "public.image" {
+            print("Image Selected")
             
-            var imgFormate = "JPG"
-            
-            
-            let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! String
-            
-            if mediaType  == "public.image" {
-                print("Image Selected")
-                
-                self.selectImageForSending(info: info)
-                
-                
-            }
-           else if mediaType == "public.movie" {
-                print("Video Selected")
-                
-                self.selectVideoForSending(info: info)
-            }
+            self.selectImageForSending(info: info)
             
             
+        }
+        else if mediaType == "public.movie" {
+            print("Video Selected")
+            
+            self.selectVideoForSending(info: info)
+        }
+        
+        
         
         //print("Testtttt")
         picker.dismiss(animated: true, completion: nil);
@@ -237,7 +276,7 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         self.uploadVideoToStorageFirebase(videoUrl: videoURL! as URL, formate: "mov")
         
-
+        
         
     }
     
@@ -279,7 +318,7 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
     
     @IBAction func sendButtonAction(_ sender: Any) {
         
-    
+        
         if self.textViewChat.text.trimmingCharacters(in: .whitespaces).count != 0 {
             
             self.sendMessaage(msg: self.textViewChat.text, messageType: "text")
@@ -290,106 +329,118 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
     
     //MARK:- Firebase call ---
     func uploadVideoToStorageFirebase(videoUrl:URL, formate:String){
-
-      //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
-
         
-//        let name = "\(Int(Date().timeIntervalSince1970)).mp4"
+        //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
+        
+        
+        //        let name = "\(Int(Date().timeIntervalSince1970)).mp4"
+        
+        self.loadingView.startAnimating()
 
         do {
             
             let videoData = try Data(contentsOf: videoUrl)
-
+            
             // Create file name
-          //  let fileExtension = fileUrl.pathExtension
+            //  let fileExtension = fileUrl.pathExtension
             let fileName = "\(Int(Date().timeIntervalSince1970)).\(formate)"
-
+            
             let storageReference = Storage.storage().reference().child("video").child(fileName)
             
             //let task = storageReference.putData(img.pngData(), metadata: StorageMetadata(dictionary: [:]))
             
+            print("Video file name - \(fileName)")
             
-            
-            _ = storageReference.putData(img.jpegData(compressionQuality: 1.0)!, metadata: nil) { (storageMetaData, error) in
+            _ = storageReference.putData(videoData, metadata: nil) { (storageMetaData, error) in
+                
+                self.loadingView.stopAnimating()
+                
                 if let error = error {
-                  print("Upload error: \(error.localizedDescription)")
-                  return
+                    print("Upload error: \(error.localizedDescription)")
+                    return
                 }
-
+                
                 // Show UIAlertController here
                 print("Image file: \(fileName) is uploaded! View it at Firebase console!")
-
+                
                 storageReference.downloadURL { (url, error) in
-                  if let error = error  {
-                    print("Error on getting download url: \(error.localizedDescription)")
-                    return
-                  }
-                  print("Download url of \(fileName) is \(url!.absoluteString)")
+                    if let error = error  {
+                        print("Error on getting download url: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Download url of \(fileName) is \(url!.absoluteString)")
                     print("path url of \(fileName) is \(url!.path)")
-                    print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
-                  //  self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Image")
-                
-                
-                  
+                    //  print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
+                    
+                    self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Video")
+                    
+                    
+                    
                 }
-              }
-            
-
+            }
             
             
-          } catch {
+            
+            
+        } catch {
+            
+            self.loadingView.stopAnimating()
             print("Error on extracting data from url: \(error.localizedDescription)")
-          }
-
-
+        }
+        
+        
     }
     
     
     func uploadImageToStorageFirebase(img:UIImage, formate:String){
-
-      //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
-
+        
+        //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
+        
+        self.loadingView.startAnimating()
         do {
             // Create file name
-          //  let fileExtension = fileUrl.pathExtension
+            //  let fileExtension = fileUrl.pathExtension
             let fileName = "\(Int(Date().timeIntervalSince1970)).\(formate)"
-
+            
             let storageReference = Storage.storage().reference().child("uploads").child(fileName)
             
             //let task = storageReference.putData(img.pngData(), metadata: StorageMetadata(dictionary: [:]))
             
             _ = storageReference.putData(img.jpegData(compressionQuality: 1.0)!, metadata: nil) { (storageMetaData, error) in
+                
+                self.loadingView.stopAnimating()
                 if let error = error {
-                  print("Upload error: \(error.localizedDescription)")
-                  return
+                    print("Upload error: \(error.localizedDescription)")
+                    return
                 }
-
+                
                 // Show UIAlertController here
                 print("Image file: \(fileName) is uploaded! View it at Firebase console!")
-
+                
                 storageReference.downloadURL { (url, error) in
-                  if let error = error  {
-                    print("Error on getting download url: \(error.localizedDescription)")
-                    return
-                  }
-                  print("Download url of \(fileName) is \(url!.absoluteString)")
+                    if let error = error  {
+                        print("Error on getting download url: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Download url of \(fileName) is \(url!.absoluteString)")
                     print("path url of \(fileName) is \(url!.path)")
                     print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
                     self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Image")
-                
-                
-                  
+                    
+                    
+                    
                 }
-              }
-            
-
+            }
             
             
-          } catch {
+            
+            
+        } catch {
+            self.loadingView.stopAnimating()
             print("Error on extracting data from url: \(error.localizedDescription)")
-          }
-
-
+        }
+        
+        
     }
     
     func sendMessaage(msg:String, messageType:String){
@@ -405,70 +456,72 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         
         
-        let textMsg = ["groupId":"This is not group", "message":msg, "message_type":messageType, "profile_image":self.currentUserImageUrl, "sender_id":self.currentUserId, "sender_user_name":self.currentUserName, "timestamp":dateFormatter.string(from: date)]
+        let textMsg:[String:Any] = ["groupId":"This is not group", "message":msg, "message_type":messageType, "profile_image":self.myChatScreenModelObj?.currentUserImageUrl, "sender_id":self.myChatScreenModelObj?.currentUserId, "sender_user_name":self.myChatScreenModelObj?.currentUserName, "timestamp":dateFormatter.string(from: date)]
         
-        self.ref.child("UserMessage").child(self.currentUserId).child(self.otherUserId).childByAutoId().setValue(textMsg)
-        self.ref.child("UserMessage").child(self.otherUserId).child(self.currentUserId).childByAutoId().setValue(textMsg)
+        self.chat_VM.messageToBeSend = textMsg
+        
+        
+        self.chat_VM.sendChat()
         
         
     }
     
-    func fetchMessages(){
-        
-        
-        self.ref.child("UserMessage").child(self.currentUserId).child(otherUserId).queryOrderedByKey().observe(.value) { (snapshot) in
-            
-            if  let dictResponse:[String:Any] = snapshot.value as? [String : Any]{
-                
-                let totalUserKeysInchat = Array(dictResponse.keys)
-                self.messageList.removeAll()
-                print("Response -\(dictResponse)")
-                for key in totalUserKeysInchat{
-                    
-                     print(key)
-                      print(dictResponse[key])
-                    print("Crash point -1")
-
-                   let msg = Message(dictionary: dictResponse[key] as! [String : Any])
-                    
-                  //  print(msg?.message)
-                    print(dictResponse[key])
-                    
-                    self.messageList.append(msg!)
-                    
-                    
-                    
-                }
-                
-                self.tableViewMessages.reloadData()
-                
-                
-                
-                
-            }
-            
-        }
-        
-    }
+//    func fetchMessages(){
+//        
+//        
+//        self.ref.child("UserMessage").child(self.currentUserId).child(otherUserId).queryOrderedByKey().observe(.value) { (snapshot) in
+//            
+//            if  let dictResponse:[String:Any] = snapshot.value as? [String : Any]{
+//                
+//                let totalUserKeysInchat = Array(dictResponse.keys)
+//                self.messageList.removeAll()
+//                print("Response -\(dictResponse)")
+//                for key in totalUserKeysInchat{
+//                    
+//                    print(key)
+//                    print(dictResponse[key])
+//                    print("Crash point -1")
+//                    
+//                    let msg = Message(dictionary: dictResponse[key] as! [String : Any])
+//                    
+//                    //  print(msg?.message)
+//                    print(dictResponse[key])
+//                    
+//                    self.messageList.append(msg!)
+//                    
+//                    
+//                    
+//                }
+//                
+//                self.tableViewMessages.reloadData()
+//                
+//                
+//                
+//                
+//            }
+//            
+//        }
+//        
+//    }
     
     //MARK:- UIButton action methods ----
     
     @IBAction func backButtonAction(_ sender: Any) {
-    
+        
         self.navigationController?.popViewController(animated: true)
         
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
@@ -476,7 +529,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.messageList.count
+        return self.chat_VM.messageList.count
         
     }
     
@@ -484,8 +537,8 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
         
         
         
-        let msg = self.messageList[indexPath.row]
-        if msg.message_type == "text" && msg.sender_id == self.currentUserId{
+        let msg = self.chat_VM.messageList[indexPath.row]
+        if msg.message_type == "text" && msg.sender_id == self.myChatScreenModelObj?.currentUserId{
             
             let cell:ChatTextRightCell = tableView.dequeueReusableCell(withIdentifier: "ChatTextRightCell") as! ChatTextRightCell
             
@@ -499,7 +552,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             return cell
         }
-        else if msg.message_type == "text" && msg.sender_id != self.currentUserId{
+        else if msg.message_type == "text" && msg.sender_id != self.myChatScreenModelObj?.currentUserId{
             
             let cell:ChatTextLeftCell = tableView.dequeueReusableCell(withIdentifier: "ChatTextLeftCell") as! ChatTextLeftCell
             
@@ -512,7 +565,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
 
             return cell
         }
-        else  if msg.message_type == "Image" && msg.sender_id == self.currentUserId{
+        else  if msg.message_type == "Image" && msg.sender_id == self.myChatScreenModelObj?.currentUserId{
             
             let cell:ChatImageRightCell = tableView.dequeueReusableCell(withIdentifier: "ChatImageRightCell") as! ChatImageRightCell
             
@@ -527,7 +580,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
 
             return cell
         }
-        else if msg.message_type == "text" && msg.sender_id != self.currentUserId{
+        else if msg.message_type == "text" && msg.sender_id != self.myChatScreenModelObj?.currentUserId{
             
             let cell:ChatImageLeftCell = tableView.dequeueReusableCell(withIdentifier: "ChatImageLeftCell") as! ChatImageLeftCell
             
@@ -540,7 +593,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             return cell
         }
-        else  if msg.message_type == "Video" && msg.sender_id == self.currentUserId{
+        else  if msg.message_type == "Video" && msg.sender_id == self.myChatScreenModelObj?.currentUserId{
             
             let cell:ChatVideoRightCell = tableView.dequeueReusableCell(withIdentifier: "ChatVideoRightCell") as! ChatVideoRightCell
             
@@ -558,7 +611,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
 
             return cell
         }
-        else if msg.message_type == "Video" && msg.sender_id != self.currentUserId{
+        else if msg.message_type == "Video" && msg.sender_id != self.myChatScreenModelObj?.currentUserId{
             
             let cell:ChatVideoLeftCell = tableView.dequeueReusableCell(withIdentifier: "ChatVideoLeftCell") as! ChatVideoLeftCell
             
