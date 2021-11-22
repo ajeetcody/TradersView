@@ -9,7 +9,7 @@ import UIKit
 import AVKit
 import Firebase
 import FirebaseFirestore
-import FirebaseStorage
+
 
 class PlayerView: UIView {
     override static var layerClass: AnyClass {
@@ -97,7 +97,7 @@ struct MyChatScreenModel{
 
 }
 
-class MyChatViewController:  MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class MyChatViewController:  MasterViewController{
 
 
     
@@ -258,7 +258,11 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
             }
             
             
-            self.uploadImageToStorageFirebase(img: image, formate: imgFormate)
+//            self.uploadImageToStorageFirebase(img: image, formate: imgFormate) { (strUrl) in
+//
+//                self.sendMessaage(msg:strUrl, messageType: "Image")
+//
+//            }
             
             
             
@@ -274,44 +278,24 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         
         print(videoURL!)
         
-        self.uploadVideoToStorageFirebase(videoUrl: videoURL! as URL, formate: "mov")
+        
+//        self.uploadVideoToStorageFirebase(videoUrl: videoURL! as URL, formate: "mov") { (urlString) in
+//            
+//            self.sendMessaage(msg:urlString, messageType: "Video")
+//            
+//        }
         
         
         
     }
+    
     
     //MARK:- UIButton action methods ------
     
     @IBAction func takePhotoVideoAction(_ sender: Any) {
         
         
-        let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
-        
-        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            
-            self.fetchImages(sourceType: .savedPhotosAlbum)
-            
-        }
-        let actionCamera = UIAlertAction(title: "Camera", style: .default) { (action) in
-            
-            
-            self.fetchImages(sourceType: .camera)
-            
-        }
-        
-        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
-            
-            debugPrint("Cancel the photo options")
-            
-            
-        }
-        
-        
-        actionSheet.addAction(actionLibrary)
-        actionSheet.addAction(actionCamera)
-        actionSheet.addAction(actionCancel)
-        
-        self.present(actionSheet, animated: true, completion: nil)
+        self.openCameraOptionActionsheet()
         
         
     }
@@ -327,121 +311,7 @@ class MyChatViewController:  MasterViewController, UIImagePickerControllerDelega
         }
     }
     
-    //MARK:- Firebase call ---
-    func uploadVideoToStorageFirebase(videoUrl:URL, formate:String){
-        
-        //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
-        
-        
-        //        let name = "\(Int(Date().timeIntervalSince1970)).mp4"
-        
-        self.loadingView.startAnimating()
-
-        do {
-            
-            let videoData = try Data(contentsOf: videoUrl)
-            
-            // Create file name
-            //  let fileExtension = fileUrl.pathExtension
-            let fileName = "\(Int(Date().timeIntervalSince1970)).\(formate)"
-            
-            let storageReference = Storage.storage().reference().child("video").child(fileName)
-            
-            //let task = storageReference.putData(img.pngData(), metadata: StorageMetadata(dictionary: [:]))
-            
-            print("Video file name - \(fileName)")
-            
-            _ = storageReference.putData(videoData, metadata: nil) { (storageMetaData, error) in
-                
-                self.loadingView.stopAnimating()
-                
-                if let error = error {
-                    print("Upload error: \(error.localizedDescription)")
-                    return
-                }
-                
-                // Show UIAlertController here
-                print("Image file: \(fileName) is uploaded! View it at Firebase console!")
-                
-                storageReference.downloadURL { (url, error) in
-                    if let error = error  {
-                        print("Error on getting download url: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Download url of \(fileName) is \(url!.absoluteString)")
-                    print("path url of \(fileName) is \(url!.path)")
-                    //  print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
-                    
-                    self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Video")
-                    
-                    
-                    
-                }
-            }
-            
-            
-            
-            
-        } catch {
-            
-            self.loadingView.stopAnimating()
-            print("Error on extracting data from url: \(error.localizedDescription)")
-        }
-        
-        
-    }
     
-    
-    func uploadImageToStorageFirebase(img:UIImage, formate:String){
-        
-        //  let storageRef = FIRStorage.storage().reference().child("myImage.png")
-        
-        self.loadingView.startAnimating()
-        do {
-            // Create file name
-            //  let fileExtension = fileUrl.pathExtension
-            let fileName = "\(Int(Date().timeIntervalSince1970)).\(formate)"
-            
-            let storageReference = Storage.storage().reference().child("uploads").child(fileName)
-            
-            //let task = storageReference.putData(img.pngData(), metadata: StorageMetadata(dictionary: [:]))
-            
-            _ = storageReference.putData(img.jpegData(compressionQuality: 1.0)!, metadata: nil) { (storageMetaData, error) in
-                
-                self.loadingView.stopAnimating()
-                if let error = error {
-                    print("Upload error: \(error.localizedDescription)")
-                    return
-                }
-                
-                // Show UIAlertController here
-                print("Image file: \(fileName) is uploaded! View it at Firebase console!")
-                
-                storageReference.downloadURL { (url, error) in
-                    if let error = error  {
-                        print("Error on getting download url: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Download url of \(fileName) is \(url!.absoluteString)")
-                    print("path url of \(fileName) is \(url!.path)")
-                    print("baseURL  of \(fileName) is \(url!.baseURL?.absoluteString)")
-                    self.sendMessaage(msg:"\(url!.absoluteString)", messageType: "Image")
-                    
-                    
-                    
-                }
-            }
-            
-            
-            
-            
-        } catch {
-            self.loadingView.stopAnimating()
-            print("Error on extracting data from url: \(error.localizedDescription)")
-        }
-        
-        
-    }
     
     func sendMessaage(msg:String, messageType:String){
         

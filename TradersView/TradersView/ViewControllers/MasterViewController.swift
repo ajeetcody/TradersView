@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 
 
-class MasterViewController: UIViewController {
+class MasterViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     
     var loadingView:NVActivityIndicatorView!
 
@@ -255,6 +255,7 @@ class MasterViewController: UIViewController {
         return false
         
     }
+    
     
     //MARK:- Alert popup ----
     

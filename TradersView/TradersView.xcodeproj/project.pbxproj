@@ -14,10 +14,16 @@
 		7712E4402739336900036561 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712E43F2739336900036561 /* NotificationViewController.swift */; };
 		771D4B2F271C23AB00AD2131 /* DashboardFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */; };
 		771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B32271C244300AD2131 /* MyTabbarController.swift */; };
-		771D4B41271E81D200AD2131 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D4B40271E81D200AD2131 /* MessageViewController.swift */; };
 		7720A92F274B9720007E14C9 /* MyChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A92C274B9720007E14C9 /* MyChatViewController.swift */; };
 		7720A930274B9720007E14C9 /* MyChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A92D274B9720007E14C9 /* MyChatModel.swift */; };
 		7720A931274B9720007E14C9 /* MyChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A92E274B9720007E14C9 /* MyChatViewModel.swift */; };
+		7720A980274C223F007E14C9 /* ChatUserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A979274C223F007E14C9 /* ChatUserListViewModel.swift */; };
+		7720A981274C223F007E14C9 /* ChatUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97A274C223F007E14C9 /* ChatUserModel.swift */; };
+		7720A982274C223F007E14C9 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97B274C223F007E14C9 /* MessageViewController.swift */; };
+		7720A983274C223F007E14C9 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97D274C223F007E14C9 /* CreateGroupViewController.swift */; };
+		7720A984274C223F007E14C9 /* CreateChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97F274C223F007E14C9 /* CreateChannelViewController.swift */; };
+		7720A98B274C298A007E14C9 /* CreateChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A98A274C298A007E14C9 /* CreateChannelViewModel.swift */; };
+		7720A98E274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A98D274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift */; };
 		772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */; };
 		7729152D273D710B00991F0A /* AddTradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729152C273D710B00991F0A /* AddTradesViewController.swift */; };
 		773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520B2735646D0016BF3E /* CommentListViewController.swift */; };
@@ -33,10 +39,6 @@
 		7747D86627240BF900A81FAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86527240BF900A81FAA /* Constants.swift */; };
 		7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D86927240E8A00A81FAA /* ApiRequestModel.swift */; };
 		7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747D87C2724295F00A81FAA /* ApiResponse.swift */; };
-		7758F256274B683A002FEBFE /* ChatUserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7758F255274B683A002FEBFE /* ChatUserListViewModel.swift */; };
-		7758F27A274B74EA002FEBFE /* ChatUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7758F279274B74EA002FEBFE /* ChatUserModel.swift */; };
-		776407092744CF9900A9A7DE /* CreateChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776407082744CF9900A9A7DE /* CreateChannelViewController.swift */; };
-		7764070C2744CFAB00A9A7DE /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */; };
 		776407112744D04B00A9A7DE /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 776407102744D04B00A9A7DE /* Chat.storyboard */; };
 		776407182744D50500A9A7DE /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776407172744D50500A9A7DE /* SearchViewModel.swift */; };
 		777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DA939271B657C00C1256D /* AppDelegate.swift */; };
@@ -69,10 +71,16 @@
 		7712E43F2739336900036561 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		771D4B2E271C23AB00AD2131 /* DashboardFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DashboardFlow.storyboard; sourceTree = "<group>"; };
 		771D4B32271C244300AD2131 /* MyTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabbarController.swift; sourceTree = "<group>"; };
-		771D4B40271E81D200AD2131 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		7720A92C274B9720007E14C9 /* MyChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyChatViewController.swift; sourceTree = "<group>"; };
 		7720A92D274B9720007E14C9 /* MyChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyChatModel.swift; sourceTree = "<group>"; };
 		7720A92E274B9720007E14C9 /* MyChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyChatViewModel.swift; sourceTree = "<group>"; };
+		7720A979274C223F007E14C9 /* ChatUserListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserListViewModel.swift; sourceTree = "<group>"; };
+		7720A97A274C223F007E14C9 /* ChatUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserModel.swift; sourceTree = "<group>"; };
+		7720A97B274C223F007E14C9 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		7720A97D274C223F007E14C9 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
+		7720A97F274C223F007E14C9 /* CreateChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateChannelViewController.swift; sourceTree = "<group>"; };
+		7720A98A274C298A007E14C9 /* CreateChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelViewModel.swift; sourceTree = "<group>"; };
+		7720A98D274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMediaOnFirebaseStorage.swift; sourceTree = "<group>"; };
 		772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserProfileViewController.swift; sourceTree = "<group>"; };
 		7729152C273D710B00991F0A /* AddTradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradesViewController.swift; sourceTree = "<group>"; };
 		773C520B2735646D0016BF3E /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
@@ -88,10 +96,6 @@
 		7747D86527240BF900A81FAA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7747D86927240E8A00A81FAA /* ApiRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequestModel.swift; sourceTree = "<group>"; };
 		7747D87C2724295F00A81FAA /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
-		7758F255274B683A002FEBFE /* ChatUserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserListViewModel.swift; sourceTree = "<group>"; };
-		7758F279274B74EA002FEBFE /* ChatUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserModel.swift; sourceTree = "<group>"; };
-		776407082744CF9900A9A7DE /* CreateChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelViewController.swift; sourceTree = "<group>"; };
-		7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		776407102744D04B00A9A7DE /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		776407172744D50500A9A7DE /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		777DA936271B657C00C1256D /* TradersView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradersView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +158,33 @@
 			path = MyChat;
 			sourceTree = "<group>";
 		};
+		7720A978274C223F007E14C9 /* ChatUserList */ = {
+			isa = PBXGroup;
+			children = (
+				7720A979274C223F007E14C9 /* ChatUserListViewModel.swift */,
+				7720A97A274C223F007E14C9 /* ChatUserModel.swift */,
+				7720A97B274C223F007E14C9 /* MessageViewController.swift */,
+			);
+			path = ChatUserList;
+			sourceTree = "<group>";
+		};
+		7720A97C274C223F007E14C9 /* CreateGroup */ = {
+			isa = PBXGroup;
+			children = (
+				7720A97D274C223F007E14C9 /* CreateGroupViewController.swift */,
+			);
+			path = CreateGroup;
+			sourceTree = "<group>";
+		};
+		7720A97E274C223F007E14C9 /* CreateChannel */ = {
+			isa = PBXGroup;
+			children = (
+				7720A97F274C223F007E14C9 /* CreateChannelViewController.swift */,
+				7720A98A274C298A007E14C9 /* CreateChannelViewModel.swift */,
+			);
+			path = CreateChannel;
+			sourceTree = "<group>";
+		};
 		77460136274798030070C934 /* Chat-Swift5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,14 +218,12 @@
 		7764070F2744D00D00A9A7DE /* MessageViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7720A978274C223F007E14C9 /* ChatUserList */,
+				7720A97E274C223F007E14C9 /* CreateChannel */,
+				7720A97C274C223F007E14C9 /* CreateGroup */,
 				7720A92B274B971F007E14C9 /* MyChat */,
 				77460136274798030070C934 /* Chat-Swift5 */,
-				771D4B40271E81D200AD2131 /* MessageViewController.swift */,
-				776407082744CF9900A9A7DE /* CreateChannelViewController.swift */,
-				7764070B2744CFAB00A9A7DE /* CreateGroupViewController.swift */,
 				776407102744D04B00A9A7DE /* Chat.storyboard */,
-				7758F255274B683A002FEBFE /* ChatUserListViewModel.swift */,
-				7758F279274B74EA002FEBFE /* ChatUserModel.swift */,
 			);
 			path = MessageViewControllers;
 			sourceTree = "<group>";
@@ -265,6 +294,7 @@
 				7712E43F2739336900036561 /* NotificationViewController.swift */,
 				7729152C273D710B00991F0A /* AddTradesViewController.swift */,
 				77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */,
+				7720A98D274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -420,35 +450,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				776407182744D50500A9A7DE /* SearchViewModel.swift in Sources */,
+				7720A983274C223F007E14C9 /* CreateGroupViewController.swift in Sources */,
+				7720A981274C223F007E14C9 /* ChatUserModel.swift in Sources */,
 				7742A4BD272FDEE70081F28E /* PostViewController.swift in Sources */,
+				7720A984274C223F007E14C9 /* CreateChannelViewController.swift in Sources */,
 				7747D86327240B8300A81FAA /* ApiCallManager.swift in Sources */,
 				7712E43D27392A9600036561 /* ContactUsViewController.swift in Sources */,
 				7729152D273D710B00991F0A /* AddTradesViewController.swift in Sources */,
 				7742A4FF273037350081F28E /* HomeViewController.swift in Sources */,
 				7720A931274B9720007E14C9 /* MyChatViewModel.swift in Sources */,
-				7758F27A274B74EA002FEBFE /* ChatUserModel.swift in Sources */,
 				778A1B45271C1D0A008A4665 /* MasterViewController.swift in Sources */,
 				7747D86A27240E8A00A81FAA /* ApiRequestModel.swift in Sources */,
 				777DA959271B674300C1256D /* SignupViewController.swift in Sources */,
-				7764070C2744CFAB00A9A7DE /* CreateGroupViewController.swift in Sources */,
 				7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */,
-				771D4B41271E81D200AD2131 /* MessageViewController.swift in Sources */,
 				7746013E274798030070C934 /* ChatUser.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
+				7720A98B274C298A007E14C9 /* CreateChannelViewModel.swift in Sources */,
 				7746013B274798030070C934 /* ChatViewController.swift in Sources */,
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */,
 				77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */,
 				772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */,
-				7758F256274B683A002FEBFE /* ChatUserListViewModel.swift in Sources */,
 				7746013C274798030070C934 /* Chat.swift in Sources */,
-				776407092744CF9900A9A7DE /* CreateChannelViewController.swift in Sources */,
 				777DA93C271B657C00C1256D /* SceneDelegate.swift in Sources */,
 				7712E4122738098E00036561 /* FollowersFollowingViewController.swift in Sources */,
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
 				774601822749913F0070C934 /* PaddingLabel.swift in Sources */,
 				773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */,
+				7720A98E274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift in Sources */,
 				7720A930274B9720007E14C9 /* MyChatModel.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,
@@ -457,6 +487,8 @@
 				7747D86627240BF900A81FAA /* Constants.swift in Sources */,
 				777DA953271B672E00C1256D /* SplashViewController.swift in Sources */,
 				7712E4402739336900036561 /* NotificationViewController.swift in Sources */,
+				7720A982274C223F007E14C9 /* MessageViewController.swift in Sources */,
+				7720A980274C223F007E14C9 /* ChatUserListViewModel.swift in Sources */,
 				779D307E271B6B8B0021EEFC /* Extensions.swift in Sources */,
 				77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */,
 				7720A92F274B9720007E14C9 /* MyChatViewController.swift in Sources */,

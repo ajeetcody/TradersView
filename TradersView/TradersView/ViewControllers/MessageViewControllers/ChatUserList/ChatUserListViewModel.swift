@@ -43,6 +43,8 @@ class ChatUserListViewModel:NSObject{
         
         
     }
+    
+    
     func fetchChatUserList(completionHandler:@escaping()->Void){
         
         

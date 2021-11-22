@@ -18,9 +18,6 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     
     @IBOutlet weak var tableviewUserList: UITableView!
     
-   // private var workItemReference:DispatchWorkItem? = nil
-    
-   // fileprivate var searchVM = SearchViewModel()
     
     fileprivate var chatUserList_VM = ChatUserListViewModel()
     
@@ -62,6 +59,37 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     @IBAction func createChannelButtonAction(_ sender: Any)
     {
         
+
+        
+        if self.channelNameTextfield.text?.trimmingCharacters(in: .whitespaces).count == 0{
+            
+            self.showAlertPopupWithMessage(msg: "Please select Channel Name")
+            
+        }
+        else if self.chatUserList_VM.selectedUserData.count == 0{
+            
+            self.showAlertPopupWithMessage(msg: "Please User in Channel")
+
+            
+        }
+        else if self.channelImageView.image == nil{
+            
+            self.showAlertPopupWithMessage(msg: "Please set image of group")
+
+            
+        }
+        else{
+            
+            
+          //  self.createChanelInFirebase()
+            
+            
+            
+            
+            
+        }
+        
+        
         
     }
     
@@ -72,6 +100,10 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
         
     }
     
+    
+    //MARK:- Firebase operations -----
+    
+  
     //MARK:- Fetch Chat user list ---
     
     

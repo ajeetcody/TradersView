@@ -21,7 +21,6 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
     
     private var workItemReference:DispatchWorkItem? = nil
     
-   // fileprivate var searchVM = SearchViewModel()
     
     fileprivate var chatUserList_VM = ChatUserListViewModel()
     
@@ -68,6 +67,9 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
     {
         
         
+        
+        
+        
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
@@ -77,6 +79,7 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
         
     }
     
+   
     //MARK:- Fetch Chat user list ---
     
     
