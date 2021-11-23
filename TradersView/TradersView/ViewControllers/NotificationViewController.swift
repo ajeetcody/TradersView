@@ -235,7 +235,7 @@ extension NotificationViewController:UITableViewDelegate, UITableViewDataSource{
                 cell.widthImagePost.constant = 90.0
                 cell.heightImagePost.constant = 90.0
                 
-                cell.postImageView.sd_setImage(with: URL(string: "\(obj.postImg)"), placeholderImage: UIImage(named: ""))
+                cell.postImageView.sd_setImage(with: URL(string: "\(obj.postImg)"), placeholderImage: UIImage(named: "addImagePlaceHolder.png"))
 
                 cell.postImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 3.0)
                 

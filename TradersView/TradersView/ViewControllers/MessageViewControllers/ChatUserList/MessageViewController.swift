@@ -7,7 +7,6 @@
 
 import UIKit
 import Firebase
-
 import SDWebImage
 class MessageTabViewController: MasterViewController {
 
@@ -35,7 +34,6 @@ class MessageTabViewController: MasterViewController {
     @IBOutlet weak var tableViewGroupPrivate: UITableView!
     @IBOutlet weak var tableViewGroupPublic: UITableView!
     @IBOutlet weak var tableViewMessage: UITableView!
-    var ref: DatabaseReference!
     
     var currentUserData:LoginUserData?
     

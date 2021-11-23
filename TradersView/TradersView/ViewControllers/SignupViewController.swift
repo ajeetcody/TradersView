@@ -21,7 +21,6 @@ class SignupViewController: MasterViewController {
     @IBOutlet weak var confirmPasswordTextfield: UITextField!
     @IBOutlet weak var signupButton: UIButton!
     
-    var ref: DatabaseReference!
 
 
     

@@ -18,6 +18,17 @@ class ChatUserListViewModel:NSObject{
     var selectedUserData: [ChatUserModel] = []
 
     
+    func selectedUserIdList()->[[String:String]]{
+        
+        
+        let idList:[[String:String]] = self.selectedUserData.map { (userModel) -> [String:String] in
+            
+            return ["memberid":userModel.userID]
+        }
+        
+        return idList
+    }
+    
     func checkUserIsSelected(userData:ChatUserModel)->Bool{
         
         

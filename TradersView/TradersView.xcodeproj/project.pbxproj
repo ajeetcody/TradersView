@@ -22,8 +22,6 @@
 		7720A982274C223F007E14C9 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97B274C223F007E14C9 /* MessageViewController.swift */; };
 		7720A983274C223F007E14C9 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97D274C223F007E14C9 /* CreateGroupViewController.swift */; };
 		7720A984274C223F007E14C9 /* CreateChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A97F274C223F007E14C9 /* CreateChannelViewController.swift */; };
-		7720A98B274C298A007E14C9 /* CreateChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A98A274C298A007E14C9 /* CreateChannelViewModel.swift */; };
-		7720A98E274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720A98D274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift */; };
 		772914C9273CE16D00991F0A /* FavoriteUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */; };
 		7729152D273D710B00991F0A /* AddTradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729152C273D710B00991F0A /* AddTradesViewController.swift */; };
 		773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773C520B2735646D0016BF3E /* CommentListViewController.swift */; };
@@ -79,8 +77,6 @@
 		7720A97B274C223F007E14C9 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		7720A97D274C223F007E14C9 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		7720A97F274C223F007E14C9 /* CreateChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateChannelViewController.swift; sourceTree = "<group>"; };
-		7720A98A274C298A007E14C9 /* CreateChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelViewModel.swift; sourceTree = "<group>"; };
-		7720A98D274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMediaOnFirebaseStorage.swift; sourceTree = "<group>"; };
 		772914C8273CE16D00991F0A /* FavoriteUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserProfileViewController.swift; sourceTree = "<group>"; };
 		7729152C273D710B00991F0A /* AddTradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradesViewController.swift; sourceTree = "<group>"; };
 		773C520B2735646D0016BF3E /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				7720A97F274C223F007E14C9 /* CreateChannelViewController.swift */,
-				7720A98A274C298A007E14C9 /* CreateChannelViewModel.swift */,
 			);
 			path = CreateChannel;
 			sourceTree = "<group>";
@@ -294,7 +289,6 @@
 				7712E43F2739336900036561 /* NotificationViewController.swift */,
 				7729152C273D710B00991F0A /* AddTradesViewController.swift */,
 				77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */,
-				7720A98D274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -465,7 +459,6 @@
 				7712E43A2739156600036561 /* BlockAndMuteViewController.swift in Sources */,
 				7746013E274798030070C934 /* ChatUser.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
-				7720A98B274C298A007E14C9 /* CreateChannelViewModel.swift in Sources */,
 				7746013B274798030070C934 /* ChatViewController.swift in Sources */,
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
@@ -478,7 +471,6 @@
 				7747D87D2724295F00A81FAA /* ApiResponse.swift in Sources */,
 				774601822749913F0070C934 /* PaddingLabel.swift in Sources */,
 				773C520C2735646D0016BF3E /* CommentListViewController.swift in Sources */,
-				7720A98E274C316D007E14C9 /* UploadMediaOnFirebaseStorage.swift in Sources */,
 				7720A930274B9720007E14C9 /* MyChatModel.swift in Sources */,
 				777DA956271B673900C1256D /* LoginViewController.swift in Sources */,
 				771D4B33271C244300AD2131 /* MyTabbarController.swift in Sources */,

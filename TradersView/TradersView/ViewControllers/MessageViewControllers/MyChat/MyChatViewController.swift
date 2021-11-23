@@ -165,129 +165,28 @@ class MyChatViewController:  MasterViewController{
     
     
     
-    func fetchImages(sourceType:UIImagePickerController.SourceType){
+    //MARK:- Image url overriding ---
+    
+    
+    override func sendFileURLAfterUpload(imgUrl: String, mediaType: MediaType) {
         
-        let imgPickerController = UIImagePickerController()
+        print("img url - \(imgUrl)")
+        print("media type - \(mediaType)")
         
-        if UIImagePickerController.isSourceTypeAvailable(sourceType){
+        switch mediaType {
+        case .VIDEO:
+            self.sendMessaage(msg: imgUrl, messageType: "Video")
+
             
-            imgPickerController.sourceType = sourceType
-            imgPickerController.mediaTypes = ["public.image", "public.movie"]
-            //imgPickerController.allowsEditing = true
-            imgPickerController.delegate = self
-            imgPickerController.modalPresentationStyle = .fullScreen
-            self.present(imgPickerController, animated: true, completion: nil)
-            
-        }
-        
-        else{
-            
-            self.showAlertPopupWithMessage(msg: sourceType == .camera ?  "Camera is not available" :  "Photo library is not available")
-            
-            
+        case .IMAGE:
+            self.sendMessaage(msg: imgUrl, messageType: "Image")
+
+      
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        print("\(#function)")
-        
-        
-        var imgFormate = "JPG"
-        
-        
-        let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! String
-        
-        if mediaType  == "public.image" {
-            print("Image Selected")
-            
-            self.selectImageForSending(info: info)
-            
-            
-        }
-        else if mediaType == "public.movie" {
-            print("Video Selected")
-            
-            self.selectVideoForSending(info: info)
-        }
-        
-        
-        
-        //print("Testtttt")
-        picker.dismiss(animated: true, completion: nil);
-        
-    }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil);
-        
-        
-        print("\(#function)")
-    }
-    
-    //MARK:- Select Image ---
-    
-    
-    func selectImageForSending(info:[UIImagePickerController.InfoKey : Any]){
-        
-        
-        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
-            
-            var imgFormate = "JPG"
-            
-            
-            let assetPath = info[UIImagePickerController.InfoKey.referenceURL] as! NSURL
-            if (assetPath.absoluteString?.hasSuffix("JPG"))! {
-                print("JPG")
-                imgFormate = "JPG"
-            }
-            else if (assetPath.absoluteString?.hasSuffix("PNG"))! {
-                print("PNG")
-                
-                imgFormate = "PNG"
-            }
-            else if (assetPath.absoluteString?.hasSuffix("GIF"))! {
-                print("GIF")
-                
-                imgFormate = "GIF"
-            }
-            else {
-                print("Unknown")
-                
-                imgFormate = "Unknown"
-            }
-            
-            
-//            self.uploadImageToStorageFirebase(img: image, formate: imgFormate) { (strUrl) in
-//
-//                self.sendMessaage(msg:strUrl, messageType: "Image")
-//
-//            }
-            
-            
-            
-        }
-        
-    }
-    
-    //MARK:- Select Video ---
-    func selectVideoForSending(info:[UIImagePickerController.InfoKey : Any]){
-        
-        
-        let  videoURL = info[UIImagePickerController.InfoKey.mediaURL]as? NSURL
-        
-        print(videoURL!)
-        
-        
-//        self.uploadVideoToStorageFirebase(videoUrl: videoURL! as URL, formate: "mov") { (urlString) in
-//            
-//            self.sendMessaage(msg:urlString, messageType: "Video")
-//            
-//        }
-        
-        
-        
-    }
+
     
     
     //MARK:- UIButton action methods ------
@@ -295,7 +194,7 @@ class MyChatViewController:  MasterViewController{
     @IBAction func takePhotoVideoAction(_ sender: Any) {
         
         
-        self.openCameraOptionActionsheet()
+        self.openCameraOptionActionsheet(shouldUploadOnFirebase: true, isVideo: true)
         
         
     }
@@ -326,7 +225,7 @@ class MyChatViewController:  MasterViewController{
         
         
         
-        let textMsg:[String:Any] = ["groupId":"This is not group", "message":msg, "message_type":messageType, "profile_image":self.myChatScreenModelObj?.currentUserImageUrl, "sender_id":self.myChatScreenModelObj?.currentUserId, "sender_user_name":self.myChatScreenModelObj?.currentUserName, "timestamp":dateFormatter.string(from: date)]
+        let textMsg:[String:Any] = ["groupId":"This is not group", "message":msg, "message_type":messageType, "profile_image":self.myChatScreenModelObj!.currentUserImageUrl, "sender_id":self.myChatScreenModelObj!.currentUserId, "sender_user_name":self.myChatScreenModelObj!.currentUserName, "timestamp":dateFormatter.string(from: date)]
         
         self.chat_VM.messageToBeSend = textMsg
         
@@ -442,7 +341,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
             cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-            cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "addImagePlaceHolder.png"))
 
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemGreen, cornerRadius: 12.5)
             cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 8.0)
@@ -457,7 +356,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
             cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-            cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "addImagePlaceHolder.png"))
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
             cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 8.0)
             
@@ -487,7 +386,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: msg.message))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
             
             let url = NSURL(string: msg.message);

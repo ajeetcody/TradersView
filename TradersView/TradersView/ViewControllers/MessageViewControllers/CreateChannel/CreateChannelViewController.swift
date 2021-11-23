@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateChannelViewController: MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class CreateChannelViewController: MasterViewController {
     
     @IBOutlet weak var cancelButton: UIButton!
 
@@ -20,6 +20,11 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     
     
     fileprivate var chatUserList_VM = ChatUserListViewModel()
+   
+    var profileImage:UIImage?
+    
+    var profileImageUrl:String = ""
+    var profileImageFormate:String = ""
     
     
     //MARK:- UIViewcontroller lifecycle methods ---
@@ -46,9 +51,61 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
         self.cancelButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 8.0)
 
         
+        
+      
+        
+        
+        
         self.fetchChatUserList()
         
     }
+    
+    //MARK:- Gesture tap action ---
+    
+    
+    
+    @objc func channelImageSelected(gesture:UITapGestureRecognizer){
+        
+        
+        self.openCameraOptionActionsheet(shouldUploadOnFirebase: false, isVideo: false)
+
+    }
+    
+    //MARK:- Image url overriding ---
+    
+    override func sendImageOnly(img: UIImage,formate:String) {
+        
+        self.channelImageView.image = img
+        self.profileImage = img
+        self.profileImageFormate = formate
+        
+    }
+    
+    override func sendFileURLAfterUpload(imgUrl: String, mediaType: MediaType) {
+        
+        print("img url - \(imgUrl)")
+        print("media type - \(mediaType)")
+        
+        self.profileImageUrl = imgUrl
+        
+        
+        
+      if  let userData:LoginUserData = self.appDelegate.loginResponseData{
+
+        
+        self.createChanelInFirebase(userData: userData, profileImageUrl: imgUrl)
+        
+
+      }
+      else{
+          
+          self.showAlertPopupWithMessage(msg: "User Data is not available")
+      }
+        
+        
+    }
+    
+    
     
     
     
@@ -59,35 +116,41 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     @IBAction func createChannelButtonAction(_ sender: Any)
     {
         
+        
+            
+            
+            
+            
+            if self.channelNameTextfield.text?.trimmingCharacters(in: .whitespaces).count == 0{
+                
+                self.showAlertPopupWithMessage(msg: "Please select Channel Name")
+                
+            }
+            else if self.chatUserList_VM.selectedUserData.count == 0{
+                
+                self.showAlertPopupWithMessage(msg: "Please User in Channel")
+
+                
+            }
+            else if self.channelImageView.image == nil || self.profileImage == nil{
+                
+                self.showAlertPopupWithMessage(msg: "Please set image of group")
+
+                
+            }
+            else{
+                
+                
+                
+                self.uploadImageToStorageFirebase(img: self.profileImage!, formate: self.profileImageFormate)
+                
+                
+                
+                
+            }
+          
 
         
-        if self.channelNameTextfield.text?.trimmingCharacters(in: .whitespaces).count == 0{
-            
-            self.showAlertPopupWithMessage(msg: "Please select Channel Name")
-            
-        }
-        else if self.chatUserList_VM.selectedUserData.count == 0{
-            
-            self.showAlertPopupWithMessage(msg: "Please User in Channel")
-
-            
-        }
-        else if self.channelImageView.image == nil{
-            
-            self.showAlertPopupWithMessage(msg: "Please set image of group")
-
-            
-        }
-        else{
-            
-            
-          //  self.createChanelInFirebase()
-            
-            
-            
-            
-            
-        }
         
         
         
@@ -103,6 +166,61 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     
     //MARK:- Firebase operations -----
     
+    func createChanelInFirebase(userData:LoginUserData, profileImageUrl:String){
+        
+        //create user dictionary to first entery in "user" node firebase --
+        
+        let blockUsers = [["memberid":"No id"]]
+        let groupIDS = self.chatUserList_VM.selectedUserIdList()
+        print("GroupIds:-\(groupIDS)")
+        
+        let muteNotificationID = [["memberid":"Null"]]
+        
+        let muteUsers = [["memberid":"No id"]]
+        let semiUsers = [["memberid":"No id"]]
+        
+        
+        var dict:[String:Any] = ["addminId":userData.id, "addminname":userData.name, "blockUsers":blockUsers, "cheack":false, "groupIDS":groupIDS, "group_name":self.channelNameTextfield.text!, "isCheack":false,"mutenotificationusers":muteNotificationID,"muteUsers":muteUsers, "profileImage":profileImageUrl,"recent_iamge":"", "semiusers":semiUsers, "timdate":Date.getCurrentDate()]
+        
+        
+        self.ref.child("ChannelDetail").childByAutoId().setValue(dict) { (error, reference) in
+            
+            
+            if error != nil{
+                
+                self.showErrorMessage(error: error!)
+                
+            }
+            else{
+                
+                dict["groupID"] = reference.key
+                self.ref.child("ChannelDetail").child(reference.key!).setValue(dict) { (error, referenceTwo) in
+                    
+                    
+                    if error != nil{
+                        
+                        self.showErrorMessage(error: error!)
+                        
+                    }
+                    else{
+                        
+                        self.showAlertPopupWithMessageWithHandler(msg: "Channel is created") {
+                            
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                        
+                    }
+                }
+                
+                
+            }
+            
+            
+        }
+        
+        
+    }
   
     //MARK:- Fetch Chat user list ---
     
@@ -131,40 +249,7 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     
     //MARK:- UITapgesture action methods ----
     
-    @objc func channelImageSelected(gesture:UITapGestureRecognizer){
-        
-        
-        let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
-        
-        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            
-            self.fetchImages(sourceType: .photoLibrary)
-            
-        }
-        let actionCamera = UIAlertAction(title: "Camera", style: .default) { (action) in
-            
-            
-            self.fetchImages(sourceType: .camera)
-            
-        }
-        
-        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
-            
-            debugPrint("Cancel the photo options")
-            
-            
-        }
-        
-        
-        actionSheet.addAction(actionLibrary)
-        actionSheet.addAction(actionCamera)
-        actionSheet.addAction(actionCancel)
-        
-        self.present(actionSheet, animated: true, completion: nil)
-        
-        
-        
-    }
+    
     
     
     
@@ -172,47 +257,7 @@ class CreateChannelViewController: MasterViewController, UIImagePickerController
     
     
     
-    func fetchImages(sourceType:UIImagePickerController.SourceType){
-        
-        let imgPickerController = UIImagePickerController()
-        
-        if UIImagePickerController.isSourceTypeAvailable(sourceType){
-            
-            imgPickerController.sourceType = sourceType
-            imgPickerController.allowsEditing = true
-            imgPickerController.delegate = self
-            imgPickerController.modalPresentationStyle = .fullScreen
-            self.present(imgPickerController, animated: true, completion: nil)
-            
-        }
-        
-        else{
-            
-            self.showAlertPopupWithMessage(msg: sourceType == .camera ?  "Camera is not available" :  "Photo library is not available")
-            
-            
-        }
-    }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        print("\(#function)")
-        
-        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
-            self.channelImageView.image = image
-        }
-        
-        print("Testtttt")
-        picker.dismiss(animated: true, completion: nil);
-        
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil);
-        
-        
-        print("\(#function)")
-    }
     
     /*
      // MARK: - Navigation
@@ -293,12 +338,12 @@ extension CreateChannelViewController:UITableViewDelegate, UITableViewDataSource
             }
             else{
 
+                print("Selected  - \(obj.username)")
                 self.chatUserList_VM.selectedUserData.append(obj)
 
             }
 
 
-          //  print(obj.name)
             
             self.tableviewUserList.reloadData()
        

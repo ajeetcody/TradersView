@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostViewController: MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class PostViewController: MasterViewController {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextview: UITextView!
@@ -46,6 +46,23 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
         
     }
+    
+    //MARK:- Image  overriding ---
+    
+    override func sendImageOnly(img: UIImage, formate:String) {
+        
+        self.postImageView.image = img
+        
+    }
+    
+    override func sendFileURLAfterUpload(imgUrl: String, mediaType: MediaType) {
+        
+        print("img url - \(imgUrl)")
+        print("media type - \(mediaType)")
+        
+    }
+    
+    
     
     //MARK:- UIButton action methods ----
     
@@ -162,36 +179,8 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         print("\(#function)")
         
         
-        let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
-        
-        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            
-            self.fetchImages(sourceType: .photoLibrary)
-            
-        }
-        let actionCamera = UIAlertAction(title: "Camera", style: .default) { (action) in
-            
-            
-            self.fetchImages(sourceType: .camera)
-            
-        }
-        
-        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
-            
-            debugPrint("Cancel the photo options")
-            
-            
-        }
-        
-        
-        actionSheet.addAction(actionLibrary)
-        actionSheet.addAction(actionCamera)
-        actionSheet.addAction(actionCancel)
-        
-        self.present(actionSheet, animated: true, completion: nil)
-        
-        
-        
+        self.openCameraOptionActionsheet(shouldUploadOnFirebase: false, isVideo: false)
+
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
@@ -201,52 +190,12 @@ class PostViewController: MasterViewController, UIImagePickerControllerDelegate 
         
     }
     
+   
+    
+    
     
     //MARK:- Image fetch actions ---
     
-    
-    
-    func fetchImages(sourceType:UIImagePickerController.SourceType){
-        
-        let imgPickerController = UIImagePickerController()
-        
-        if UIImagePickerController.isSourceTypeAvailable(sourceType){
-            
-            imgPickerController.sourceType = sourceType
-            imgPickerController.allowsEditing = true
-            imgPickerController.delegate = self
-            imgPickerController.modalPresentationStyle = .fullScreen
-            self.present(imgPickerController, animated: true, completion: nil)
-            
-        }
-        
-        else{
-            
-            self.showAlertPopupWithMessage(msg: sourceType == .camera ?  "Camera is not available" :  "Photo library is not available")
-            
-            
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        print("\(#function)")
-        
-        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
-            self.postImageView.image = image
-        }
-        
-        print("Testtttt")
-        picker.dismiss(animated: true, completion: nil);
-        
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil);
-        
-        
-        print("\(#function)")
-    }
     
     /*
      

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateGroupViewController: MasterViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class CreateGroupViewController: MasterViewController {
     
     @IBOutlet weak var cancelButton: UIButton!
 
@@ -24,7 +24,11 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
     
     fileprivate var chatUserList_VM = ChatUserListViewModel()
     
+    var profileImage:UIImage?
     
+    var profileImageUrl:String = ""
+    var profileImageFormate:String = ""
+
     //MARK:- UIViewcontroller lifecycle methods ---
     
     override func viewDidLoad() {
@@ -55,6 +59,46 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
     
     
     
+    @objc func groupImageSelected(gesture:UITapGestureRecognizer){
+        
+        self.openCameraOptionActionsheet(shouldUploadOnFirebase: false, isVideo: false)
+
+        
+    }
+    
+    //MARK:- Image url overriding ---
+    
+    override func sendImageOnly(img: UIImage,formate:String) {
+        
+        self.groupImageView.image = img
+        self.profileImage = img
+        self.profileImageFormate = formate
+        
+        
+    }
+    override func sendFileURLAfterUpload(imgUrl: String, mediaType: MediaType) {
+        
+        print("img url - \(imgUrl)")
+        print("media type - \(mediaType)")
+        
+        self.profileImageUrl = imgUrl
+        
+      if  let userData:LoginUserData = self.appDelegate.loginResponseData{
+
+        
+        self.createGroupInFirebase(userData: userData, profileImageUrl: imgUrl)
+        
+
+      }
+      else{
+          
+          self.showAlertPopupWithMessage(msg: "User Data is not available")
+      }
+        
+    }
+    
+    
+    
     //MARK:- UIButton action methods ----
     
     @IBAction func publicSwitchAction(_ sender: UISwitch) {
@@ -66,7 +110,31 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
     @IBAction func createGroupButtonAction(_ sender: Any)
     {
         
+
         
+        if self.groupNameTextfield.text?.trimmingCharacters(in: .whitespaces).count == 0{
+            
+            self.showAlertPopupWithMessage(msg: "Please select Channel Name")
+            
+        }
+        else if self.chatUserList_VM.selectedUserData.count == 0{
+            
+            self.showAlertPopupWithMessage(msg: "Please User in Channel")
+
+            
+        }
+        else if self.groupImageView.image == nil || self.profileImage == nil{
+            
+            self.showAlertPopupWithMessage(msg: "Please set image of group")
+
+            
+        }
+        else{
+            
+            
+            self.uploadImageToStorageFirebase(img: self.profileImage!, formate: self.profileImageFormate)
+
+        }
         
         
         
@@ -79,6 +147,73 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
         
     }
     
+    
+    //MARK:- Firebase - Create Group ----
+    
+    
+    
+    func createGroupInFirebase(userData:LoginUserData, profileImageUrl:String){
+        
+        //create user dictionary to first entery in "user" node firebase --
+        
+        let blockUsers = [["memberid":"No id"]]
+        let groupIDS = self.chatUserList_VM.selectedUserIdList()
+        print("GroupIds:-\(groupIDS)")
+        
+        let muteNotificationID = [["memberid":"Null"]]
+
+        let muteUsers = [["memberid":"No id"]]
+        let semiUsers = [["memberid":"No id"]]
+
+
+        var dict:[String:Any] = ["addminId":userData.id, "addminname":userData.name, "blockUsers":blockUsers, "cheack":self.publicSwitch.isOn, "groupIDS":groupIDS, "group_name":self.groupNameTextfield.text!, "isCheack":self.publicSwitch.isOn,"mutenotificationusers":muteNotificationID,"muteUsers":muteUsers, "profileImage":profileImageUrl,"recent_iamge":"", "semiusers":semiUsers, "timdate":Date.getCurrentDate()]
+        
+        
+        self.ref.child("PublicGroupDetail").childByAutoId().setValue(dict) { (error, reference) in
+            
+            
+            if error != nil{
+                
+                self.showErrorMessage(error: error!)
+                
+            }
+            else{
+                
+                dict["groupID"] = reference.key
+                self.ref.child("PublicGroupDetail").child(reference.key!).setValue(dict) { (error, referenceTwo) in
+                    
+                    
+                    if error != nil{
+                        
+                        self.showErrorMessage(error: error!)
+                        
+                    }
+                    else{
+                        
+                        self.showAlertPopupWithMessageWithHandler(msg: "Group is created") {
+                            
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                        
+                    }
+                }
+                
+                
+            }
+            
+            
+        }
+        
+       // let dict:[String:Any] = ["channel_group":channelGroup, "private_group":privateGroup, "public_group":publicGroup,"date":Date.getCurrentDate(), "email":userData.email, "psd":userData.username, "recent_message":"","status":"online", "userId":userData.id,"username":userData.name, "imageURL":"https://spsofttech.com/projects/treader/images/dummy.png"]
+        
+        
+        
+//        self.ref.child("PublicGroupDetail").
+        
+        
+        
+    }
    
     //MARK:- Fetch Chat user list ---
     
@@ -105,90 +240,9 @@ class CreateGroupViewController: MasterViewController, UIImagePickerControllerDe
 
     
     
-    //MARK:- UITapgesture action methods ----
-    
-    @objc func groupImageSelected(gesture:UITapGestureRecognizer){
-        
-        
-        let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
-        
-        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            
-            self.fetchImages(sourceType: .photoLibrary)
-            
-        }
-        let actionCamera = UIAlertAction(title: "Camera", style: .default) { (action) in
-            
-            
-            self.fetchImages(sourceType: .camera)
-            
-        }
-        
-        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
-            
-            debugPrint("Cancel the photo options")
-            
-            
-        }
-        
-        
-        actionSheet.addAction(actionLibrary)
-        actionSheet.addAction(actionCamera)
-        actionSheet.addAction(actionCancel)
-        
-        self.present(actionSheet, animated: true, completion: nil)
-        
-        
-        
-    }
-    
-    
-    
     //MARK:- Image fetch actions ---
     
     
-    
-    func fetchImages(sourceType:UIImagePickerController.SourceType){
-        
-        let imgPickerController = UIImagePickerController()
-        
-        if UIImagePickerController.isSourceTypeAvailable(sourceType){
-            
-            imgPickerController.sourceType = sourceType
-            imgPickerController.allowsEditing = true
-            imgPickerController.delegate = self
-            imgPickerController.modalPresentationStyle = .fullScreen
-            self.present(imgPickerController, animated: true, completion: nil)
-            
-        }
-        
-        else{
-            
-            self.showAlertPopupWithMessage(msg: sourceType == .camera ?  "Camera is not available" :  "Photo library is not available")
-            
-            
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        print("\(#function)")
-        
-        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
-            self.groupImageView.image = image
-        }
-        
-        print("Testtttt")
-        picker.dismiss(animated: true, completion: nil);
-        
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil);
-        
-        
-        print("\(#function)")
-    }
     
     /*
      // MARK: - Navigation
@@ -259,24 +313,22 @@ extension CreateGroupViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
+        let obj = self.chatUserList_VM.filterUserList[indexPath.row]
+
+        if self.chatUserList_VM.checkUserIsSelected(userData: obj){
+
+            self.chatUserList_VM.removeUserFromSelectedList(userData: obj)
+        }
+        else{
+
+            print("Selected  - \(obj.username)")
+            self.chatUserList_VM.selectedUserData.append(obj)
+
+        }
+
+
         
-
-            let obj = self.chatUserList_VM.chatUserList[indexPath.row]
-
-            if self.chatUserList_VM.checkUserIsSelected(userData: obj){
-
-                self.chatUserList_VM.removeUserFromSelectedList(userData: obj)
-            }
-            else{
-
-                self.chatUserList_VM.selectedUserData.append(obj)
-
-            }
-
-
-          //  print(obj.name)
-            
-            self.tableViewSearch.reloadData()
+        self.tableViewSearch.reloadData()
        
         
     }
