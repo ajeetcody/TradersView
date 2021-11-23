@@ -76,6 +76,7 @@ class CreateGroupViewController: MasterViewController {
         
         
     }
+    
     override func sendFileURLAfterUpload(imgUrl: String, mediaType: MediaType) {
         
         print("img url - \(imgUrl)")

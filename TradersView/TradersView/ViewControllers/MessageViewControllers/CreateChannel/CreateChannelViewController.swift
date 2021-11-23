@@ -62,13 +62,12 @@ class CreateChannelViewController: MasterViewController {
     
     //MARK:- Gesture tap action ---
     
-    
-    
     @objc func channelImageSelected(gesture:UITapGestureRecognizer){
         
         
         self.openCameraOptionActionsheet(shouldUploadOnFirebase: false, isVideo: false)
-
+     
+        
     }
     
     //MARK:- Image url overriding ---
@@ -87,8 +86,7 @@ class CreateChannelViewController: MasterViewController {
         print("media type - \(mediaType)")
         
         self.profileImageUrl = imgUrl
-        
-        
+
         
       if  let userData:LoginUserData = self.appDelegate.loginResponseData{
 

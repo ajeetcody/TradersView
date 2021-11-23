@@ -46,6 +46,7 @@ class MessageTabViewController: MasterViewController {
     override func viewDidLoad() {
        
         super.viewDidLoad()
+        
         self.ref = Database.database().reference()
 
         if  let userData:LoginUserData = self.appDelegate.loginResponseData{
@@ -64,6 +65,9 @@ class MessageTabViewController: MasterViewController {
 
         
         self.fetchUserList()
+        self.fetchChannelList()
+        self.fetchPublicGroup()
+        self.fetchPrivateGroup()
         
         
         
@@ -72,6 +76,51 @@ class MessageTabViewController: MasterViewController {
     
     //MARK:- Firebase operations ---
     
+    func fetchPrivateGroup(){
+        
+        self.chatUserList_VM.fetchPrivateGroupList {
+            
+            
+            print("--- Fetch chat user list ---")
+            
+            self.tableViewGroupPrivate.isHidden = self.chatUserList_VM.privateGroupList.count > 0 ?  false :  true
+            
+            self.tableViewGroupPrivate.reloadData()
+            
+            
+        }
+        
+    }
+    func fetchPublicGroup(){
+        
+        self.chatUserList_VM.fetchPublicGroupList {
+            
+            
+            print("--- Fetch chat user list ---")
+            
+            self.tableViewGroupPublic.isHidden = self.chatUserList_VM.publicGroupList.count > 0 ?  false :  true
+            
+            self.tableViewGroupPublic.reloadData()
+            
+            
+        }
+        
+    }
+    func fetchChannelList(){
+        
+        self.chatUserList_VM.fetchChannelList {
+            
+            
+            print("--- Fetch chat user list ---")
+            
+            self.tableViewChannel.isHidden = self.chatUserList_VM.channelList.count > 0 ?  false :  true
+            
+            self.tableViewChannel.reloadData()
+            
+            
+        }
+        
+    }
     func fetchUserList(){
         
         self.chatUserList_VM.fetchChatUserList {
@@ -201,41 +250,106 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if tableView.tag == 100{
+            
+            
+            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+            
+
+                let searchUser = self.chatUserList_VM.chatUserList[indexPath.row]
+
+                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
+
+                cell.profilePicture.tag = indexPath.row
+
+
+                cell.userNameLabel.text = searchUser.username.capitalized
+               // cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
+
+
+                if self.chatUserList_VM.checkUserIsSelected(userData: searchUser){
+
+                    cell.accessoryType = .checkmark
+
+                }
+                else{
+
+                    cell.accessoryType = .none
+
+                }
+
+            
+            return cell
+            
+        }
+        else if tableView.tag == 101 {
+            
+            
+            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+            
+
+                let searchUser = self.chatUserList_VM.publicGroupList[indexPath.row]
+
+                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
+
+                cell.profilePicture.tag = indexPath.row
+
+
+                cell.userNameLabel.text = searchUser.username.capitalized
+         
+            
+            
+            return cell
+            
+        }
+        else if tableView.tag == 102 {
+            
+            
+            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+            
+
+                let searchUser = self.chatUserList_VM.privateGroupList[indexPath.row]
+
+                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
+
+                cell.profilePicture.tag = indexPath.row
+
+
+                cell.userNameLabel.text = searchUser.username.capitalized
+               // cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
+
+
+           
+            
+            
+            return cell
+            
+        }
+        else if tableView.tag == 103 {
+            
+            
+            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+            
+
+                let searchUser = self.chatUserList_VM.channelList[indexPath.row]
+
+                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
+
+                cell.profilePicture.tag = indexPath.row
+
+
+                cell.userNameLabel.text = searchUser.username.capitalized
+           
+            
+            return cell
+            
+        }
         
-        
-        let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
-        
-
-            let searchUser = self.chatUserList_VM.chatUserList[indexPath.row]
-
-            cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
-
-            cell.profilePicture.tag = indexPath.row
-
-
-            cell.userNameLabel.text = searchUser.username.capitalized
-           // cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
-
-
-            if self.chatUserList_VM.checkUserIsSelected(userData: searchUser){
-
-                cell.accessoryType = .checkmark
-
-            }
-            else{
-
-                cell.accessoryType = .none
-
-            }
-
-
-
-
-        
-        
-        return cell
-        
+        return UITableViewCell()
         
     }
     
@@ -247,22 +361,61 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.chatUserList_VM.chatUserList.count
+       
+        if tableView.tag == 100{
+          
+            return self.chatUserList_VM.chatUserList.count
+
+        }
+        else if tableView.tag == 101{
+          
+            return self.chatUserList_VM.publicGroupList.count
+
+            
+        }
+        else if tableView.tag == 102{
+            
+            return self.chatUserList_VM.privateGroupList.count
+
+        }
+        else if tableView.tag == 103{
+            
+            return self.chatUserList_VM.channelList.count
+
+        }
+        
+        return 0
+        
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        let selectedUser = self.chatUserList_VM.chatUserList[indexPath.row]
+        if tableView.tag == 100{
+           
+            
+            let selectedUser = self.chatUserList_VM.chatUserList[indexPath.row]
+
+            let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId: (selectedUser.userID), otherUserName: (selectedUser.username), isGroupChat: false)
+            
+            self.pushChatScreen(dataObj: chatScreenObj)
+            
+        }
+        else if tableView.tag == 101{
+
+            
+        }
+        else if tableView.tag == 102{
+            
+
+        }
+        else if tableView.tag == 103{
+            
+
+        }
+        
        
-       // let obj = MyChatScreenModel()
-        
-        
-        let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId: (selectedUser.userID), otherUserName: (selectedUser.username), isGroupChat: false)
-        
-        self.pushChatScreen(dataObj: chatScreenObj)
-        
         
        
         

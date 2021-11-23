@@ -14,9 +14,15 @@ class ChatUserListViewModel:NSObject{
     
     var chatUserList:[ChatUserModel] = []
     var filterUserList:[ChatUserModel] = []
-    
     var selectedUserData: [ChatUserModel] = []
 
+    //GroupDetailModel
+    
+    
+    var publicGroupList:[GroupDetailModel] = []
+    var privateGroupList:[GroupDetailModel] = []
+    var channelList:[GroupDetailModel] = []
+    
     
     func selectedUserIdList()->[[String:String]]{
         
@@ -49,12 +55,145 @@ class ChatUserListViewModel:NSObject{
             
             return user.userID == userData.userID
         }
-        
-        
-        
-        
     }
     
+    func fetchChannelList(completionHandler:@escaping()->Void){
+        
+        
+        
+        self.ref.child("ChannelDetail").queryOrderedByKey().observe(.value) { (snapshot) in
+            
+            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
+            
+            print("\(#function)")
+            print(dictResponse)
+            
+            let snapshotChildren = snapshot.children
+            
+            while let child = snapshotChildren.nextObject() as? DataSnapshot {
+                
+                print(child.key)
+                
+                let obj:[String:Any] = child.value as! [String : Any]
+                
+                do{
+                    
+                    let jsonData = try JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
+                    
+                    let groupObj = try JSONDecoder().decode(GroupDetailModel.self, from: jsonData)
+                    
+                    
+                    self.publicGroupList.append(groupObj)
+                    
+                    
+                    
+                }
+                catch{
+                    
+                    print("Eroor ---")
+                    
+                }
+                
+                
+            }
+            
+            debugPrint("Channel  - \(self.publicGroupList.count)")
+            
+            completionHandler()
+            
+        }
+    }
+    
+    func fetchPrivateGroupList(completionHandler:@escaping()->Void){
+        
+        
+        
+        self.ref.child("PublicGroupDetail").queryOrderedByKey().observe(.value) { (snapshot) in
+            
+            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
+            
+            print("\(#function)")
+            print(dictResponse)
+            
+            let snapshotChildren = snapshot.children
+            
+            while let child = snapshotChildren.nextObject() as? DataSnapshot {
+                
+                print(child.key)
+                
+                let obj:[String:Any] = child.value as! [String : Any]
+                
+                do{
+                    
+                    let jsonData = try JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
+                    
+                    let groupObj = try JSONDecoder().decode(GroupDetailModel.self, from: jsonData)
+                    
+                    
+                    self.publicGroupList.append(groupObj)
+                    
+                    
+                    
+                }
+                catch{
+                    
+                    print("Eroor ---")
+                    
+                }
+                
+                
+            }
+            
+            debugPrint("private GroupList  - \(self.publicGroupList.count)")
+            completionHandler()
+            
+        }
+    }
+    func fetchPublicGroupList(completionHandler:@escaping()->Void){
+        
+        
+        
+        self.ref.child("PublicGroupDetail").queryOrderedByKey().observe(.value) { (snapshot) in
+            
+            let dictResponse:[String:Any] = snapshot.value as! [String : Any]
+            
+            print("\(#function)")
+            print(dictResponse)
+            
+            let snapshotChildren = snapshot.children
+            
+            while let child = snapshotChildren.nextObject() as? DataSnapshot {
+                
+                print(child.key)
+                
+                let obj:[String:Any] = child.value as! [String : Any]
+                
+                do{
+                    
+                    let jsonData = try JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
+                    
+                    let groupObj = try JSONDecoder().decode(GroupDetailModel.self, from: jsonData)
+                    
+                    
+                    self.publicGroupList.append(groupObj)
+                    
+                    
+                    
+                }
+                catch{
+                    
+                    print("Eroor ---")
+                    
+                }
+                
+                
+            }
+            
+            debugPrint("public GroupList  - \(self.publicGroupList.count)")
+            completionHandler()
+            
+        }
+    }
     
     func fetchChatUserList(completionHandler:@escaping()->Void){
         
@@ -64,11 +203,7 @@ class ChatUserListViewModel:NSObject{
             
             let dictResponse:[String:Any] = snapshot.value as! [String : Any]
             
-            
-            
-            
-            
-            
+            print("\(#function)")
             print(dictResponse)
             
             let snapshotChildren = snapshot.children
@@ -106,14 +241,6 @@ class ChatUserListViewModel:NSObject{
             
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
 }
