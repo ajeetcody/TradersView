@@ -248,6 +248,14 @@ extension MessageTabViewController:UIScrollViewDelegate{
 }
 extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 105.0
+        
+        
+    }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView.tag == 100{
@@ -258,7 +266,7 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
 
                 let searchUser = self.chatUserList_VM.chatUserList[indexPath.row]
 
-                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
                 cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
 
                 cell.profilePicture.tag = indexPath.row
@@ -286,19 +294,19 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
         else if tableView.tag == 101 {
             
             
-            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+            let cell:GroupAndChannelTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GroupAndChannelTableViewCell") as! GroupAndChannelTableViewCell
             
-
-                let searchUser = self.chatUserList_VM.publicGroupList[indexPath.row]
-
-                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
-
-                cell.profilePicture.tag = indexPath.row
-
-
-                cell.userNameLabel.text = searchUser.username.capitalized
-         
+            
+            let publicGroup = self.chatUserList_VM.publicGroupList[indexPath.row]
+            
+            cell.profilePicture.sd_setImage(with: URL(string: "\(publicGroup.profileImage)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
+            
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            
+            
+            
+            cell.groupNameLabel.text = publicGroup.groupName.capitalized
+            
             
             
             return cell
@@ -307,43 +315,36 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
         else if tableView.tag == 102 {
             
             
-            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
+            let cell:GroupAndChannelTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GroupAndChannelTableViewCell") as! GroupAndChannelTableViewCell
             
-
-                let searchUser = self.chatUserList_VM.privateGroupList[indexPath.row]
-
-                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
-
-                cell.profilePicture.tag = indexPath.row
-
-
-                cell.userNameLabel.text = searchUser.username.capitalized
-               // cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
-
-
-           
             
+            let privateGroupObj = self.chatUserList_VM.privateGroupList[indexPath.row]
+            
+            cell.profilePicture.sd_setImage(with: URL(string: "\(privateGroupObj.profileImage)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            
+            
+            
+            cell.groupNameLabel.text = privateGroupObj.groupName.capitalized
             
             return cell
             
         }
         else if tableView.tag == 103 {
             
+            print("tableview tag == 103")
+            let cell:GroupAndChannelTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GroupAndChannelTableViewCell") as! GroupAndChannelTableViewCell
             
-            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell") as! MessageTableViewCell
             
-
-                let searchUser = self.chatUserList_VM.channelList[indexPath.row]
-
-                cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
-
-                cell.profilePicture.tag = indexPath.row
-
-
-                cell.userNameLabel.text = searchUser.username.capitalized
-           
+            let channelObj = self.chatUserList_VM.channelList[indexPath.row]
+            
+            cell.profilePicture.sd_setImage(with: URL(string: "\(channelObj.profileImage)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            
+            
+            
+            cell.groupNameLabel.text = channelObj.groupName.capitalized
+            
             
             return cell
             

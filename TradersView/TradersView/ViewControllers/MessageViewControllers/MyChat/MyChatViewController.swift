@@ -313,7 +313,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.messageLabel.text = msg.message
             cell.messageLabel.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 15.0)
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemGreen, cornerRadius: 12.5)
@@ -327,7 +327,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.messageLabel.text = msg.message
             cell.messageLabel.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 15.0)
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
@@ -340,8 +340,8 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
-            cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "addImagePlaceHolder.png"))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
+            cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: Constants.DEFAULT_POST_IMAGE))
 
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemGreen, cornerRadius: 12.5)
             cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 8.0)
@@ -355,7 +355,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.imageChatImageView.sd_setImage(with: URL(string: "\(msg.message)"), placeholderImage: UIImage(named: "addImagePlaceHolder.png"))
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
             cell.imageChatImageView.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 8.0)
@@ -368,7 +368,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
 
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemGreen, cornerRadius: 12.5)
             
@@ -386,7 +386,7 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             
             cell.dateLabel.text = msg.timpstamp
             cell.userNameLabel.text = msg.sender_user_name.capitalized
-            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
             
             let url = NSURL(string: msg.message);

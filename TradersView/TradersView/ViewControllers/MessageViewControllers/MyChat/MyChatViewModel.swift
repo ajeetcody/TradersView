@@ -20,6 +20,7 @@ class MyChatViewModel{
     var messageToBeSend:[String:Any] = [:]
     
     
+    
     func sendChat(){
         
         self.ref.child("UserMessage").child(self.currentUserId).child(self.otherUserId).childByAutoId().setValue(messageToBeSend)

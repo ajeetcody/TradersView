@@ -31,6 +31,10 @@ struct Constants {
     static let FONT_TABBAR_TITLE = UIFont(name: Constants.FONT_AVENIR, size: 12.0)
     static let FONT_TABBAR_TITLE_HEAVY = UIFont(name: Constants.FONT_AVENIR_HEAVY, size: 12.0)
     
+    //MARK:- Image name ---
+    
+    static let DEFAULT_PROFILE_PIC = "placeHolderProfileImage"
+    static let DEFAULT_POST_IMAGE = "placeHolderImage"
     
    
  

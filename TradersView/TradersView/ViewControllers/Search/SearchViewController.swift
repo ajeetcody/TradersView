@@ -149,7 +149,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource{
 
         let searchUser = searchResult[indexPath.row]
         
-        cell.profileImageView.sd_setImage(with: URL(string: "\(searchUser.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+        cell.profileImageView.sd_setImage(with: URL(string: "\(searchUser.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
         cell.profileImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
         
         cell.profileImageView.tag = indexPath.row

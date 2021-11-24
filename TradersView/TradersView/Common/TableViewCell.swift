@@ -10,6 +10,14 @@ import UIKit
 import SDWebImage
 
 
+class GroupAndChannelTableViewCell:UITableViewCell{
+    
+    @IBOutlet var profilePicture:UIImageView!
+    @IBOutlet var groupNameLabel:UILabel!
+    
+    
+}
+
 class MessageTableViewCell:UITableViewCell{
     
     @IBOutlet var profilePicture:UIImageView!

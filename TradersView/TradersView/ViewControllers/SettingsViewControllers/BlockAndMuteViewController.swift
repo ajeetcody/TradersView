@@ -316,7 +316,7 @@ extension BlockAndMuteViewController:UITableViewDelegate, UITableViewDataSource{
         print("imageURL - \(userObj.profileImg)")
         
         
-        cell.profilePictureImageView.sd_setImage(with: URL(string: "\(userObj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+        cell.profilePictureImageView.sd_setImage(with: URL(string: "\(userObj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
         
         cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
         

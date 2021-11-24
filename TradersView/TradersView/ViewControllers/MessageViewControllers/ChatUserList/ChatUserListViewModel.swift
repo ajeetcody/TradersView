@@ -83,7 +83,7 @@ class ChatUserListViewModel:NSObject{
                     let groupObj = try JSONDecoder().decode(GroupDetailModel.self, from: jsonData)
                     
                     
-                    self.publicGroupList.append(groupObj)
+                    self.channelList.append(groupObj)
                     
                     
                     

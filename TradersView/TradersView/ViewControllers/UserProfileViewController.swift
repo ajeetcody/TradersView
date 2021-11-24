@@ -749,11 +749,11 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 
                 
-                cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+                cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
                 
                 cell.profileImageView.changeBorder(width: 2.0, borderColor: .darkGray, cornerRadius: 45.0)
                 
-                cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: "placeHolderImage.png"))
+                cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: Constants.DEFAULT_POST_IMAGE))
                 
                 cell.coverImageView.contentMode = .scaleToFill
                 
@@ -835,7 +835,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             
             cell.nameLabel.text = obj.username.capitalized
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.postCaptionLabel.text = obj.message
             
             cell.heightPostImageView.constant = 0.0
@@ -967,7 +967,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.nameLabel.text = obj.username
             
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.postCaptionLabel.text = obj.message
             
             cell.heightPostImageView.constant = 0.0

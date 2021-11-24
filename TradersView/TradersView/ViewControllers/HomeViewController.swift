@@ -839,7 +839,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             cell.nameLabel.text = obj.username
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.postCaptionLabel.text = obj.message
             
             cell.heightPostImageView.constant = 0.0
@@ -970,7 +970,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             cell.nameLabel.text = obj.username
             cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.postCaptionLabel.text = obj.message
             
             cell.likeCountLabel.text = obj.like
@@ -1198,7 +1198,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             let popular:MostPopularDatum = self.arrayPopular[indexPath.row]
             
             print(popular.image)
-            cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: "placeHolderImage.jpeg"))
+            cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: Constants.DEFAULT_POST_IMAGE))
             
             cell.popularImageView.contentMode = .scaleAspectFit
            
@@ -1223,7 +1223,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             
             
             
-            cell.topProfileImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/dummy.png"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+            cell.topProfileImageView.sd_setImage(with: URL(string: "https://spsofttech.com/projects/treader/images/dummy.png"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             
             cell.topProfileImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 45.0/2.0)
             

@@ -324,7 +324,7 @@ extension CommentListViewController:UITableViewDelegate, UITableViewDataSource{
         
         cell.userNamelabel.text = obj.name.capitalized
         cell.commentLabel.text = obj.comment
-        cell.userProfileImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: "placeHolderProfileImage.jpeg"))
+        cell.userProfileImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
         
         cell.likeImageView.tag = indexPath.row
         
