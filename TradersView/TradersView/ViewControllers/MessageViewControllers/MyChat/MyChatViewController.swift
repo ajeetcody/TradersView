@@ -10,6 +10,16 @@ import AVKit
 import Firebase
 import FirebaseFirestore
 
+enum ChatType{
+    
+    case PERSONAL
+    case PUBLIC_GROUP
+    case PRIVATE_GROUP
+    case CHANNEL
+    
+    
+}
+
 
 class PlayerView: UIView {
     override static var layerClass: AnyClass {
@@ -89,10 +99,10 @@ struct MyChatScreenModel{
     var currentUserImageUrl:String = "https://spsofttech.com/projects/treader/images/dummy.png"
 
     var currentUserName:String = "Ajeet Sharma"
-    var currentUserId:String = "318"
+    var currentUserId:String = ""
    
-    var otherUserId:String = "319"
-    var otherUserName:String = "NA"
+    var otherUserId:String = ""
+    var otherUserName:String = ""
     var isGroupChat:Bool = false
 
 }
@@ -100,6 +110,7 @@ struct MyChatScreenModel{
 class MyChatViewController:  MasterViewController{
 
 
+    @IBOutlet weak var optionButton: UIButton!
     
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var tableViewMessages: UITableView!
@@ -117,10 +128,18 @@ class MyChatViewController:  MasterViewController{
         super.viewDidLoad()
         self.fetchMessages()
         self.fetchNewAddedMessage()
-        self.headingLabel.text = "Chat with \(myChatScreenModelObj!.otherUserName)"
+        self.headingLabel.text = "\(myChatScreenModelObj!.otherUserName)"
         self.tableViewMessages.estimatedRowHeight = 80.0
         self.tableViewMessages.rowHeight = UITableView.automaticDimension
         self.textViewChat.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 5.0)
+
+        self.chat_VM.isThisGroupChat = myChatScreenModelObj!.isGroupChat
+        
+        if !self.chat_VM.isThisGroupChat{
+            
+            
+            self.optionButton.isHidden = true
+        }
     }
     
     
@@ -191,6 +210,24 @@ class MyChatViewController:  MasterViewController{
     
     //MARK:- UIButton action methods ------
     
+    @IBAction func optionButtonAction(_ sender: Any) {
+        
+        
+        DispatchQueue.main.async {
+            
+            let dashBoardStoryBoard = UIStoryboard(name: "Chat", bundle: nil)
+            let vc:ChannelDetailViewController = dashBoardStoryBoard.instantiateViewController(identifier: "ChannelDetailViewController")
+            
+            vc.groupNameString = self.myChatScreenModelObj!.otherUserName
+            vc.groupId = self.myChatScreenModelObj!.otherUserId
+            
+            self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
+            
+        }
+        
+    }
+    
+    
     @IBAction func takePhotoVideoAction(_ sender: Any) {
         
         
@@ -224,8 +261,9 @@ class MyChatViewController:  MasterViewController{
         dateFormatter.dateFormat = "dd MMM yyyy HH:MM:SS"
         
         
+        let groupId = self.myChatScreenModelObj!.isGroupChat ? "\(self.chat_VM.otherUserId)" : "This is not group"
         
-        let textMsg:[String:Any] = ["groupId":"This is not group", "message":msg, "message_type":messageType, "profile_image":self.myChatScreenModelObj!.currentUserImageUrl, "sender_id":self.myChatScreenModelObj!.currentUserId, "sender_user_name":self.myChatScreenModelObj!.currentUserName, "timestamp":dateFormatter.string(from: date)]
+        let textMsg:[String:Any] = ["groupId":groupId, "message":msg, "message_type":messageType, "profile_image":self.myChatScreenModelObj!.currentUserImageUrl, "sender_id":self.myChatScreenModelObj!.currentUserId, "sender_user_name":self.myChatScreenModelObj!.currentUserName, "timestamp":dateFormatter.string(from: date)]
         
         self.chat_VM.messageToBeSend = textMsg
         

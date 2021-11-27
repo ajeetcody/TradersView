@@ -74,7 +74,7 @@ class MasterViewController: UIViewController, UIImagePickerControllerDelegate & 
     
     //MARK:- Viewcontroller Present ----
     
-    func pushChatScreen(dataObj:MyChatScreenModel){
+    func pushChatScreen(dataObj:MyChatScreenModel, chatType:ChatType){
         
         DispatchQueue.main.async {
             
@@ -82,6 +82,7 @@ class MasterViewController: UIViewController, UIImagePickerControllerDelegate & 
             let vc:MyChatViewController = dashBoardStoryBoard.instantiateViewController(identifier: "MyChatViewController")
             
             vc.myChatScreenModelObj = dataObj
+            vc.chat_VM.chatType = chatType
             
             self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
             

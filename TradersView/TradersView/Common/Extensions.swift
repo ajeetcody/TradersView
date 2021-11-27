@@ -46,9 +46,18 @@ extension UserDefaults: ObjectSavable {
 }
 
 extension UIScrollView {
+   
     var currentPage:Int{
         return Int((self.contentOffset.x+(0.5*self.frame.size.width))/self.frame.width)
     }
+    
+    func scrollTo(horizontalPage: Int? = 0, verticalPage: Int? = 0, animated: Bool? = true) {
+        var frame: CGRect = self.frame
+        frame.origin.x = frame.size.width * CGFloat(horizontalPage ?? 0)
+        frame.origin.y = frame.size.width * CGFloat(verticalPage ?? 0)
+        self.scrollRectToVisible(frame, animated: animated ?? true)
+    }
+
 }
 
 extension UILabel{
@@ -128,9 +137,14 @@ extension String {
     }
 }
 
-
-
 extension UIView{
+    
+    func roundUpCorners(_ corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
     func dropShadow() {
             layer.masksToBounds = false
             layer.shadowColor = UIColor.black.cgColor

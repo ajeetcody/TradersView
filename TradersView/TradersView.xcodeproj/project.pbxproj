@@ -54,6 +54,7 @@
 		77AAD6152731CAF2001CE95A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AAD6142731CAF2001CE95A /* SearchViewController.swift */; };
 		77AB7EDA272694CB00E16F9A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */; };
 		77B85F6D271FCE7F00E2F168 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */; };
+		77B8E33A275264AF0033522B /* ChannelDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B8E339275264AF0033522B /* ChannelDetailViewController.swift */; };
 		77CC35D62724905500D65EDC /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CC35D52724905500D65EDC /* credentials.plist */; };
 		77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */; };
 		D82C1E60444120925C28A5FB /* Pods_TradersView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF87F7C671824567FD8B818 /* Pods_TradersView.framework */; };
@@ -111,6 +112,7 @@
 		77AAD6142731CAF2001CE95A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		77AB7ED9272694CA00E16F9A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		77B85F6C271FCE7F00E2F168 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		77B8E339275264AF0033522B /* ChannelDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailViewController.swift; sourceTree = "<group>"; };
 		77CC35D52724905500D65EDC /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		77E87160273EF40B00EC9F74 /* SelectSymbolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSymbolViewController.swift; sourceTree = "<group>"; };
 		AE7A72DC2771714CCF95BBDE /* Pods-TradersView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradersView.release.xcconfig"; path = "Target Support Files/Pods-TradersView/Pods-TradersView.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				7720A92B274B971F007E14C9 /* MyChat */,
 				77460136274798030070C934 /* Chat-Swift5 */,
 				776407102744D04B00A9A7DE /* Chat.storyboard */,
+				77B8E339275264AF0033522B /* ChannelDetailViewController.swift */,
 			);
 			path = MessageViewControllers;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 				7746013E274798030070C934 /* ChatUser.swift in Sources */,
 				777DA93E271B657C00C1256D /* ViewController.swift in Sources */,
 				7746013B274798030070C934 /* ChatViewController.swift in Sources */,
+				77B8E33A275264AF0033522B /* ChannelDetailViewController.swift in Sources */,
 				773C520F2735BFB90016BF3E /* UserProfileViewController.swift in Sources */,
 				777DA93A271B657C00C1256D /* AppDelegate.swift in Sources */,
 				77E87161273EF40B00EC9F74 /* SelectSymbolViewController.swift in Sources */,

@@ -392,7 +392,7 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
+
         if tableView.tag == 100{
            
             
@@ -400,20 +400,36 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
 
             let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId: (selectedUser.userID), otherUserName: (selectedUser.username), isGroupChat: false)
             
-            self.pushChatScreen(dataObj: chatScreenObj)
+            
+            self.pushChatScreen(dataObj: chatScreenObj, chatType: .PERSONAL)
             
         }
         else if tableView.tag == 101{
-
             
+            let groupObj = self.chatUserList_VM.publicGroupList[indexPath.row]
+
+
+            let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId:groupObj.groupID, otherUserName: (groupObj.groupName), isGroupChat: true)
+            
+            self.pushChatScreen(dataObj: chatScreenObj, chatType: .PUBLIC_GROUP)
         }
         else if tableView.tag == 102{
             
+            let groupObj = self.chatUserList_VM.privateGroupList[indexPath.row]
 
+
+            let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId:groupObj.groupID, otherUserName: (groupObj.groupName), isGroupChat: true)
+            
+            self.pushChatScreen(dataObj: chatScreenObj, chatType: .PRIVATE_GROUP)
         }
         else if tableView.tag == 103{
             
+            let groupObj = self.chatUserList_VM.channelList[indexPath.row]
 
+
+            let chatScreenObj = MyChatScreenModel(currentUserImageUrl: (self.currentUserData?.profileImg)!, currentUserName: (self.currentUserData?.name)!, currentUserId: (self.currentUserData?.id)!, otherUserId:groupObj.groupID, otherUserName: (groupObj.groupName), isGroupChat: true)
+            
+            self.pushChatScreen(dataObj: chatScreenObj, chatType: .CHANNEL)
         }
         
        
