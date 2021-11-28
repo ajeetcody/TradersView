@@ -10,8 +10,13 @@ import Firebase
 import SDWebImage
 class MessageTabViewController: MasterViewController {
 
+    
+    
+    
     //MARK:- Autolayout declaration -----
 
+    @IBOutlet weak var scrollViewGroup: UIScrollView!
+    @IBOutlet weak var scrollViewMessages: UIScrollView!
     
     @IBOutlet weak var leadingScrollIndicator: NSLayoutConstraint!
     @IBOutlet weak var leadingGroupScrollIndicator: NSLayoutConstraint!
@@ -172,20 +177,90 @@ class MessageTabViewController: MasterViewController {
     
     @IBAction func messageButtonAction(_ sender: Any) {
         
+        self.scrollViewMessages.scrollTo(horizontalPage: 0, verticalPage: 0, animated: true)
         
+        
+        
+        self.changeUIofTopOptionIndicator(tag: 0)
+
     }
     
     @IBAction func groupButtonAction(_ sender: Any) {
         
-        
+        self.scrollViewMessages.scrollTo(horizontalPage: 1, verticalPage: 0, animated: true)
+        self.changeUIofTopOptionIndicator(tag: 0)
     }
     
     @IBAction func channelButtonAction(_ sender: Any) {
         
-        
+        self.scrollViewMessages.scrollTo(horizontalPage: 2, verticalPage: 0, animated: true)
+        self.changeUIofTopOptionIndicator(tag: 0)
         
     }
     
+    @IBAction func privateGroupButtonAction(_ sender: Any) {
+        
+        self.scrollViewGroup.scrollTo(horizontalPage: 1, verticalPage: 0, animated: true)
+        self.changeUIofTopOptionIndicator(tag: 1)
+    }
+    
+    @IBAction func publicGroupButtonAction(_ sender: Any) {
+        
+        self.scrollViewGroup.scrollTo(horizontalPage: 0, verticalPage: 0, animated: true)
+        self.changeUIofTopOptionIndicator(tag: 1)
+        
+    }
+    
+    
+    //MARK:- UI Changes ----
+    
+    func changeUIofTopOptionIndicator(tag:Int){
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            
+            
+            
+        
+        
+        if tag == 0 {
+        
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+                
+               
+                
+                self.leadingScrollIndicator.constant = CGFloat(self.scrollViewMessages.currentPage * (Int(self.view.frame.size.width)/3))
+
+                self.view.layoutIfNeeded()
+                
+            } completion: { (isComplete) in
+                print("Complete animation first scrollview")
+            }
+
+            
+        }
+        else if tag == 1{
+
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+                
+               
+                
+                self.leadingGroupScrollIndicator.constant = CGFloat(self.scrollViewGroup.currentPage * (Int(self.view.frame.size.width)/2))
+
+                self.view.layoutIfNeeded()
+                
+            } completion: { (isComplete) in
+                print("Complete animation second scrollview")
+            }
+
+            
+        }
+        
+     
+        
+        }
+        
+    }
     
     /*
     // MARK: - Navigation
@@ -207,40 +282,7 @@ extension MessageTabViewController:UIScrollViewDelegate{
         
         print(scrollView.currentPage)
         
-        if scrollView.tag == 0 {
-        
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
-                
-               
-                
-                self.leadingScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/3))
-
-                self.view.layoutIfNeeded()
-                
-            } completion: { (isComplete) in
-                print("Complete animation")
-            }
-
-            
-        }
-        else if scrollView.tag == 1{
-
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
-                
-               
-                
-                self.leadingGroupScrollIndicator.constant = CGFloat(scrollView.currentPage * (Int(self.view.frame.size.width)/2))
-
-                self.view.layoutIfNeeded()
-                
-            } completion: { (isComplete) in
-                print("Complete animation")
-            }
-
-            
-        }
-        
-     
+        self.changeUIofTopOptionIndicator(tag: scrollView.tag)
         
     }
     

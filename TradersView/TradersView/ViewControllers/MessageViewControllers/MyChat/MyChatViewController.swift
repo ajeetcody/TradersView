@@ -17,7 +17,6 @@ enum ChatType{
     case PRIVATE_GROUP
     case CHANNEL
     
-    
 }
 
 
@@ -126,9 +125,11 @@ class MyChatViewController:  MasterViewController{
         
         
         super.viewDidLoad()
+        
+        self.tableViewMessages.isHidden = true
         self.fetchMessages()
         self.fetchNewAddedMessage()
-        self.headingLabel.text = "\(myChatScreenModelObj!.otherUserName)"
+        self.headingLabel.text = "\(myChatScreenModelObj!.otherUserName.capitalized)"
         self.tableViewMessages.estimatedRowHeight = 80.0
         self.tableViewMessages.rowHeight = UITableView.automaticDimension
         self.textViewChat.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 5.0)
@@ -159,6 +160,17 @@ class MyChatViewController:  MasterViewController{
             
             self.tableViewMessages.scrollToRow(at: IndexPath(row: self.chat_VM.messageList.count - 1, section: 0), at: .bottom, animated: true)
             debugPrint("Crash point ----")
+            
+            if self.chat_VM.messageList.count == 0{
+                
+                
+                self.tableViewMessages.isHidden = true
+            }
+            else{
+                
+                self.tableViewMessages.isHidden = false
+                
+            }
             
         }
     }
@@ -220,6 +232,18 @@ class MyChatViewController:  MasterViewController{
             
             vc.groupNameString = self.myChatScreenModelObj!.otherUserName
             vc.groupId = self.myChatScreenModelObj!.otherUserId
+            vc.chatType = self.chat_VM.chatType
+            
+            vc.messageList = self.chat_VM.messageList.filter({ (message) -> Bool in
+                
+                if message.message_type == "Video" || message.message_type == "Image"{
+                    
+                    return true
+                }
+                    
+                    return false
+                 
+            })
             
             self.appDelegate.mainNavigation?.pushViewController(vc, animated: true)
             
