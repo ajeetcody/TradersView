@@ -178,7 +178,7 @@ class CreateChannelViewController: MasterViewController {
         let semiUsers = [["memberid":"No id"]]
         
         
-        var dict:[String:Any] = ["addminId":userData.id, "addminname":userData.name, "blockUsers":blockUsers, "cheack":false, "groupIDS":groupIDS, "group_name":self.channelNameTextfield.text!, "isCheack":false,"mutenotificationusers":muteNotificationID,"muteUsers":muteUsers, "profileImage":profileImageUrl,"recent_iamge":"", "semiusers":semiUsers, "timdate":Date.getCurrentDate()]
+        var dict:[String:Any] = ["addminId":userData.id, "addminname":userData.name, "blockusers":blockUsers, "cheack":false, "groupIDS":groupIDS, "group_name":self.channelNameTextfield.text!, "isCheack":false,"mutenotificationusers":muteNotificationID,"muteusers":muteUsers, "profileImage":profileImageUrl,"recent_message":"", "semiusers":semiUsers, "timedate":Date.getCurrentDate()]
         
         
         self.ref.child("ChannelDetail").childByAutoId().setValue(dict) { (error, reference) in

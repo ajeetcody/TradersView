@@ -523,7 +523,7 @@ extension ChannelDetailViewController:UICollectionViewDelegate, UICollectionView
             
             cell.mediaImageView.sd_setImage(with: URL(string: "\(message.message)"), placeholderImage: UIImage(named: Constants.DEFAULT_POST_IMAGE))
             
-           
+            cell.mediaImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 5.0)
             
             
             return cell
@@ -550,11 +550,18 @@ extension ChannelDetailViewController:UICollectionViewDelegate, UICollectionView
           
           print("\(#function) - \(collectionView.tag)")
          
-        return CGSize(width: Constants.screenWidth/3 - 4, height: Constants.screenWidth/3 - 4)
+        return CGSize(width: Constants.screenWidth/3, height: Constants.screenWidth/3)
         
         
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        
+      
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 0)
+        
+        
+    }
     
     
 }

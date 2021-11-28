@@ -109,6 +109,7 @@ struct MyChatScreenModel{
 class MyChatViewController:  MasterViewController{
 
 
+    @IBOutlet weak var bottomConstraintsOfBottomView: NSLayoutConstraint!
     @IBOutlet weak var optionButton: UIButton!
     
     @IBOutlet weak var headingLabel: UILabel!
@@ -141,8 +142,18 @@ class MyChatViewController:  MasterViewController{
             
             self.optionButton.isHidden = true
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+
     }
-    
+    //Calls this function when the tap is recognized.
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
     
     
     //MARK:- View model request for messages --
@@ -254,7 +265,8 @@ class MyChatViewController:  MasterViewController{
     
     @IBAction func takePhotoVideoAction(_ sender: Any) {
         
-        
+        bottomConstraintsOfBottomView.constant = 5
+        view.endEditing(true)
         self.openCameraOptionActionsheet(shouldUploadOnFirebase: true, isVideo: true)
         
         
@@ -334,6 +346,21 @@ class MyChatViewController:  MasterViewController{
 //        }
 //        
 //    }
+    
+    //MARK:- Keyboard notificaiton ---
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                bottomConstraintsOfBottomView.constant = keyboardSize.height - 35
+
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        
+            bottomConstraintsOfBottomView.constant = 5
+        
+    }
     
     //MARK:- UIButton action methods ----
     
@@ -501,3 +528,5 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
     
     
 }
+
+

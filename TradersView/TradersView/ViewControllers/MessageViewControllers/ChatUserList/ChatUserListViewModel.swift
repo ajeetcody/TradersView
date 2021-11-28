@@ -74,6 +74,8 @@ class ChatUserListViewModel:NSObject{
                 
                 print(child.key)
                 
+                self.channelList.removeAll()
+                
                 let obj:[String:Any] = child.value as! [String : Any]
                 
                 do{
@@ -116,7 +118,7 @@ class ChatUserListViewModel:NSObject{
             print(dictResponse)
             
             let snapshotChildren = snapshot.children
-            
+            self.publicGroupList.removeAll()
             while let child = snapshotChildren.nextObject() as? DataSnapshot {
                 
                 print(child.key)
@@ -180,9 +182,9 @@ class ChatUserListViewModel:NSObject{
                     
                     
                 }
-                catch{
+                catch let error{
                     
-                    print("Eroor ---")
+                    print("Eroor public group --- \(error.localizedDescription)")
                     
                 }
                 
@@ -207,7 +209,7 @@ class ChatUserListViewModel:NSObject{
             print(dictResponse)
             
             let snapshotChildren = snapshot.children
-            
+            self.filterUserList.removeAll()
             while let child = snapshotChildren.nextObject() as? DataSnapshot {
                 
                 print(child.key)

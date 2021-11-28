@@ -167,7 +167,7 @@ class CreateGroupViewController: MasterViewController {
         let semiUsers = [["memberid":"No id"]]
 
 
-        var dict:[String:Any] = ["addminId":userData.id, "addminname":userData.name, "blockUsers":blockUsers, "cheack":self.publicSwitch.isOn, "groupIDS":groupIDS, "group_name":self.groupNameTextfield.text!, "isCheack":self.publicSwitch.isOn,"mutenotificationusers":muteNotificationID,"muteUsers":muteUsers, "profileImage":profileImageUrl,"recent_iamge":"", "semiusers":semiUsers, "timdate":Date.getCurrentDate()]
+        var dict:[String:Any] = ["addminId":userData.id, "addminname":userData.name, "blockusers":blockUsers, "cheack":false, "groupIDS":groupIDS, "group_name":self.groupNameTextfield.text!, "isCheack":false,"mutenotificationusers":muteNotificationID,"muteusers":muteUsers, "profileImage":profileImageUrl,"recent_message":"", "semiusers":semiUsers, "timedate":Date.getCurrentDate()]
         
         
         self.ref.child("PublicGroupDetail").childByAutoId().setValue(dict) { (error, reference) in

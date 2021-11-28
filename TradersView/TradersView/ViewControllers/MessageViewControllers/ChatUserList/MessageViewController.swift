@@ -86,7 +86,7 @@ class MessageTabViewController: MasterViewController {
         self.chatUserList_VM.fetchPrivateGroupList {
             
             
-            print("--- Fetch chat user list ---")
+            print("--- Fetch fetchPrivateGroupList ---")
             
             self.tableViewGroupPrivate.isHidden = self.chatUserList_VM.privateGroupList.count > 0 ?  false :  true
             
@@ -101,7 +101,7 @@ class MessageTabViewController: MasterViewController {
         self.chatUserList_VM.fetchPublicGroupList {
             
             
-            print("--- Fetch chat user list ---")
+            print("--- Fetch fetchPublicGroupList ---")
             
             self.tableViewGroupPublic.isHidden = self.chatUserList_VM.publicGroupList.count > 0 ?  false :  true
             

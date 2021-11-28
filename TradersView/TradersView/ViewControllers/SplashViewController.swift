@@ -44,7 +44,7 @@ class SplashViewController: MasterViewController {
 //
 //    }
     override func viewWillAppear(_ animated: Bool) {
-        
+
         
         if UserDefaults.standard.value(forKey: Constants.USER_DEFAULT_KEY_USER_DATA) != nil{
             
@@ -55,6 +55,8 @@ class SplashViewController: MasterViewController {
                 let loginData = try userDefaults.getObject(forKey: Constants.USER_DEFAULT_KEY_USER_DATA, castTo: LoginUserData.self)
                 
                 self.appDelegate.loginResponseData = loginData
+                print("Login data response ----")
+
                 self.showTabbarController(animated: false)
                 
                 
