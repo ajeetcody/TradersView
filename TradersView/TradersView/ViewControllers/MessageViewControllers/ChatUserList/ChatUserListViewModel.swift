@@ -15,7 +15,7 @@ class ChatUserListViewModel:NSObject{
     var chatUserList:[ChatUserModel] = []
     var filterUserList:[ChatUserModel] = []
     var selectedUserData: [ChatUserModel] = []
-
+    
     //GroupDetailModel
     
     
@@ -49,84 +49,50 @@ class ChatUserListViewModel:NSObject{
     
     
     func removeUserFromSelectedList(userData:ChatUserModel){
-        
-      
         self.selectedUserData.removeAll { (user) -> Bool in
-            
             return user.userID == userData.userID
         }
     }
     
     func fetchChannelList(completionHandler:@escaping()->Void){
-        
-        
-        
         self.ref.child("ChannelDetail").queryOrderedByKey().observe(.value) { (snapshot) in
-            
             let dictResponse:[String:Any] = snapshot.value as! [String : Any]
-            
             print("\(#function)")
             print(dictResponse)
-            
             let snapshotChildren = snapshot.children
             
+            print(dictResponse.count)
+            self.channelList.removeAll()
             while let child = snapshotChildren.nextObject() as? DataSnapshot {
-                
                 print(child.key)
                 
-                self.channelList.removeAll()
-                
                 let obj:[String:Any] = child.value as! [String : Any]
-                
                 do{
-                    
                     let jsonData = try JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
-                    
                     let groupObj = try JSONDecoder().decode(GroupDetailModel.self, from: jsonData)
-                    
-                    
                     self.channelList.append(groupObj)
-                    
-                    
-                    
+                    print("Added channel in channelList - \(self.channelList.count)")
                 }
                 catch{
-                    
                     print("Eroor ---")
-                    
                 }
-                
-                
             }
-            
-            debugPrint("Channel  - \(self.publicGroupList.count)")
-            
+            debugPrint("Channel  - \(self.channelList.count)")
             completionHandler()
-            
         }
     }
     
     func fetchPrivateGroupList(completionHandler:@escaping()->Void){
-        
-        
-        
         self.ref.child("PublicGroupDetail").queryOrderedByKey().observe(.value) { (snapshot) in
-            
             let dictResponse:[String:Any] = snapshot.value as! [String : Any]
-            
             print("\(#function)")
             print(dictResponse)
-            
             let snapshotChildren = snapshot.children
             self.publicGroupList.removeAll()
             while let child = snapshotChildren.nextObject() as? DataSnapshot {
-                
                 print(child.key)
-                
                 let obj:[String:Any] = child.value as! [String : Any]
-                
-                do{
-                    
+                do{                    
                     let jsonData = try JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
                     
                     let groupObj = try JSONDecoder().decode(GroupDetailModel.self, from: jsonData)

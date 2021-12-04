@@ -116,7 +116,7 @@ class MessageTabViewController: MasterViewController {
         self.chatUserList_VM.fetchChannelList {
             
             
-            print("--- Fetch chat user list ---")
+            print("--- Fetch chat user list --- \(self.chatUserList_VM.channelList.count)")
             
             self.tableViewChannel.isHidden = self.chatUserList_VM.channelList.count > 0 ?  false :  true
             
