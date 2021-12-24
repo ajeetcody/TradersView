@@ -31,6 +31,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
+                                    <action selector="continueButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hky-Pm-0kD"/>
                                     <segue destination="gEZ-4U-iD1" kind="presentation" modalPresentationStyle="fullScreen" id="PDg-u1-HSG"/>
                                 </connections>
                             </button>

@@ -215,49 +215,52 @@ class MessageTabViewController: MasterViewController {
     //MARK:- UI Changes ----
     
     func changeUIofTopOptionIndicator(tag:Int){
-        
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            
-            
-            
-        
-        
-        if tag == 0 {
-        
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
-                
-               
-                
-                self.leadingScrollIndicator.constant = CGFloat(self.scrollViewMessages.currentPage * (Int(self.view.frame.size.width)/3))
+            if tag == 0 {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+                    self.leadingScrollIndicator.constant = CGFloat(CGFloat(self.scrollViewMessages.currentPage) * ((self.view.frame.size.width-80)/3))
+                    self.view.layoutIfNeeded()
+                } completion: { (isComplete) in
+                    print("Complete animation first scrollview")
+                }
+                switch self.scrollViewMessages.currentPage {
+                case 0:
+                    self.messageButton.setTitleColor(.black, for: .normal)
+                    self.groupButton.setTitleColor(UIColor(hexString: "#6D9FAE"), for: .normal)
+                    self.channelButton.setTitleColor(UIColor(hexString: "#6D9FAE"), for: .normal)
+                case 1:
+                    self.messageButton.setTitleColor(UIColor(hexString: "#6D9FAE"), for: .normal)
+                    self.groupButton.setTitleColor(.black, for: .normal)
+                    self.channelButton.setTitleColor(UIColor(hexString: "#6D9FAE"), for: .normal)
 
-                self.view.layoutIfNeeded()
-                
-            } completion: { (isComplete) in
-                print("Complete animation first scrollview")
+                case 2:
+                    self.messageButton.setTitleColor(UIColor(hexString: "#6D9FAE"), for: .normal)
+                    self.groupButton.setTitleColor(UIColor(hexString: "#6D9FAE"), for: .normal)
+                    self.channelButton.setTitleColor(.black, for: .normal)
+
+                default:
+                    print("Default")
+                }
             }
-
-            
-        }
-        else if tag == 1{
-
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+            else if tag == 1{
                 
-               
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: []) {
+                    
+                    var indecatorWidth = self.view.frame.size.width - 80
+                    
+                    self.leadingGroupScrollIndicator.constant = CGFloat(self.scrollViewGroup.currentPage * (Int(indecatorWidth)/2))
+                    
+                    self.view.layoutIfNeeded()
+                    
+                } completion: { (isComplete) in
+                    print("Complete animation second scrollview")
+                }
                 
-                self.leadingGroupScrollIndicator.constant = CGFloat(self.scrollViewGroup.currentPage * (Int(self.view.frame.size.width)/2))
-
-                self.view.layoutIfNeeded()
                 
-            } completion: { (isComplete) in
-                print("Complete animation second scrollview")
             }
-
             
-        }
-        
-     
-        
+            
+            
         }
         
     }
@@ -292,7 +295,7 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 105.0
+        return 80.0
         
         
     }
@@ -309,10 +312,9 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
                 let searchUser = self.chatUserList_VM.chatUserList[indexPath.row]
 
                 cell.profilePicture.sd_setImage(with: URL(string: "\(searchUser.imageURL)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
-                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 65/2.0)
+                cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 20.0)
 
                 cell.profilePicture.tag = indexPath.row
-
 
                 cell.userNameLabel.text = searchUser.username.capitalized
                // cell.userNameLabel.text = "@\(searchUser.psd.capitalized)"
@@ -343,7 +345,7 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
             
             cell.profilePicture.sd_setImage(with: URL(string: "\(publicGroup.profileImage)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             
-            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 20.0)
             
             
             
@@ -363,7 +365,7 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
             let privateGroupObj = self.chatUserList_VM.privateGroupList[indexPath.row]
             
             cell.profilePicture.sd_setImage(with: URL(string: "\(privateGroupObj.profileImage)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
-            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 20.0)
             
             
             
@@ -381,7 +383,7 @@ extension MessageTabViewController:UITableViewDelegate, UITableViewDataSource{
             let channelObj = self.chatUserList_VM.channelList[indexPath.row]
             
             cell.profilePicture.sd_setImage(with: URL(string: "\(channelObj.profileImage)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
-            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+            cell.profilePicture.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 20.0)
             
             
             

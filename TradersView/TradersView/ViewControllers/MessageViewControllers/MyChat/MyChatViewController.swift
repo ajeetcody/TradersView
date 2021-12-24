@@ -41,6 +41,7 @@ class PlayerView: UIView {
 
 class ChatTextRightCell: UITableViewCell{
     
+    @IBOutlet weak var contentBlueView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profilePictureImageView: UIImageView!
@@ -54,6 +55,7 @@ class ChatTextLeftCell: UITableViewCell{
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profilePictureImageView: UIImageView!
     
+    @IBOutlet weak var contentBlueView: UIView!
     @IBOutlet weak var messageLabel: PaddingLabel!
     
     
@@ -108,7 +110,8 @@ struct MyChatScreenModel{
 
 class MyChatViewController:  MasterViewController{
 
-
+    @IBOutlet weak var chatTextUIView: UIView!
+    
     @IBOutlet weak var bottomConstraintsOfBottomView: NSLayoutConstraint!
     @IBOutlet weak var optionButton: UIButton!
     
@@ -133,7 +136,6 @@ class MyChatViewController:  MasterViewController{
         self.headingLabel.text = "\(myChatScreenModelObj!.otherUserName.capitalized)"
         self.tableViewMessages.estimatedRowHeight = 80.0
         self.tableViewMessages.rowHeight = UITableView.automaticDimension
-        self.textViewChat.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 5.0)
 
         self.chat_VM.isThisGroupChat = myChatScreenModelObj!.isGroupChat
         
@@ -146,6 +148,8 @@ class MyChatViewController:  MasterViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        
+        self.chatTextUIView.changeBorder(width: 1.0, borderColor: UIColor(hexString: "#474571"), cornerRadius: 20.0)
         view.addGestureRecognizer(tap)
 
     }
@@ -404,8 +408,8 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             cell.userNameLabel.text = msg.sender_user_name.capitalized
             cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.messageLabel.text = msg.message
-            cell.messageLabel.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 15.0)
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemGreen, cornerRadius: 12.5)
+            cell.contentBlueView.changeBorder(width: 0.0, borderColor: .clear, cornerRadius: 10.0)
 
             
             return cell
@@ -418,8 +422,8 @@ extension MyChatViewController:UITableViewDataSource, UITableViewDelegate{
             cell.userNameLabel.text = msg.sender_user_name.capitalized
             cell.profilePictureImageView.sd_setImage(with: URL(string: "\(msg.profile_image)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
             cell.messageLabel.text = msg.message
-            cell.messageLabel.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 15.0)
             cell.profilePictureImageView.changeBorder(width: 1.0, borderColor: .systemRed, cornerRadius: 12.5)
+            cell.contentBlueView.changeBorder(width: 0.0, borderColor: .clear, cornerRadius: 10.0)
 
             return cell
         }

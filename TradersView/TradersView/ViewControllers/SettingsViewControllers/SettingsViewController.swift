@@ -573,7 +573,7 @@ extension SettingsViewController:UITableViewDataSource, UITableViewDelegate{
                 
                 let cell:SettingsCellButtonOnly = tableView.dequeueReusableCell(withIdentifier: "SettingsCellButtonOnly") as! SettingsCellButtonOnly
                 
-                cell.logoutButton.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
+                cell.logoutButton.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 25.0)
                 
                 cell.logoutButton.tag = indexPath.row
                 cell.logoutButton.superview?.tag = indexPath.section

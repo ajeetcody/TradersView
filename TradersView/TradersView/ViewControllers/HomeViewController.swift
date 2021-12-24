@@ -22,7 +22,7 @@ class MyOwnTableView: UITableView {
     
     override func reloadData() {
         super.reloadData()
-      //  self.invalidateIntrinsicContentSize()
+        //  self.invalidateIntrinsicContentSize()
         
     }
 }
@@ -106,12 +106,12 @@ class CellFeedAndCommunity:UITableViewCell{
 
 class HomeViewController: MasterViewController {
     
-   // @IBOutlet weak var heightContentSizeScrollView: NSLayoutConstraint!
+    // @IBOutlet weak var heightContentSizeScrollView: NSLayoutConstraint!
     @IBOutlet weak var tableViewHome: UITableView!
     @IBOutlet weak var notificationButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     
-    let sectionTitle:[String] = ["Most Popular", "Top Profile","Post"]
+    let sectionTitle:[String] = ["Most Popular","Post"]
     
     var arrayPopular:[MostPopularDatum] = []
     var topProfile = ["Ajit", "Amit","Rakesh", "Ramesh", "Kapil", "chintoo", "Sourach", "Ravi"]
@@ -125,11 +125,11 @@ class HomeViewController: MasterViewController {
     
     private var shouldStopMyPostLoadMore:Bool = false
     private var shouldStopCommunityLoadMore:Bool = false
-
+    
     let refreshControl = UIRefreshControl()
     private var currentUserId:String?
     //MARK:- UIViewcontroller lifecycle methods ---
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -155,8 +155,8 @@ class HomeViewController: MasterViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         self.tableViewHome.addSubview(refreshControl) // not required when using UITableViewController
-
-
+        
+        
         
         
     }
@@ -166,7 +166,7 @@ class HomeViewController: MasterViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-     
+        
         
         
     }
@@ -174,7 +174,7 @@ class HomeViewController: MasterViewController {
     //MARK:- Refresh apiCall ----
     
     @objc func refresh(_ sender: AnyObject) {
-       
+        
         self.callAllApis()
         
     }
@@ -184,7 +184,7 @@ class HomeViewController: MasterViewController {
     
     
     //MARK:- API call methods ----
-
+    
     
     func likePostApi(_notifyUserId:String, _postId:String, imgLike:UIImageView, countLabel:UILabel){
         
@@ -201,7 +201,7 @@ class HomeViewController: MasterViewController {
                 print("like response - \(results.like)")
                 
                 self.changeLikeButtonIconAndCount(results: results, imgViewLike: imgLike, likeCountLabel: countLabel)
-
+                
             }
             else{
                 
@@ -223,7 +223,7 @@ class HomeViewController: MasterViewController {
         
     }
     
-
+    
     
     func callAllApis(){
         
@@ -232,7 +232,7 @@ class HomeViewController: MasterViewController {
         
         
         
-
+        
         self.apiCallMostPopular()
         self.apiCallTopProfile()
         
@@ -302,12 +302,12 @@ class HomeViewController: MasterViewController {
         
         
         print("self.communityPageNumber - \(self.communityPageNumber)")
-
+        
         ApiCallManager.shared.apiCall(request: request, apiType: .COMMUNITY, responseType: CommunityResponse.self, requestMethod: .POST) { (results) in
             
             
             DispatchQueue.main.async {
-            
+                
                 self.refreshControl.endRefreshing()
             }
             
@@ -351,9 +351,9 @@ class HomeViewController: MasterViewController {
                 
                 
                 
-                    
-                    
-                    
+                
+                
+                
                 if self.communityPageNumber == 0 {
                     
                     //   self.arrayMyPost.removeAll()
@@ -380,7 +380,7 @@ class HomeViewController: MasterViewController {
         } failureHandler: { (error) in
             
             DispatchQueue.main.async {
-            
+                
                 self.refreshControl.endRefreshing()
             }
             self.showErrorMessage(error: error)
@@ -423,7 +423,7 @@ class HomeViewController: MasterViewController {
                     
                     
                 }
-             
+                
                 
                 DispatchQueue.main.async {
                     
@@ -435,15 +435,15 @@ class HomeViewController: MasterViewController {
                 
                 
                 
-                    
-                    
-                    
+                
+                
+                
                 if self.myPostPageNumber == 0 {
                     
                     DispatchQueue.main.async {
                         self.tableViewHome.reloadData()
                     }
-
+                    
                     
                 }
                 else{
@@ -469,7 +469,7 @@ class HomeViewController: MasterViewController {
     }
     
     //MARK:- UITapgesture action methods ----
-
+    
     
     @objc func likeImageViewTapGesture(gesture: UITapGestureRecognizer) {
         
@@ -496,10 +496,10 @@ class HomeViewController: MasterViewController {
             print("post id - \(postObj.postid)")
         }
         
-    
+        
         
         let label = gesture.view!.superview!.subviews.compactMap({$0 as? UILabel})
-     
+        
         
         self.likePostApi(_notifyUserId: notifyUserId, _postId: postID, imgLike: (gesture.view as! UIImageView?)!,countLabel:label[0])
         
@@ -588,7 +588,7 @@ class HomeViewController: MasterViewController {
     }
     
     //MARK:- UIButton action methods ----
-
+    
     
     @objc func moreInfoButtonAction(_sender:UIButton){
         
@@ -600,12 +600,12 @@ class HomeViewController: MasterViewController {
         
     }
     
-
+    
     
     @IBAction func searchButtonAction(_ sender: Any) {
         
         if let userID = self.currentUserId{
-        
+            
             self.pushScreenWithScreenName(screenName: "SearchViewController", currentUserId: userID)
             
         }
@@ -621,7 +621,7 @@ class HomeViewController: MasterViewController {
         
         
         if let userID = self.currentUserId{
-        
+            
             self.pushScreenWithScreenName(screenName: "NotificationViewController", currentUserId: userID)
             
         }
@@ -665,11 +665,11 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 return Constants.screenHeight / 4.0
                 
             }
-            else if indexPath.section == 1{
-                
-                
-                return Constants.screenHeight / 6.0
-            }
+            //            else if indexPath.section == 1{
+            //
+            //
+            //                return Constants.screenHeight / 6.0
+            //            }
             else if indexPath.section == 2{
                 
                 
@@ -787,24 +787,24 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 
             }
+            //            else if indexPath.section == 1 {
+            //
+            //
+            //
+            //
+            //                let cell:CellTopProfile = tableView.dequeueReusableCell(withIdentifier: "CellTopProfile") as! CellTopProfile
+            //                cell.collectionViewTopProfile.tag = 101
+            //                cell.collectionViewTopProfile.delegate = self
+            //                cell.collectionViewTopProfile.dataSource = self
+            //                cell.collectionViewTopProfile.reloadData()
+            //
+            //
+            //
+            //                return cell
+            //
+            //
+            //            }
             else if indexPath.section == 1 {
-                
-                
-                
-                
-                let cell:CellTopProfile = tableView.dequeueReusableCell(withIdentifier: "CellTopProfile") as! CellTopProfile
-                cell.collectionViewTopProfile.tag = 101
-                cell.collectionViewTopProfile.delegate = self
-                cell.collectionViewTopProfile.dataSource = self
-                cell.collectionViewTopProfile.reloadData()
-                
-                
-                
-                return cell
-                
-                
-            }
-            else if indexPath.section == 2 {
                 
                 
                 let cell:CellFeedAndCommunity = tableView.dequeueReusableCell(withIdentifier: "CellFeedAndCommunity") as! CellFeedAndCommunity
@@ -870,7 +870,7 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
             
             cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-
+            
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
@@ -893,18 +893,18 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 let imgUrl = imgObj.image
                 
-               // print("imgUrl - \(imgUrl)")
+                // print("imgUrl - \(imgUrl)")
                 
                 switch imgUrl {
                 case .integer(let intValue):
-                   print("Integer value -- \(intValue)")
+                    print("Integer value -- \(intValue)")
                     cell.heightPostImageView.constant = 0.0
                     
-                    
+                    cell.heightPostImageView.constant = Constants.screenWidth - 70
                 case .string(let strUrl):
-                   
+                    
                     // print("String value -- \(strUrl)")
-
+                    
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
                         if img != nil{
@@ -912,13 +912,14 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                             let ratio = img!.size.width / img!.size.height
                             let newHeight = (Constants.screenWidth - 55) / ratio
                             cell.heightPostImageView.constant = newHeight
+                            print("call to change height - 1")
                             self.view.layoutIfNeeded()
                             
                         }
                         else{
                             
                             cell.heightPostImageView.constant = 0.0
-
+                            
                         }
                     }
                 }
@@ -936,19 +937,19 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             if self.arrayCommunity.count - 1 == indexPath.row{
                 
-               
+                
+                
+                if !self.shouldStopCommunityLoadMore{
                     
-                    if !self.shouldStopCommunityLoadMore{
+                    self.communityPageNumber = self.communityPageNumber + 1
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                         
-                        self.communityPageNumber = self.communityPageNumber + 1
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-
                         self.apiCallCommunity()
-                        }
-                        
                     }
                     
+                }
+                
                 
             }
             
@@ -1003,9 +1004,9 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             
-
+            
             cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-
+            
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
             
             
@@ -1038,8 +1039,9 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                 case .string(let strUrl):
                     
                     print("String value -- \(strUrl)")
-
                     
+                    cell.heightPostImageView.constant = Constants.screenWidth - 70
+
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
                         if img != nil{
@@ -1047,13 +1049,11 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
                             let ratio = img!.size.width / img!.size.height
                             let newHeight = (Constants.screenWidth - 55) / ratio
                             cell.heightPostImageView.constant = newHeight
+                            print("call to change height - 2")
                             self.view.layoutIfNeeded()
-                            
                         }
                         else{
-                            
                             cell.heightPostImageView.constant = 0.0
-
                         }
                     }
                 }
@@ -1071,25 +1071,25 @@ extension HomeViewController:UITableViewDataSource, UITableViewDelegate {
             
             if self.arrayMyPost.count - 1 == indexPath.row{
                 
-               
+                
+                
+                if !self.shouldStopMyPostLoadMore{
                     
-                    if !self.shouldStopMyPostLoadMore{
+                    self.myPostPageNumber = self.myPostPageNumber + 1
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                         
-                        self.myPostPageNumber = self.myPostPageNumber + 1
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-
-                            
-                            
+                        
                         self.apiCallMyFeed()
-                            
-                        }
                         
                     }
                     
+                }
+                
                 
             }
-
+            
             
             return cell
             
@@ -1111,19 +1111,19 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-          
+        
         print("\(#function) - \(collectionView.tag)")
-          let edge    : CGFloat = 1.0
-          let spacing : CGFloat = 1.0
-
-          let noOfColumn = 2.5
-          let collectionviewWidth = collectionView.frame.width
-          let bothEdge =  CGFloat(edge + edge) // left + right
-          let excludingEdge = collectionviewWidth - bothEdge
-          let cellWidthExcludingSpaces = excludingEdge - (CGFloat((noOfColumn - 1)) * spacing)
-          let finalCellWidth = Double(cellWidthExcludingSpaces) / noOfColumn
-          let height = finalCellWidth
-          return CGSize(width: finalCellWidth, height: height)
+        let edge    : CGFloat = 1.0
+        let spacing : CGFloat = 1.0
+        
+        let noOfColumn = 2.5
+        let collectionviewWidth = collectionView.frame.width
+        let bothEdge =  CGFloat(edge + edge) // left + right
+        let excludingEdge = collectionviewWidth - bothEdge
+        let cellWidthExcludingSpaces = excludingEdge - (CGFloat((noOfColumn - 1)) * spacing)
+        let finalCellWidth = Double(cellWidthExcludingSpaces) / noOfColumn
+        let height = finalCellWidth
+        return CGSize(width: finalCellWidth, height: height)
         
         
     }
@@ -1151,7 +1151,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             return 5
         }
         else if collectionView.tag == 101{
-        
+            
             return 5
         }
         return 20
@@ -1201,10 +1201,10 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             cell.popularImageView.sd_setImage(with: URL(string: "\(popular.image)"), placeholderImage: UIImage(named: Constants.DEFAULT_POST_IMAGE))
             
             cell.popularImageView.contentMode = .scaleAspectFit
-           
+            
             // cell.popularImageView.changeBorder(width: 1.0, borderColor: .black, cornerRadius: 10.0)
             
-          //  cell.popularImageView.superview?.backgroundColor = .red
+            //  cell.popularImageView.superview?.backgroundColor = .red
             // popular.
             
             
@@ -1250,11 +1250,11 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             let obj = self.arrayPopular[indexPath.row]
             
             guard let url = URL(string: obj.link) else {
-              return //be safe
+                return //be safe
             }
             
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-
+            
             
         }
         else if collectionView.tag == 101{
@@ -1263,8 +1263,8 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
             self.showAlertCommingSoon()
             
         }
-
-
+        
+        
         
         
         

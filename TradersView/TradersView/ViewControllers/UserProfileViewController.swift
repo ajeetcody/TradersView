@@ -84,7 +84,7 @@ class UserProfileViewController: MasterViewController {
     var arrayMyTreds:[GetPostListByUserIdResponseDatum] = []
     
     
-     var scrollViewIndicatorLabel: UILabel!
+    var scrollViewIndicatorLabel: UILabel!
     var userProfileObj:GetProfileByIDDatum?
     
     private var myPostPageNumber:Int = 0
@@ -173,6 +173,21 @@ class UserProfileViewController: MasterViewController {
     }
     
     //MARK:- UIButton action methods ---
+    
+    @IBAction func searchButtonAction(_ sender: Any) {
+        
+        
+            self.pushScreenWithScreenName(screenName: "SearchViewController", currentUserId: self.currentUserId)
+       
+        
+    }
+    
+    @IBAction func notificationButtonAction(_ sender: Any) {
+        
+        
+            self.pushScreenWithScreenName(screenName: "NotificationViewController", currentUserId: self.currentUserId)
+            
+    }
     
     @objc func shareTradeButtonAction(sender:UIButton){
         
@@ -654,11 +669,11 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         
         let sectionHeaderView = UIView(frame: CGRect(x: 20, y: 0, width: Constants.screenWidth - 40, height: 40))
         
-        sectionHeaderView.backgroundColor = .black
+        sectionHeaderView.backgroundColor = .clear
         let headingLabel = UILabel(frame: CGRect(x: 25, y: 0, width: Constants.screenWidth, height: 40))
         
         headingLabel.text = "POST"
-        headingLabel.textColor = .white
+        headingLabel.textColor = .black
         sectionHeaderView.addSubview(headingLabel)
         
         return sectionHeaderView
@@ -933,7 +948,8 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                     // print("String value -- \(strUrl)")
                     
                     // cell.postImageView.sd_setImage(with: URL(string: strUrl), placeholderImage: UIImage(named: ""))
-                    
+                    cell.heightPostImageView.constant = Constants.screenWidth - 70
+
                     cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
                         
                         if img != nil{
@@ -999,7 +1015,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.contentViewWithShadow.changeBorder(width: 0.0, borderColor: .darkGray, cornerRadius: 10.0)
             
             cell.contentViewWithShadow.dropShadow(opacity: 0.5, radius: 15.0)
-
+            
             
             
             return cell

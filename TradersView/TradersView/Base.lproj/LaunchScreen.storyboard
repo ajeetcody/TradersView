@@ -15,18 +15,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Traders View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkl-Xc-nwI">
-                                <rect key="frame" x="98" y="428.5" width="218" height="49.5"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="36"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="aGh-sP-THu">
+                                <rect key="frame" x="0.0" y="80" width="414" height="448"/>
+                                <color key="backgroundColor" red="0.90967148542404175" green="0.89244192838668823" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.28902849555015564" green="0.27510014176368713" blue="0.44778060913085938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="jkl-Xc-nwI" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="UCl-bv-rb1"/>
-                            <constraint firstItem="jkl-Xc-nwI" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="yEa-eA-zmd"/>
+                            <constraint firstItem="aGh-sP-THu" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4Wi-g0-BC5"/>
+                            <constraint firstItem="aGh-sP-THu" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.5" id="5QJ-Cc-dng"/>
+                            <constraint firstItem="aGh-sP-THu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="36" id="EpZ-yH-ruP"/>
+                            <constraint firstItem="aGh-sP-THu" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="cYV-e2-SBI"/>
+                            <constraint firstItem="aGh-sP-THu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gzH-zj-5lw"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -35,4 +36,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="App-logo.png" width="1536" height="1536"/>
+    </resources>
 </document>
