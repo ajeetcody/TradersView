@@ -79,12 +79,16 @@ class MyTabbarController: UITabBarController {
         let totalTabs = self.imageList.count
         
         let viewTabbar = UIView()
-        
+        let backgroundImageView = UIImageView()
+
         viewTabbar.frame = CGRect(x: 0, y: 0, width:  self.tabBar.frame.size.width, height: self.tabBar.frame.size.height)
-        viewTabbar.backgroundColor = UIColor(hexString: "#FFFFFF", alpha: 2.0)
+        viewTabbar.backgroundColor = .clear
         self.tabBar.addSubview(viewTabbar)
         
-        
+        backgroundImageView.frame = CGRect(x: 0, y: 0, width:  self.tabBar.frame.size.width, height: self.tabBar.frame.size.height)
+        backgroundImageView.image = UIImage(named: "tabbar_background.jpeg")
+        viewTabbar.addSubview(backgroundImageView)
+
         
         for index in 0...totalTabs-1{
             
@@ -98,34 +102,37 @@ class MyTabbarController: UITabBarController {
             let tabImageView = UIImageView()
             
             
-            tabViewCustom.frame = CGRect(x: CGFloat(xCordinateOfTabView), y: 0.0, width: self.tabbarWidthConst, height: self.tabBar.frame.size.height)
-            
-            
-            if index == 0{
-                
-                //17325A
-                tabViewCustom.backgroundColor = self.hexStringToUIColorTabbar(hex: "#17325A")
-                
+            if index == 2{
+                tabViewCustom.frame = CGRect(x: CGFloat(xCordinateOfTabView + 10), y: -35.0, width: self.tabbarWidthConst - 20, height: self.tabbarWidthConst - 20)
+                tabViewCustom.changeBorder(width: 0.0, borderColor: .darkGray, cornerRadius: (self.tabbarWidthConst - 20)/2)
+                tabViewCustom.dropShadow(opacity: 0.5, radius: 12.0)
+
+                tabViewCustom.backgroundColor = .white
+                tabViewCustom.layer.borderWidth = 0.0                
+                tabViewCustom.layer.borderColor = UIColor(hexString: "#474571").cgColor
             }
             else{
-                
-                
-                tabViewCustom.backgroundColor = .lightGray
-                
+                tabViewCustom.frame = CGRect(x: CGFloat(xCordinateOfTabView), y: 0.0, width: self.tabbarWidthConst, height: self.tabBar.frame.size.height)
+                tabViewCustom.backgroundColor = .clear
             }
             
             tabViewCustom.tag = index
             
-            
-            tabImageView.frame = CGRect(x: 8, y: 8.0 , width: self.tabbarWidthConst - 16, height: self.tabBar.frame.height - 16)
+            if index == 2{
+                tabImageView.frame = CGRect(x: 20.0, y: 17.0 , width: self.tabbarWidthConst - 50, height: self.tabbarWidthConst - 50)
+                
+            }
+            else{
+                tabImageView.frame = CGRect(x: 8, y: 8.0 , width: self.tabbarWidthConst - 25, height: self.tabBar.frame.height - 25)
+            }
             tabImageView.contentMode = .scaleAspectFit
-            tabImageView.image = UIImage(named: "\(self.imageList[index])")
+            tabImageView.image = UIImage(named: "tabbar_\(index+1)")
             tabViewCustom.addSubview(tabImageView)
             
             
             tabViewCustom.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tabbarSelection(gesture:))))
             tabViewCustom.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(self.tabbarLongPressSelection(gesture:))))
-
+            
             self.tabViewArray.append(tabViewCustom)
             
             viewTabbar.addSubview(tabViewCustom)
@@ -141,18 +148,18 @@ class MyTabbarController: UITabBarController {
     
     func hexStringToUIColorTabbar (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
+        
         if (cString.hasPrefix("#")) {
             cString.remove(at: cString.startIndex)
         }
-
+        
         if ((cString.count) != 6) {
             return UIColor.gray
         }
-
+        
         var rgbValue:UInt64 = 0
         Scanner(string: cString).scanHexInt64(&rgbValue)
-
+        
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
@@ -182,17 +189,18 @@ class MyTabbarController: UITabBarController {
         
         
         if let tag = gesture.view?.tag{
-        
+            
             if tag == 2 {
                 
-               
+                
                 self.showActionSheet()
+                
                 
                 
             }
             else{
                 
-            
+                
                 self.selectedIndex = tag
                 self.changeUITabbarAfterTabSelection(tabIndex: tag)
                 
@@ -200,7 +208,7 @@ class MyTabbarController: UITabBarController {
             }
             
         }
-      
+        
         
     }
     
@@ -212,12 +220,15 @@ class MyTabbarController: UITabBarController {
             
             if view.tag == tabIndex{
                 
-                view.backgroundColor = self.hexStringToUIColorTabbar(hex: "#17325A")
+                view.frame = CGRect(x: CGFloat(tabbarWidthConst * CGFloat(view.tag)), y: -2, width: self.tabbarWidthConst + 5, height: self.tabBar.frame.size.height + 5)
+                
+                // view.backgroundColor = self.hexStringToUIColorTabbar(hex: "#17325A")
                 
             }
-            else{
+            else if view.tag != 2{
+                view.frame = CGRect(x: CGFloat(tabbarWidthConst * CGFloat(view.tag)), y: 8.0, width: self.tabbarWidthConst, height: self.tabBar.frame.size.height)
                 
-                view.backgroundColor = .lightGray
+                //view.backgroundColor = .lightGray
                 
             }
             
@@ -307,7 +318,7 @@ class MyTabbarController: UITabBarController {
         let vc:CreateChannelViewController = storyBoardDashboard.instantiateViewController(identifier: "CreateChannelViewController") as! CreateChannelViewController
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
-
+        
         
         
     }

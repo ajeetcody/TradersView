@@ -19,6 +19,7 @@ pod 'SkyFloatingLabelTextField', '~> 3.0'
 pod 'Firebase/Storage'
 
 pod 'NVActivityIndicatorView'
+pod 'Cosmos', '~> 23.0'
 
 pod 'Firebase/Database'
 # Swift 5.0

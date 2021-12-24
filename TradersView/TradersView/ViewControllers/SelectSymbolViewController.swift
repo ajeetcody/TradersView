@@ -50,7 +50,7 @@ class SelectSymbolViewController: MasterViewController {
         
         self.popupViewSelectSymbol.changeBorder(width: 1.0, borderColor: .darkGray, cornerRadius: 15.0)
         
-        self.popupViewSelectSymbol.dropShadow()
+        self.popupViewSelectSymbol.dropShadow(opacity: 0.5, radius: 15.0)
 
     }
     

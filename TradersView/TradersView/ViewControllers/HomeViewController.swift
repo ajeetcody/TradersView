@@ -1116,7 +1116,7 @@ extension HomeViewController:UICollectionViewDelegate, UICollectionViewDataSourc
           let edge    : CGFloat = 1.0
           let spacing : CGFloat = 1.0
 
-        let noOfColumn = 2.5
+          let noOfColumn = 2.5
           let collectionviewWidth = collectionView.frame.width
           let bothEdge =  CGFloat(edge + edge) // left + right
           let excludingEdge = collectionviewWidth - bothEdge

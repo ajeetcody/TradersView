@@ -8,8 +8,37 @@
 import UIKit
 
 import SDWebImage
+import Cosmos
+
+class TradesCell:UITableViewCell{
+    
+    @IBOutlet weak var curruncyLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var openLabel: UILabel!
+    
+    @IBOutlet weak var contentViewWithShadow: UIView!
+    
+    @IBOutlet weak var tradPriceLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var tradeProfitLabel: UILabel!
+    
+    @IBOutlet weak var stopLessLabel: UILabel!
+    @IBOutlet weak var takeProfitButton: UIButton!
+    
+    @IBOutlet weak var starView: CosmosView!
+    
+    @IBOutlet weak var percentLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
+    
+}
+
+
 
 class CellUserProfileDetails:UITableViewCell{
+    
+    
+    @IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var coverImageView: UIImageView!
     
@@ -34,13 +63,17 @@ class CellUserProfileDetails:UITableViewCell{
     
     @IBOutlet weak var postLabel: UILabel!
     
+    
+    @IBOutlet weak var crownView: UIView!
+    
+    @IBOutlet weak var premiumButton: UIButton!
+    
 }
 class UserProfileViewController: MasterViewController {
     
     
     @IBOutlet weak var favImageView: UIImageView!
     
-    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var userNameHeaderLabel: UILabel!
     
     var userIDOfProfile:String = ""
@@ -51,7 +84,7 @@ class UserProfileViewController: MasterViewController {
     var arrayMyTreds:[GetPostListByUserIdResponseDatum] = []
     
     
-    
+     var scrollViewIndicatorLabel: UILabel!
     var userProfileObj:GetProfileByIDDatum?
     
     private var myPostPageNumber:Int = 0
@@ -69,7 +102,7 @@ class UserProfileViewController: MasterViewController {
         
         self.tableViewUserProfile.estimatedRowHeight = 88.0
         self.tableViewUserProfile.rowHeight = UITableView.automaticDimension
-       
+        
         self.tableViewUserProfile.contentInset = .zero
         print("Current user id - \(self.currentUserId)")
         print("Profile id - \(self.userIDOfProfile)")
@@ -79,7 +112,6 @@ class UserProfileViewController: MasterViewController {
             
             if self.navigationController?.viewControllers.count == 1{
                 
-                self.cancelButton.isHidden = true
                 self.currentUserId = userData.id
                 self.userIDOfProfile = userData.id
                 
@@ -87,7 +119,6 @@ class UserProfileViewController: MasterViewController {
             }
             else{
                 
-                self.cancelButton.isHidden = false
                 self.currentUserId = userData.id
                 
                 
@@ -142,6 +173,20 @@ class UserProfileViewController: MasterViewController {
     }
     
     //MARK:- UIButton action methods ---
+    
+    @objc func shareTradeButtonAction(sender:UIButton){
+        
+        self.showAlertCommingSoon()
+        
+        
+    }
+    
+    @objc func backButtonAction(sender:UIButton){
+        
+        
+        self.navigationController?.popViewController(animated: true)
+        
+    }
     
     @IBAction func cancelButtonAction(_ sender: Any) {
         
@@ -249,7 +294,7 @@ class UserProfileViewController: MasterViewController {
                         
                         self.tableViewUserProfile.reloadData()
                         
-                        self.userNameHeaderLabel.text = userData.name?.capitalized
+                        // self.userNameHeaderLabel.text = userData.name?.capitalized
                         
                     }
                     
@@ -393,15 +438,7 @@ class UserProfileViewController: MasterViewController {
             print("post id - \(postObj.postid)")
             
         }
-        else if gesture.view!.superview!.tag == 102{
-            
-            
-            let postObj = self.arrayMyTreds[gesture.view!.tag]
-            postID = postObj.postid
-            notifyUserId = postObj.userID
-            
-            print("post id - \(postObj.postid)")
-        }
+        
         
         let label = gesture.view!.superview!.subviews.compactMap({$0 as? UILabel})
         
@@ -430,14 +467,6 @@ class UserProfileViewController: MasterViewController {
             
             print("post id - \(postObj.postid)")
             
-        }
-        else if gesture.view!.superview!.tag == 102{
-            
-            
-            let postObj = self.arrayMyTreds[gesture.view!.tag]
-            postID = postObj.postid
-            notifyUserId = postObj.userID
-            print("post id - \(postObj.postid)")
         }
         
         
@@ -479,12 +508,6 @@ class UserProfileViewController: MasterViewController {
             print("post id - \(postObj.postid)")
             
         }
-        else if gesture.view!.superview!.tag == 102{
-            
-            
-            let postObj = self.arrayMyTreds[gesture.view!.tag]
-            print("post id - \(postObj.postid)")
-        }
         
         
     }
@@ -504,15 +527,7 @@ class UserProfileViewController: MasterViewController {
             print("post id - \(postObj.postid)")
             
         }
-        else if gesture.view!.superview!.tag == 102{
-            
-            
-            let postObj = self.arrayMyTreds[gesture.view!.tag]
-            
-            profileUserId = postObj.userID
-            
-            print("post id - \(postObj.postid)")
-        }
+        
         
         if profileUserId != self.userIDOfProfile{
             
@@ -642,7 +657,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         sectionHeaderView.backgroundColor = .black
         let headingLabel = UILabel(frame: CGRect(x: 25, y: 0, width: Constants.screenWidth, height: 40))
         
-        headingLabel.text = "Post"
+        headingLabel.text = "POST"
         headingLabel.textColor = .white
         sectionHeaderView.addSubview(headingLabel)
         
@@ -696,7 +711,9 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         else if tableView.tag == 102 {
             
             print("\(#function) - arrayMyTreds - \(self.arrayMyTreds.count)")
-            return  self.arrayMyTreds.count
+            
+            return 10
+            //return  self.arrayMyTreds.count
             
             
         }
@@ -751,7 +768,7 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 
                 cell.profileImageView.sd_setImage(with: URL(string: (self.userProfileObj?.profileImg)!), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
                 
-                cell.profileImageView.changeBorder(width: 2.0, borderColor: .darkGray, cornerRadius: 45.0)
+                cell.profileImageView.changeBorder(width: 2.0, borderColor: UIColor.init(hexString: "#474571"), cornerRadius: 45.0)
                 
                 cell.coverImageView.sd_setImage(with: URL(string: (self.userProfileObj?.coverImg)!), placeholderImage: UIImage(named: Constants.DEFAULT_POST_IMAGE))
                 
@@ -764,8 +781,22 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
                 cell.followButton.addTarget(self, action: #selector(self.followButtonAction(_sender:)), for: .touchUpInside)
                 
                 
+                cell.premiumButton.changeBorder(width: 0.0, borderColor: .clear, cornerRadius: 5.0)
+                cell.crownView.changeBorder(width: 0, borderColor: .clear, cornerRadius: 20.0)
                 
-                
+                if (self.navigationController?.viewControllers.count)! > 1 {
+                    
+                    
+                    cell.backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+                    
+                    cell.backButton.isHidden = false
+                }
+                else{
+                    
+                    
+                    cell.backButton.isHidden = true
+                    
+                }
                 
                 
                 return cell
@@ -863,9 +894,9 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
             cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
             cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
             cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
-           
+            
             cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-
+            
             
             cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
             cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
@@ -959,110 +990,17 @@ extension UserProfileViewController:UITableViewDataSource, UITableViewDelegate {
         }
         else if tableView.tag == 102{
             
-            let cell:CellPost = tableView.dequeueReusableCell(withIdentifier: "CellMyTreds") as! CellPost
+            let cell:TradesCell = tableView.dequeueReusableCell(withIdentifier: "TradesCell") as! TradesCell
             
-            let obj = self.arrayMyTreds[indexPath.row]
-            
-            
-            cell.nameLabel.text = obj.username
-            
-            cell.dateLabel.text = self.changeDateFormateToDisplay(dateString: obj.date)
-            cell.profilePicImageView.sd_setImage(with: URL(string: "\(obj.profileImg)"), placeholderImage: UIImage(named: Constants.DEFAULT_PROFILE_PIC))
-            cell.postCaptionLabel.text = obj.message
-            
-            cell.heightPostImageView.constant = 0.0
-            
-            cell.likeCountLabel.text = obj.like
-            cell.commentCountLabel.text = obj.comment
-            cell.shareCountLabel.text = obj.share
-            
-            cell.likeImageView.tag = indexPath.row
-            cell.commentImageView.tag = indexPath.row
-            cell.shareImageView.tag = indexPath.row
-            cell.moreInfoButton.tag = indexPath.row
+            cell.shareButton.addTarget(self, action: #selector(shareTradeButtonAction), for: .touchUpInside)
             
             
-            cell.moreInfoButton.superview!.tag = tableView.tag
-            cell.likeImageView.superview!.tag = tableView.tag
-            cell.commentImageView.superview!.tag = tableView.tag
-            cell.shareImageView.superview!.tag = tableView.tag
             
+            cell.contentViewWithShadow.changeBorder(width: 0.0, borderColor: .darkGray, cornerRadius: 10.0)
             
-            cell.profilePicImageView.tag = indexPath.row
-            
-            cell.profilePicImageView.superview!.tag = tableView.tag
-            
-            cell.likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.likeImageViewTapGesture(gesture:))))
-            cell.commentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.commentImageViewTapGesture(gesture:))))
-            cell.shareImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.shareImageViewTapGesture(gesture:))))
+            cell.contentViewWithShadow.dropShadow(opacity: 0.5, radius: 15.0)
 
             
-            cell.postImageView.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-
-            
-            cell.moreInfoButton.addTarget(self, action: #selector(self.moreInfoButtonAction(_sender:)), for: .touchUpInside)
-            
-            cell.profilePicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profilePicImageViewTapGesture(gesture:))))
-            
-
-            
-            if obj.isLike != 0 {
-                
-                
-                cell.likeImageView.image = UIImage(named: "like-filled")
-            }
-            else{
-                
-                cell.likeImageView.image = UIImage(named: "like-empty")
-                
-            }
-            
-            
-            if let imgVideo = obj.imageVideo{
-                
-                let imgObj = imgVideo[0]
-                
-                let imgUrl = imgObj.image
-                
-                print("imgUrl - \(imgUrl)")
-                
-                switch imgUrl {
-                case .integer(let intValue):
-                    print("Integer value -- \(intValue)")
-                    cell.heightPostImageView.constant = 0.0
-                    
-                    
-                case .string(let strUrl):
-                    print("String value -- \(strUrl)")
-                    
-                    cell.postImageView.sd_setImage(with: URL(string: strUrl)) { (img, error, cacheType, url) in
-                        
-                        if img != nil{
-                            
-                            let ratio = img!.size.width / img!.size.height
-                            let newHeight = (Constants.screenWidth - 30) / ratio
-                            cell.heightPostImageView.constant = newHeight
-                            self.view.layoutIfNeeded()
-                            
-                        }
-                        else{
-                            
-                            cell.heightPostImageView.constant = 0.0
-                            
-                        }
-                    }
-                }
-                
-                
-                
-            }
-            else{
-                
-                cell.heightPostImageView.constant = 0.0
-                
-                
-                
-            }
             
             return cell
             

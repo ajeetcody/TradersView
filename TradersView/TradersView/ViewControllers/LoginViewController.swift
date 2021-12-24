@@ -14,8 +14,8 @@ class LoginViewController: MasterViewController {
     
     //MARK:- UI Object declarations ---
     
+    @IBOutlet weak var imageLogo: UIImageView!
     @IBOutlet weak var emailIDTextfield: UITextField!
-    
     @IBOutlet weak var passwordTextfield: UITextField!
     
     @IBOutlet weak var loginButton: UIButton!
@@ -37,29 +37,29 @@ class LoginViewController: MasterViewController {
         
         self.googleButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 25.0)
         
-        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 15.0)
+        self.emailIDTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
         
-        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 15.0)
+        self.passwordTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
         
         
-       // self.emailIDTextfield.text = "ra168@gmail.com"
-       // self.passwordTextfield.text = "qwerty123"
+        // self.emailIDTextfield.text = "ra168@gmail.com"
+        // self.passwordTextfield.text = "qwerty123"
         
         self.emailIDTextfield.setLeftPaddingPoints(10.0)
         self.emailIDTextfield.setRightPaddingPoints(10.0)
-
+        
         
         self.passwordTextfield.setLeftPaddingPoints(10.0)
         self.passwordTextfield.setRightPaddingPoints(10.0)
-
+        
         
         self.emailIDTextfield.clearButtonMode = .always
         self.emailIDTextfield.clearButtonMode = .whileEditing
-
         
-        //        self.emailIDTextfield.text = "kek@gmail.com"
-        //        self.passwordTextfield.text = "123456"
         
+        self.emailIDTextfield.text = "a16887@gmail.com"
+        self.passwordTextfield.text = "qwerty"
+        self.imageLogo.changeBorder(width: 0.0, borderColor: .clear, cornerRadius: (Constants.screenWidth * 0.4)/2)
         
     }
     
@@ -69,7 +69,7 @@ class LoginViewController: MasterViewController {
     @IBAction func facebookButtonAction(_ sender: Any) {
         
         self.showAlertCommingSoon()
-
+        
         
     }
     
@@ -193,13 +193,13 @@ class LoginViewController: MasterViewController {
             UserDefaults.standard.synchronize()
             
             print("Archive Success ----")
-
+            
         }catch (let error){
             #if DEBUG
-                print("Failed to convert UIColor to Data : \(error.localizedDescription)")
+            print("Failed to convert UIColor to Data : \(error.localizedDescription)")
             #endif
         }
-
+        
         
         
         

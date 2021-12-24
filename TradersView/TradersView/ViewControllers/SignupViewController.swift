@@ -9,7 +9,7 @@ import UIKit
 
 import Firebase
 class SignupViewController: MasterViewController {
-
+    
     
     //MARK:- UI Object declarations ---
     
@@ -21,8 +21,8 @@ class SignupViewController: MasterViewController {
     @IBOutlet weak var confirmPasswordTextfield: UITextField!
     @IBOutlet weak var signupButton: UIButton!
     
-
-
+    
+    
     
     //MARK:- UIViewcontroller lifecycle methods ---
     
@@ -31,17 +31,17 @@ class SignupViewController: MasterViewController {
         super.viewDidLoad()
         
         ref = Database.database().reference()
-
-
+        
+        
         self.uiChanges()
         
         self.nameTextfield.text = "ajeet sharma"
         self.userNameTextfield.text = "a168"
-        self.emailIDTextfield.text = "a168@gmail.com"
+        self.emailIDTextfield.text = "a168887@gmail.com"
         self.phoneTextfield.text = "+919009241741"
         self.passwordTextfield.text = "qwerty123"
         self.confirmPasswordTextfield.text = "qwerty123"
-
+        
     }
     
     //MARK:- UI Changes -----
@@ -50,37 +50,37 @@ class SignupViewController: MasterViewController {
     func uiChanges(){
         
         
-        self.signupButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.signupButton.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 25.0)
         
-        self.nameTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-        self.userNameTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-        self.emailIDTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-        self.phoneTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-        self.passwordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
-        self.confirmPasswordTextfield.changeBorder(width: 1.0, borderColor: .lightGray, cornerRadius: 10.0)
+        self.nameTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
+        self.userNameTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
+        self.emailIDTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
+        self.phoneTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
+        self.passwordTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
+        self.confirmPasswordTextfield.changeBorder(width: 0.0, borderColor: .lightGray, cornerRadius: 25.0)
         
         
         self.nameTextfield.setLeftPaddingPoints(10.0)
         self.nameTextfield.setRightPaddingPoints(10.0)
-
+        
         
         self.userNameTextfield.setLeftPaddingPoints(10.0)
         self.userNameTextfield.setRightPaddingPoints(10.0)
         
         self.emailIDTextfield.setLeftPaddingPoints(10.0)
         self.emailIDTextfield.setRightPaddingPoints(10.0)
-
+        
         
         self.phoneTextfield.setLeftPaddingPoints(10.0)
         self.phoneTextfield.setRightPaddingPoints(10.0)
         
         self.passwordTextfield.setLeftPaddingPoints(10.0)
         self.passwordTextfield.setRightPaddingPoints(10.0)
-
+        
         
         self.confirmPasswordTextfield.setLeftPaddingPoints(10.0)
         self.confirmPasswordTextfield.setRightPaddingPoints(10.0)
-
+        
         
         
     }
@@ -105,7 +105,7 @@ class SignupViewController: MasterViewController {
                 self.showAlertPopupWithMessage(msg: "Both password should be same.")
                 
             }
-           
+            
             
         }
         
@@ -114,7 +114,7 @@ class SignupViewController: MasterViewController {
     }
     
     @IBAction func loginButtonAction(_ sender: Any) {
-       
+        
         self.dismiss(animated: true, completion: nil)
         
         
@@ -123,7 +123,7 @@ class SignupViewController: MasterViewController {
     @IBAction func cancelButtonAction(_ sender: Any) {
         
         self.dismiss(animated: true, completion: nil)
-
+        
     }
     
     //MARK:- Add user entry in firebaes for chatting ---
@@ -137,8 +137,8 @@ class SignupViewController: MasterViewController {
         let privateGroup = [["groupid":"Null"]]
         let publicGroup = [["groupid":"Null"]]
         
-
-
+        
+        
         
         let dict:[String:Any] = ["channel_group":channelGroup, "private_group":privateGroup, "public_group":publicGroup,"date":Date.getCurrentDate(), "email":userData.email, "psd":userData.username, "recent_message":"","status":"online", "userId":userData.id,"username":userData.name, "imageURL":"https://spsofttech.com/projects/treader/images/dummy.png"]
         
@@ -199,18 +199,18 @@ class SignupViewController: MasterViewController {
                     } errorHandler: { (error) in
                         
                         self.showAlertPopupWithMessageWithHandler(msg: "Error - \(error.localizedDescription)") {
-                        
+                            
                             self.dismiss(animated: true, completion: nil)
                             
                         }
                         
                     }
-
-
+                    
+                    
                 }
                 
                 
-               
+                
                 
             }
             
@@ -221,27 +221,27 @@ class SignupViewController: MasterViewController {
             
             self.showErrorMessage(error: error)
         }
-
+        
         
         
         
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
 extension SignupViewController{
-   
+    
     
     func parseSuccessHandler(response: ResponseModel) {
         

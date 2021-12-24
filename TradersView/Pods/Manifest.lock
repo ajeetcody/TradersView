@@ -350,6 +350,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
+  - Cosmos (23.0.0)
   - FacebookCore (0.9.0):
     - FBSDKCoreKit (~> 5.0)
   - FacebookLogin (0.9.0):
@@ -475,6 +476,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.4)
+  - Cosmos (~> 23.0)
   - FacebookCore
   - FacebookLogin
   - FacebookShare
@@ -493,6 +495,7 @@ SPEC REPOS:
     - Alamofire
     - AppAuth
     - BoringSSL-GRPC
+    - Cosmos
     - FacebookCore
     - FacebookLogin
     - FacebookShare
@@ -526,6 +529,7 @@ SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
   FacebookLogin: 6cee9fd6e1fe976fe8f7eec199e27b28b14f5d63
   FacebookShare: 85968ad1b1606c4944fb154924e425fd29184ea5
@@ -554,6 +558,6 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
 
-PODFILE CHECKSUM: b9deb76a3e492d7a5ebcebf70c1f1e3a505eeabd
+PODFILE CHECKSUM: 5aaaa8f4de0cf7a365ef3ae40770d69032c42d93
 
 COCOAPODS: 1.11.2
