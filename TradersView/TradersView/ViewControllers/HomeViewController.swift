@@ -111,7 +111,7 @@ class HomeViewController: MasterViewController {
     @IBOutlet weak var notificationButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     
-    let sectionTitle:[String] = ["Most Popular","Post"]
+    let sectionTitle:[String] = ["Most Popular","COMMUNITY"]
     
     var arrayPopular:[MostPopularDatum] = []
     var topProfile = ["Ajit", "Amit","Rakesh", "Ramesh", "Kapil", "chintoo", "Sourach", "Ravi"]

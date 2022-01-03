@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import Photos
+import AVFoundation
 
 
 class SplashViewController: MasterViewController {
@@ -93,6 +94,7 @@ class SplashViewController: MasterViewController {
         
         /* Record audio */
         
+        self.checkAudioRecordPermission()
         
         /* Notification permission */
         
@@ -106,6 +108,22 @@ class SplashViewController: MasterViewController {
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             UIApplication.shared.registerUserNotificationSettings(settings)
         }
+    }
+    
+    func checkAudioRecordPermission(){
+        switch AVAudioSession.sharedInstance().recordPermission {
+            case .granted:
+                print("Permission granted")
+            case .denied:
+                print("Permission denied")
+            case .undetermined:
+                print("Request permission here")
+                AVAudioSession.sharedInstance().requestRecordPermission({ granted in
+                    // Handle granted
+                })
+            @unknown default:
+                print("Unknown case")
+            }
     }
     func checkPhotoLibraryPermission() {
         let status = PHPhotoLibrary.authorizationStatus()
